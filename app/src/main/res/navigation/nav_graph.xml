@@ -50,5 +50,17 @@
     <fragment
         android:id="@+id/addGrnt1Fragment"
         android:name="com.bellacity.ui.fragment.addGrnt.AddGrnt1Fragment"
-        android:label="AddGrnt1Fragment" />
+        android:label="AddGrnt1Fragment">
+        <action
+            android:id="@+id/action_addGrnt1Fragment_to_addGrnt2Fragment"
+            app:destination="@id/addGrnt2Fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addGrnt2Fragment"
+        android:name="com.bellacity.ui.fragment.addGrnt.AddGrnt2Fragment"
+        android:label="AddGrnt2Fragment">
+        <argument
+            android:name="tech_id_args"
+            app:argType="integer" />
+    </fragment>
 </navigation>

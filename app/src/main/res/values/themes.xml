@@ -35,6 +35,16 @@
         <item name="boxCornerRadiusTopStart">@dimen/radius_8</item>
     </style>
 
+    <style name="DropDownTextInputLayoutStyle" parent="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu">
+        <item name="android:textSize">12sp</item>
+        <item name="boxStrokeColor">@color/red</item>
+        <item name="boxStrokeWidth">0dp</item>
+        <item name="boxBackgroundColor">@color/light_white</item>
+        <item name="errorEnabled">true</item>
+        <item name="boxCornerRadiusTopEnd">@dimen/radius_8</item>
+        <item name="boxCornerRadiusTopStart">@dimen/radius_8</item>
+    </style>
+
     <style name="SearchTextInputLayoutStyle" parent="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
         <item name="android:textSize">12sp</item>
         <item name="boxStrokeWidth">2dp</item>

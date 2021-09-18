@@ -6,12 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import com.bellacity.ui.activity.mainActivity.MainActivity
+import com.bellacity.ui.fragment.SharedViewModel
 import com.google.android.material.snackbar.Snackbar
 import timber.log.Timber
 
 abstract class BaseFragment<VDB : ViewDataBinding> : Fragment() {
     protected lateinit var binding: VDB
+    protected val sharedViewModel: SharedViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -19,16 +22,17 @@ abstract class BaseFragment<VDB : ViewDataBinding> : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = getViewBinding(inflater, container)
-        return binding?.root
+        return binding.root
     }
 
     protected abstract fun getViewBinding(inflater: LayoutInflater, container: ViewGroup?): VDB
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initViewModel()
         onCreateInit()
         initClicks()
+        initViewModel()
+
     }
 
     protected abstract fun initClicks()

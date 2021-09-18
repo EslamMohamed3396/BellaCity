@@ -160,7 +160,6 @@
                     android:layout_marginEnd="8dp"
                     android:hint="@string/tech_name"
                     app:errorEnabled="false"
-
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/super_text_input"
                     app:layout_constraintTop_toBottomOf="@+id/general_super_text_input">

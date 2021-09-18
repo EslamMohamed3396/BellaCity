@@ -7,5 +7,6 @@
     <color name="white">#FFFFFFFF</color>
 
     <color name="transparent">@android:color/transparent</color>
+    <color name="light_white">#F5F5F5</color>
 
 </resources>

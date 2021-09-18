@@ -5,6 +5,8 @@ import android.view.ViewGroup
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.bellacity.R
+import com.bellacity.data.model.addGrnt.request.BodyAddGrnt
 import com.bellacity.data.model.distributor.response.Distributor
 import com.bellacity.data.model.tech.response.Tech
 import com.bellacity.databinding.FragmentAddGrnt1Binding
@@ -12,12 +14,12 @@ import com.bellacity.ui.base.BaseFragment
 import com.bellacity.ui.fragment.addGrnt.adapter.AutoCompleteDistributorAdapter
 import com.bellacity.ui.fragment.addGrnt.adapter.AutoCompleteTechAdapter
 import com.bellacity.utilities.*
-import timber.log.Timber
 import java.util.*
-import kotlin.collections.ArrayList
 
 
 class AddGrnt1Fragment : BaseFragment<FragmentAddGrnt1Binding>() {
+    private var techId: Int? = null
+    private var distributorId: Int? = null
     private val viewModel: AddGrntViewModel by viewModels()
 
     override fun getViewBinding(
@@ -29,7 +31,8 @@ class AddGrnt1Fragment : BaseFragment<FragmentAddGrnt1Binding>() {
 
         binding.nextBtn.setOnClickListener {
             if (checkData()) {
-                Timber.d("nextBtn")
+                sharedViewModel.saveAddGrnt(bodyAddGrnt())
+                goToAddGrant2()
             }
         }
 
@@ -38,6 +41,11 @@ class AddGrnt1Fragment : BaseFragment<FragmentAddGrnt1Binding>() {
         }
 
 
+    }
+
+    private fun goToAddGrant2() {
+        val action = AddGrnt1FragmentDirections.actionAddGrnt1FragmentToAddGrnt2Fragment(techId!!)
+        findNavController().navigate(action)
     }
 
     override fun initViewModel() {
@@ -143,7 +151,7 @@ class AddGrnt1Fragment : BaseFragment<FragmentAddGrnt1Binding>() {
     private fun fillTechAutoCompelete(teclList: List<Tech>) {
         val adapter = AutoCompleteTechAdapter(
             requireContext(),
-            com.bellacity.R.layout.item_tech_list,
+            R.layout.item_tech_list,
             teclList,
             ::clickOnTechName
         )
@@ -152,34 +160,50 @@ class AddGrnt1Fragment : BaseFragment<FragmentAddGrnt1Binding>() {
     }
 
     private fun fillDistributorAutoCompelete(distributorList: List<Distributor>) {
-        val distributorName = ArrayList<String>()
-        val action: (Distributor) -> Unit = {
-            distributorName.add(it.distributorName!!)
-        }
-        distributorList.forEach(action)
 
         val adapter = AutoCompleteDistributorAdapter(
             requireContext(),
-            com.bellacity.R.layout.item_tech_list,
+            R.layout.item_tech_list,
             distributorList,
             ::clickOnDistributorName
         )
 
         binding.autoDistributorName.setAdapter(adapter)
 
-
     }
 
     private fun clickOnTechName(item: Tech) {
-        binding.autoTecName.setText("${item.techName} ")
+        binding.techTextInput.editText?.setText(item.techName + " ")
         binding.cityTechTextInput.editText?.setText(item.techGovernorate)
         binding.governmentTechTextInput.editText?.setText(item.techCity)
+        techId = item.techID
     }
 
     private fun clickOnDistributorName(item: Distributor) {
-        binding.autoDistributorName.setText("${item.distributorName} ")
+        binding.distributorTextInput.editText?.setText(item.distributorName + " ")
         binding.cityDistributorTextInput.editText?.setText(item.distributorGovernorate)
         binding.governmentDistributorTextInput.editText?.setText(item.distributorCity)
+        distributorId = item.distributorID
+    }
+
+    private fun bodyAddGrnt(): BodyAddGrnt {
+        return BodyAddGrnt(
+            techId,
+            distributorId,
+            binding.consumerTextInput.editText?.text.toString(),
+            binding.consumerPhoneTextInput.editText?.text.toString(),
+            binding.consumerAddressTextInput.editText?.text.toString(),
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            binding.merchantTextInput.editText?.text.toString(),
+            null,
+            null,
+            null
+        )
     }
 
 }

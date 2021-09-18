@@ -20,5 +20,9 @@
     <string name="distributor_name">اسم الموزع</string>
     <string name="merchant_name">اسم التاجر</string>
     <string name="next">متابعة</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="book_number">رقم الدفتر</string>
+    <string name="product_type">نوع المنتج</string>
 
 </resources>

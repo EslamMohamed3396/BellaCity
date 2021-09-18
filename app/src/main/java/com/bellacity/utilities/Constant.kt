@@ -18,6 +18,8 @@ object Constant {
     const val PREVIOUS_PREVIEW = BASE_ROUTS + "GetGrntList"
     const val TECH_LIST = BASE_ROUTS + "GetTechList"
     const val DISTRIBUTOR_LIST = BASE_ROUTS + "GetDistributorList"
+    const val BOOK_NUMBER_LIST = BASE_ROUTS + "GetBookNoList"
+    const val PRODUCT_TYPE_LIST = BASE_ROUTS + "GetGrntItemsTypeList"
 
     //endregion
 
