@@ -1,11 +1,13 @@
 package com.bellacity.data.network
 
 import com.bellacity.data.model.checkLogin.response.ResonseCheckLogin
+import com.bellacity.data.model.distributor.response.ResponseDistributor
 import com.bellacity.data.model.login.request.BodyLogin
 import com.bellacity.data.model.login.response.ResponseLogin
 import com.bellacity.data.model.previousPreview.request.BodyPreviousPreview
 import com.bellacity.data.model.previousPreview.response.ResponsePreviousPreviews
 import com.bellacity.data.model.refreshToken.response.BodyRefreshToken
+import com.bellacity.data.model.tech.response.ResponseTech
 import com.bellacity.utilities.App
 import com.bellacity.utilities.Constant
 import com.bellacity.utilities.ErrorHandling
@@ -50,7 +52,7 @@ object Client {
                         .header(
                             Constant.AUTHORIZATION,
                             Constant.BEARER + PreferencesUtils(App.getContext()).getUserData(
-                                Constant.USER_ID_DATA
+                                Constant.USER_DATA_KEY
                             )?.token
                         )
                         .build()
@@ -119,6 +121,14 @@ object Client {
 
     fun previousPreview(bodyPreviousPreview: BodyPreviousPreview): Single<ResponsePreviousPreviews> {
         return apiService?.previousPreview(bodyPreviousPreview)!!
+    }
+
+    fun techList(): Single<ResponseTech> {
+        return apiService?.techList()!!
+    }
+
+    fun distributorList(): Single<ResponseDistributor> {
+        return apiService?.distributorList()!!
     }
 
 }

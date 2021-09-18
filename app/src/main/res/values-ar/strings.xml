@@ -4,8 +4,21 @@
     <string name="password">كلمة المرور</string>
     <string name="log_in">تسجيل دخول</string>
     <string name="invalid">غير صحيح</string>
-    <string name="tech_name">اسم الفني :  %s</string>
+    <string name="tech_name_bind">اسم الفني :  %s</string>
     <string name="warrnty_number">رقم شهادة الضمان :  %s</string>
     <string name="date">التاريخ :  </string>
     <string name="something_wrong">حدث خطأ من فضلك سجل دخولك مرة ثانية</string>
+    <string name="enter_your_name">اسم المندوب</string>
+    <string name="super_name">المشرف </string>
+    <string name="general_super_name">المشرف العام</string>
+    <string name="tech_name">اسم الفني </string>
+    <string name="city">المحافظة</string>
+    <string name="government_name">المدينة او المركز او الحي</string>
+    <string name="consumer_name">اسم المستهلك</string>
+    <string name="consumer_phone">رقم هاتف المستهلك</string>
+    <string name="consumer_address">عنوان المستهلك</string>
+    <string name="distributor_name">اسم الموزع</string>
+    <string name="merchant_name">اسم التاجر</string>
+    <string name="next">متابعة</string>
+
 </resources>

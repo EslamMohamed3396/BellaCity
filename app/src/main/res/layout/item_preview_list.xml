@@ -27,7 +27,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="8dp"
-                android:text="@{@string/tech_name(preview.grntTechName)}"
+                android:text="@{@string/tech_name_bind(preview.grntTechName)}"
                 android:textAlignment="viewStart"
                 android:textColor="@color/black"
                 android:textSize="16sp"

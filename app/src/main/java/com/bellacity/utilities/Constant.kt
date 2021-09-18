@@ -16,7 +16,8 @@ object Constant {
     const val CHECK_LOGIN = BASE_ROUTS + "CheckLogin"
 
     const val PREVIOUS_PREVIEW = BASE_ROUTS + "GetGrntList"
-
+    const val TECH_LIST = BASE_ROUTS + "GetTechList"
+    const val DISTRIBUTOR_LIST = BASE_ROUTS + "GetDistributorList"
 
     //endregion
 
@@ -26,14 +27,9 @@ object Constant {
     const val sharedPrefFile = "bella city"
 
     //shared Preference Key
-    const val USER_ID_DATA = "user_data_key"
-    const val USER_ID_KEY = "user_id_key"
-    const val USER_NAME_KEY = "user_name_key"
-    const val USER_TOKEN = "user_name_key"
-    const val LANGUAGE_KEY = "language_key"
+
     const val IS_USER_LOGIN = "login_key"
     const val USER_DATA_KEY = "user_data_key"
-    const val LANG_APP = "lang"
 
 
 }

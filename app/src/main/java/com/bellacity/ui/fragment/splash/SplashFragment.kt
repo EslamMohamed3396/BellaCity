@@ -12,6 +12,7 @@ import com.bellacity.databinding.FragmentSplashBinding
 import com.bellacity.ui.base.BaseFragment
 import com.bellacity.utilities.Constant
 import com.bellacity.utilities.PreferencesUtils
+import timber.log.Timber
 
 class SplashFragment : BaseFragment<FragmentSplashBinding>() {
 
@@ -42,7 +43,7 @@ class SplashFragment : BaseFragment<FragmentSplashBinding>() {
     private fun animation() {
         mAnimationLogo =
             AnimationUtils.loadAnimation(requireContext(), R.anim.anim_slide_from_bottom)
-        binding?.logo?.animation = mAnimationLogo
+        binding.logo.animation = mAnimationLogo
 
     }
 
@@ -64,9 +65,11 @@ class SplashFragment : BaseFragment<FragmentSplashBinding>() {
         handler?.postDelayed(runnable!!, 3000)
     }
 
-    override fun onPause() {
-        super.onPause()
+    override fun onDestroyView() {
+        super.onDestroyView()
         mAnimationLogo?.cancel()
         handler?.removeCallbacks(runnable!!)
+        Timber.d("onDestroyView")
     }
+
 }

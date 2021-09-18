@@ -1,11 +1,13 @@
 package com.bellacity.data.network
 
 import com.bellacity.data.model.checkLogin.response.ResonseCheckLogin
+import com.bellacity.data.model.distributor.response.ResponseDistributor
 import com.bellacity.data.model.login.request.BodyLogin
 import com.bellacity.data.model.login.response.ResponseLogin
 import com.bellacity.data.model.previousPreview.request.BodyPreviousPreview
 import com.bellacity.data.model.previousPreview.response.ResponsePreviousPreviews
 import com.bellacity.data.model.refreshToken.response.BodyRefreshToken
+import com.bellacity.data.model.tech.response.ResponseTech
 import com.bellacity.utilities.Constant
 import io.reactivex.Single
 import retrofit2.http.Body
@@ -24,4 +26,11 @@ interface ApiService {
 
     @POST(Constant.PREVIOUS_PREVIEW)
     fun previousPreview(@Body bodyPreviousPreview: BodyPreviousPreview): Single<ResponsePreviousPreviews>
+
+    @POST(Constant.TECH_LIST)
+    fun techList(): Single<ResponseTech>
+
+    @POST(Constant.DISTRIBUTOR_LIST)
+    fun distributorList(): Single<ResponseDistributor>
+
 }

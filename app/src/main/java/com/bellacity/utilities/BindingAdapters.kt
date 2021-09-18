@@ -51,4 +51,15 @@ fun changeDateFormat(textView: TextView, dateString: String?) {
         }
         textView.text = "${textView.context.resources.getString(R.string.date)}  $result"
     }
+
+}
+
+@BindingAdapter("app:currentDate")
+fun currentDate(textView: TextView, dateString: Date?) {
+    //2021-09-01 08:40:04
+
+    val df = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+    val formattedDate = df.format(dateString!!)
+    textView.text = formattedDate
+
 }

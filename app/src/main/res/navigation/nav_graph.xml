@@ -33,15 +33,22 @@
     <fragment
         android:id="@+id/home_button_navigation"
         android:name="com.bellacity.ui.fragment.home.HomeFragment"
-        android:label="HomeFragment" >
+        android:label="HomeFragment">
         <action
             android:id="@+id/action_home_button_navigation_to_loginFragment"
             app:destination="@id/loginFragment"
             app:popUpTo="@id/home_button_navigation"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_home_button_navigation_to_addGrnt1Fragment"
+            app:destination="@id/addGrnt1Fragment" />
     </fragment>
     <fragment
         android:id="@+id/edit_button_navigation"
         android:name="com.bellacity.ui.fragment.previousPreviews.PreviousPreviewsFragment"
         android:label="PreviousPreviewsFragment" />
+    <fragment
+        android:id="@+id/addGrnt1Fragment"
+        android:name="com.bellacity.ui.fragment.addGrnt.AddGrnt1Fragment"
+        android:label="AddGrnt1Fragment" />
 </navigation>

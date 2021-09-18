@@ -27,7 +27,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
 
     override fun initClicks() {
-
+        binding.btnAdd.setOnClickListener {
+            findNavController().navigate(R.id.action_home_button_navigation_to_addGrnt1Fragment)
+        }
     }
 
     override fun initViewModel() {
