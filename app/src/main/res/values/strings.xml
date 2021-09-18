@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Bella City</string>
+       <string name="name">الإسم</string>
+    <string name="password">كلمة المرور</string>
+    <string name="log_in">تسجيل دخول</string>
+    <string name="invalid">غير صحيح</string>
+    <string name="tech_name">اسم الفني :  %s</string>
+    <string name="warrnty_number">رقم شهادة الضمان :  %s</string>
+    <string name="date">التاريخ :  </string>
+    <string name="something_wrong">حدث خطأ من فضلك سجل دخولك مرة ثانية</string>
+</resources>
