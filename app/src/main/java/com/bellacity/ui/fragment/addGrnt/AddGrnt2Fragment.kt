@@ -7,9 +7,11 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bellacity.R
+import com.bellacity.data.model.activeType.response.GrntTypes
 import com.bellacity.data.model.addGrnt.request.BodyAddGrnt
 import com.bellacity.data.model.bookNumber.request.BodyBookNumber
 import com.bellacity.data.model.bookNumber.response.BookNo
+import com.bellacity.data.model.cobon.request.BodyCobon
 import com.bellacity.data.model.productType.response.GrntItemsType
 import com.bellacity.databinding.FragmentAddGrnt2Binding
 import com.bellacity.ui.base.BaseFragment
@@ -17,11 +19,13 @@ import com.bellacity.utilities.DialogUtil
 import com.bellacity.utilities.Resource
 
 class AddGrnt2Fragment : BaseFragment<FragmentAddGrnt2Binding>() {
+    private var activeTypeId: Int? = null
     private val viewModel: AddGrntViewModel by viewModels()
     private var bookId: Int? = null
     private var productTypeId: Int? = null
     private var bodyAddGrnt: BodyAddGrnt? = null
     private val args: AddGrnt2FragmentArgs by navArgs()
+
     override fun getViewBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
@@ -45,6 +49,7 @@ class AddGrnt2Fragment : BaseFragment<FragmentAddGrnt2Binding>() {
     override fun initViewModel() {
         initBookListViewModel()
         initProductTypeListViewModel()
+        initActiveTypeListViewModel()
     }
 
     override fun onCreateInit() {
@@ -74,7 +79,6 @@ class AddGrnt2Fragment : BaseFragment<FragmentAddGrnt2Binding>() {
             }
         })
     }
-
 
     private fun fillSpinnerBookNumber(bookNumberList: List<BookNo>) {
         val bookNumber = ArrayList<Int>()
@@ -136,6 +140,76 @@ class AddGrnt2Fragment : BaseFragment<FragmentAddGrnt2Binding>() {
         binding.autoProductType.setOnItemClickListener { parent, view, position, id ->
             productTypeId = productTypeList[position].grntItemsTypeID
         }
+    }
+
+    private fun initActiveTypeListViewModel() {
+        viewModel.activeType().observe(viewLifecycleOwner, { response ->
+            when (response) {
+                is Resource.Success -> {
+                    DialogUtil.dismissDialog()
+                    when (response.data?.status) {
+                        1 -> {
+                            fillSpinnerActiveType(response.data.grntTypesList!!)
+                        }
+                        else -> {
+                            showSnackbar(response.data?.message)
+                        }
+                    }
+                }
+                is Resource.Error -> {
+                    DialogUtil.dismissDialog()
+                }
+                is Resource.Loading -> {
+                    DialogUtil.showDialog(requireContext())
+                }
+            }
+        })
+    }
+
+    private fun fillSpinnerActiveType(activeTypeList: List<GrntTypes>) {
+        val activeType = ArrayList<String>()
+        activeTypeList.forEach {
+            activeType.add(it.grntTypeName!!)
+        }
+        val dataAdapter: ArrayAdapter<String> =
+            ArrayAdapter(
+                requireContext(),
+                R.layout.item_drop_down,
+                activeType
+            )
+        binding.autoActiveType.setAdapter(dataAdapter)
+        binding.autoActiveType.setOnItemClickListener { parent, view, position, id ->
+            activeTypeId = activeTypeList[position].grntTypeID
+            initCobonListViewModel(activeTypeId)
+        }
+    }
+
+    private fun initCobonListViewModel(activeType: Int?) {
+        viewModel.cobonList(bodyCobon(activeType)).observe(viewLifecycleOwner, { response ->
+            when (response) {
+                is Resource.Success -> {
+                    DialogUtil.dismissDialog()
+                    when (response.data?.status) {
+                        1 -> {
+
+                        }
+                        else -> {
+                            showSnackbar(response.data?.message)
+                        }
+                    }
+                }
+                is Resource.Error -> {
+                    DialogUtil.dismissDialog()
+                }
+                is Resource.Loading -> {
+                    DialogUtil.showDialog(requireContext())
+                }
+            }
+        })
+    }
+
+    private fun bodyCobon(activeType: Int?): BodyCobon {
+        return BodyCobon(activeType)
     }
 
 

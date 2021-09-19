@@ -1,8 +1,11 @@
 package com.bellacity.data.network
 
+import com.bellacity.data.model.activeType.response.ResponseActiveType
 import com.bellacity.data.model.bookNumber.request.BodyBookNumber
 import com.bellacity.data.model.bookNumber.response.ResponseBookNumber
 import com.bellacity.data.model.checkLogin.response.ResonseCheckLogin
+import com.bellacity.data.model.cobon.request.BodyCobon
+import com.bellacity.data.model.cobon.response.ResponseCobon
 import com.bellacity.data.model.distributor.response.ResponseDistributor
 import com.bellacity.data.model.login.request.BodyLogin
 import com.bellacity.data.model.login.response.ResponseLogin
@@ -140,6 +143,14 @@ object Client {
 
     fun productType(): Single<ResponseProductType> {
         return apiService?.productType()!!
+    }
+
+    fun activeType(): Single<ResponseActiveType> {
+        return apiService?.activeType()!!
+    }
+
+    fun cobonList(bodyCobon: BodyCobon): Single<ResponseCobon> {
+        return apiService?.cobonList(bodyCobon)!!
     }
 
 }

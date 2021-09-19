@@ -20,6 +20,8 @@ object Constant {
     const val DISTRIBUTOR_LIST = BASE_ROUTS + "GetDistributorList"
     const val BOOK_NUMBER_LIST = BASE_ROUTS + "GetBookNoList"
     const val PRODUCT_TYPE_LIST = BASE_ROUTS + "GetGrntItemsTypeList"
+    const val ACTIVE_TYPE_LIST = BASE_ROUTS + "GetGrntTypeList"
+    const val COBON_LIST = BASE_ROUTS + "GetCobonList"
 
     //endregion
 

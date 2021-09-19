@@ -2,8 +2,11 @@ package com.bellacity.ui.fragment.addGrnt
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.bellacity.data.model.activeType.response.ResponseActiveType
 import com.bellacity.data.model.bookNumber.request.BodyBookNumber
 import com.bellacity.data.model.bookNumber.response.ResponseBookNumber
+import com.bellacity.data.model.cobon.request.BodyCobon
+import com.bellacity.data.model.cobon.response.ResponseCobon
 import com.bellacity.data.model.distributor.response.ResponseDistributor
 import com.bellacity.data.model.productType.response.ResponseProductType
 import com.bellacity.data.model.tech.response.ResponseTech
@@ -41,6 +44,20 @@ class AddGrntViewModel : BaseViewModel() {
 
     fun productType(): LiveData<Resource<ResponseProductType>> {
         return callApi(Client.getInstance()?.productType()!!, _productTypeMutableLiveData)
+    }
+
+    private var _activeTypeMutableLiveData = MutableLiveData<Resource<ResponseActiveType>>()
+
+
+    fun activeType(): LiveData<Resource<ResponseActiveType>> {
+        return callApi(Client.getInstance()?.activeType()!!, _activeTypeMutableLiveData)
+    }
+
+    private var _cobonMutableLiveData = MutableLiveData<Resource<ResponseCobon>>()
+
+
+    fun cobonList(bodyCobon: BodyCobon): LiveData<Resource<ResponseCobon>> {
+        return callApi(Client.getInstance()?.cobonList(bodyCobon)!!, _cobonMutableLiveData)
     }
 
 }

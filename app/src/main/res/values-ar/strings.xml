@@ -22,5 +22,6 @@
     <string name="next">متابعة</string>
     <string name="book_number">رقم الدفتر</string>
     <string name="product_type">نوع المنتج</string>
+    <string name="active_type">نوع التفعيل</string>
 
 </resources>
