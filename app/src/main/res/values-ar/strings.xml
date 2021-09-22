@@ -23,5 +23,12 @@
     <string name="book_number">رقم الدفتر</string>
     <string name="product_type">نوع المنتج</string>
     <string name="active_type">نوع التفعيل</string>
+    <string name="serial">سريال القطع والمواسير</string>
+    <string name="check">تحقق من السريال</string>
+    <string name="valid_serial_was_added">السيريال الصحيح الذي تم اضافته</string>
+    <string name="items">المنتجات</string>
+    <string name="choosed_items">المنتجات التي تم اختيارها</string>
+    <string name="gifts">هدايا تشجيعية</string>
+    <string name="send">ارسال المتابعة</string>
 
 </resources>

@@ -2,7 +2,7 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/splashFragment">
+    app:startDestination="@id/addGrnt3Fragment">
 
     <fragment
         android:id="@+id/loginFragment"
@@ -62,5 +62,12 @@
         <argument
             android:name="tech_id_args"
             app:argType="integer" />
+        <action
+            android:id="@+id/action_addGrnt2Fragment_to_addGrnt3Fragment"
+            app:destination="@id/addGrnt3Fragment" />
     </fragment>
+    <fragment
+        android:id="@+id/addGrnt3Fragment"
+        android:name="com.bellacity.ui.fragment.addGrnt.AddGrnt3Fragment"
+        android:label="AddGrnt3Fragment" />
 </navigation>

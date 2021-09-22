@@ -9,5 +9,9 @@ object CheckValidData {
         return EditTextValidiation.validField(inputLayout)
     }
 
+    fun checkSerial(inputLayout: TextInputLayout): Boolean {
+        return EditTextValidiation.validSerial(inputLayout)
+    }
+
 
 }

@@ -22,6 +22,9 @@ object Constant {
     const val PRODUCT_TYPE_LIST = BASE_ROUTS + "GetGrntItemsTypeList"
     const val ACTIVE_TYPE_LIST = BASE_ROUTS + "GetGrntTypeList"
     const val COBON_LIST = BASE_ROUTS + "GetCobonList"
+    const val TEXT_FROM_IMAGE = BASE_ROUTS + "GetTextFromImage"
+    const val CHECK_SERIAL = BASE_ROUTS + "ValidateSerial"
+    const val GRNT_ITEMS = BASE_ROUTS + "GetGrntItemList"
 
     //endregion
 

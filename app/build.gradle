@@ -10,6 +10,9 @@ android {
     compileSdk 30
 
     defaultConfig {
+        configurations.all {
+            resolutionStrategy { force 'androidx.core:core-ktx:1.6.0' }
+        }
         applicationId "com.bellacity"
         minSdk 22
         targetSdk 30
@@ -82,5 +85,8 @@ dependencies {
     // For Kotlin use paging-runtime-ktx
     implementation 'androidx.paging:paging-runtime-ktx:3.0.1'
 
+
+    //capture image
+    implementation 'com.github.jrvansuita:PickImage:2.5.2'
 
 }

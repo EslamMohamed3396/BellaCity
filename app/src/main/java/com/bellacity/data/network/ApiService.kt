@@ -4,15 +4,20 @@ import com.bellacity.data.model.activeType.response.ResponseActiveType
 import com.bellacity.data.model.bookNumber.request.BodyBookNumber
 import com.bellacity.data.model.bookNumber.response.ResponseBookNumber
 import com.bellacity.data.model.checkLogin.response.ResonseCheckLogin
+import com.bellacity.data.model.checkSerial.request.BodyCheckSerial
+import com.bellacity.data.model.checkSerial.response.ResponseCheckSerial
 import com.bellacity.data.model.cobon.request.BodyCobon
 import com.bellacity.data.model.cobon.response.ResponseCobon
 import com.bellacity.data.model.distributor.response.ResponseDistributor
+import com.bellacity.data.model.items.response.ResponseItems
 import com.bellacity.data.model.login.request.BodyLogin
 import com.bellacity.data.model.login.response.ResponseLogin
 import com.bellacity.data.model.previousPreview.request.BodyPreviousPreview
 import com.bellacity.data.model.previousPreview.response.ResponsePreviousPreviews
 import com.bellacity.data.model.productType.response.ResponseProductType
 import com.bellacity.data.model.refreshToken.response.BodyRefreshToken
+import com.bellacity.data.model.serialFromImage.request.BodySerialFromImage
+import com.bellacity.data.model.serialFromImage.response.ResponseSerialFromImage
 import com.bellacity.data.model.tech.response.ResponseTech
 import com.bellacity.utilities.Constant
 import io.reactivex.Single
@@ -50,5 +55,14 @@ interface ApiService {
 
     @POST(Constant.COBON_LIST)
     fun cobonList(@Body bodyCobon: BodyCobon): Single<ResponseCobon>
+
+    @POST(Constant.TEXT_FROM_IMAGE)
+    fun textFromImage(@Body bodySerialFromImage: BodySerialFromImage): Single<ResponseSerialFromImage>
+
+    @POST(Constant.CHECK_SERIAL)
+    fun checkSerial(@Body bodyCheckSerial: BodyCheckSerial): Single<ResponseCheckSerial>
+
+    @POST(Constant.GRNT_ITEMS)
+    fun grntItems(): Single<ResponseItems>
 
 }

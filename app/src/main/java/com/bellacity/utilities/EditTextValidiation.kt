@@ -22,4 +22,20 @@ object EditTextValidiation {
     }
 
 
+    fun validSerial(
+        textInputLayout: TextInputLayout
+    ): Boolean {
+        val mName = textInputLayout.editText?.text.toString().lowercase(Locale.ROOT).trim()
+        return if (mName.length in 8..10) {
+            textInputLayout.error = null
+            true
+        } else {
+            textInputLayout.error =
+                textInputLayout.context.resources.getString(R.string.invalid)
+            textInputLayout.editText?.requestFocus()
+            false
+        }
+    }
+
+
 }

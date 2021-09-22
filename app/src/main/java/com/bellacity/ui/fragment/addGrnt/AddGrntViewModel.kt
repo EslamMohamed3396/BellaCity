@@ -5,10 +5,15 @@ import androidx.lifecycle.MutableLiveData
 import com.bellacity.data.model.activeType.response.ResponseActiveType
 import com.bellacity.data.model.bookNumber.request.BodyBookNumber
 import com.bellacity.data.model.bookNumber.response.ResponseBookNumber
+import com.bellacity.data.model.checkSerial.request.BodyCheckSerial
+import com.bellacity.data.model.checkSerial.response.ResponseCheckSerial
 import com.bellacity.data.model.cobon.request.BodyCobon
 import com.bellacity.data.model.cobon.response.ResponseCobon
 import com.bellacity.data.model.distributor.response.ResponseDistributor
+import com.bellacity.data.model.items.response.ResponseItems
 import com.bellacity.data.model.productType.response.ResponseProductType
+import com.bellacity.data.model.serialFromImage.request.BodySerialFromImage
+import com.bellacity.data.model.serialFromImage.response.ResponseSerialFromImage
 import com.bellacity.data.model.tech.response.ResponseTech
 import com.bellacity.data.network.Client
 import com.bellacity.ui.base.BaseViewModel
@@ -58,6 +63,36 @@ class AddGrntViewModel : BaseViewModel() {
 
     fun cobonList(bodyCobon: BodyCobon): LiveData<Resource<ResponseCobon>> {
         return callApi(Client.getInstance()?.cobonList(bodyCobon)!!, _cobonMutableLiveData)
+    }
+
+    private var _serialFromImageMutableLiveData =
+        MutableLiveData<Resource<ResponseSerialFromImage>>()
+
+
+    fun textFromImage(bodySerialFromImage: BodySerialFromImage): LiveData<Resource<ResponseSerialFromImage>> {
+        return callApi(
+            Client.getInstance()?.textFromImage(bodySerialFromImage)!!,
+            _serialFromImageMutableLiveData
+        )
+    }
+
+    private var _checkSerialMutableLiveData =
+        MutableLiveData<Resource<ResponseCheckSerial>>()
+
+
+    fun checkSerial(bodyCheckSerial: BodyCheckSerial): LiveData<Resource<ResponseCheckSerial>> {
+        return callApi(
+            Client.getInstance()?.checkSerial(bodyCheckSerial)!!, _checkSerialMutableLiveData
+        )
+    }
+
+    var _grntItemsMutableLiveData =
+        MutableLiveData<Resource<ResponseItems>>()
+
+    fun grntItems(): LiveData<Resource<ResponseItems>> {
+        return callApi(
+            Client.getInstance()?.grntItems()!!, _grntItemsMutableLiveData
+        )
     }
 
 }

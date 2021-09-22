@@ -1,8 +1,12 @@
 package com.bellacity.ui.fragment.addGrnt
 
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -11,20 +15,36 @@ import com.bellacity.data.model.activeType.response.GrntTypes
 import com.bellacity.data.model.addGrnt.request.BodyAddGrnt
 import com.bellacity.data.model.bookNumber.request.BodyBookNumber
 import com.bellacity.data.model.bookNumber.response.BookNo
+import com.bellacity.data.model.checkSerial.request.BodyCheckSerial
 import com.bellacity.data.model.cobon.request.BodyCobon
 import com.bellacity.data.model.productType.response.GrntItemsType
+import com.bellacity.data.model.serialFromImage.request.BodySerialFromImage
 import com.bellacity.databinding.FragmentAddGrnt2Binding
 import com.bellacity.ui.base.BaseFragment
+import com.bellacity.ui.fragment.addGrnt.adapter.cobonAdapter.CobonAdapter
+import com.bellacity.ui.fragment.addGrnt.adapter.vaildSerialAdapter.ValidSerialAdapter
+import com.bellacity.utilities.CheckValidData
 import com.bellacity.utilities.DialogUtil
+import com.bellacity.utilities.ImageUtil
 import com.bellacity.utilities.Resource
+import com.vansuita.pickimage.bundle.PickSetup
+import com.vansuita.pickimage.dialog.PickImageDialog
+import com.vansuita.pickimage.enums.EPickType
+import timber.log.Timber
+
 
 class AddGrnt2Fragment : BaseFragment<FragmentAddGrnt2Binding>() {
+    private var imageBitmap: String? = null
+    private var cobonList: List<Int>? = null
     private var activeTypeId: Int? = null
     private val viewModel: AddGrntViewModel by viewModels()
     private var bookId: Int? = null
     private var productTypeId: Int? = null
     private var bodyAddGrnt: BodyAddGrnt? = null
     private val args: AddGrnt2FragmentArgs by navArgs()
+    private val cobonAdapter: CobonAdapter by lazy { CobonAdapter() }
+    private val validSerialAdapter: ValidSerialAdapter by lazy { ValidSerialAdapter(::deleteCheckedSerial) }
+    private val chekedSerialList = ArrayList<String>()
 
     override fun getViewBinding(
         inflater: LayoutInflater,
@@ -32,7 +52,19 @@ class AddGrnt2Fragment : BaseFragment<FragmentAddGrnt2Binding>() {
     ) = FragmentAddGrnt2Binding.inflate(inflater, container, false)
 
     override fun initClicks() {
+        binding.imTakePhoto.setOnClickListener {
+            pickImage()
+        }
 
+        binding.checkBtn.setOnClickListener {
+            if (checkSerial()) {
+                initCheckSerialViewModel(binding.serialTextInput.editText?.text.toString())
+            }
+        }
+
+        binding.toolbar.backBtn.setOnClickListener {
+            findNavController().navigateUp()
+        }
     }
 
     private fun getGrntSharedViewModel() {
@@ -40,20 +72,33 @@ class AddGrnt2Fragment : BaseFragment<FragmentAddGrnt2Binding>() {
             bodyAddGrnt = response
         })
 
-        binding.toolbar.backBtn.setOnClickListener {
-            findNavController().navigateUp()
-        }
 
     }
 
     override fun initViewModel() {
-        initBookListViewModel()
-        initProductTypeListViewModel()
-        initActiveTypeListViewModel()
+//        initBookListViewModel()
+//        initProductTypeListViewModel()
+//        initActiveTypeListViewModel()
     }
 
     override fun onCreateInit() {
         getGrntSharedViewModel()
+        bindData()
+        visableCheckButton()
+        hideNavBtn()
+    }
+
+
+    private fun emptyRecycler() {
+        cobonAdapter.submitList(null)
+        binding.rvCobon.visibility = View.GONE
+
+    }
+
+    private fun visiableRecycler() {
+        cobonAdapter.submitList(cobonList)
+        binding.rvCobon.visibility = View.VISIBLE
+
     }
 
     private fun initBookListViewModel() {
@@ -98,7 +143,7 @@ class AddGrnt2Fragment : BaseFragment<FragmentAddGrnt2Binding>() {
     }
 
     private fun bodyBookNumber(): BodyBookNumber {
-        return BodyBookNumber(args.techIdArgs)
+        return BodyBookNumber(null)
     }
 
     private fun initProductTypeListViewModel() {
@@ -139,6 +184,7 @@ class AddGrnt2Fragment : BaseFragment<FragmentAddGrnt2Binding>() {
         binding.autoProductType.setAdapter(dataAdapter)
         binding.autoProductType.setOnItemClickListener { parent, view, position, id ->
             productTypeId = productTypeList[position].grntItemsTypeID
+            initCobonListViewModel(productTypeId)
         }
     }
 
@@ -180,7 +226,12 @@ class AddGrnt2Fragment : BaseFragment<FragmentAddGrnt2Binding>() {
         binding.autoActiveType.setAdapter(dataAdapter)
         binding.autoActiveType.setOnItemClickListener { parent, view, position, id ->
             activeTypeId = activeTypeList[position].grntTypeID
-            initCobonListViewModel(activeTypeId)
+
+            if (activeTypeId == 1) {
+                emptyRecycler()
+            } else {
+                visiableRecycler()
+            }
         }
     }
 
@@ -191,7 +242,8 @@ class AddGrnt2Fragment : BaseFragment<FragmentAddGrnt2Binding>() {
                     DialogUtil.dismissDialog()
                     when (response.data?.status) {
                         1 -> {
-
+                            cobonList = response.data.cobonList
+                            cobonAdapter.submitList(response.data.cobonList!!)
                         }
                         else -> {
                             showSnackbar(response.data?.message)
@@ -212,5 +264,128 @@ class AddGrnt2Fragment : BaseFragment<FragmentAddGrnt2Binding>() {
         return BodyCobon(activeType)
     }
 
+    private fun bindData() {
+        binding.cobonAdapter = cobonAdapter
+        binding.validSerialAdapter = validSerialAdapter
+    }
+
+    private fun initSerialFromImageViewModel(image: String) {
+        Timber.d("initSerialFromImageViewModel")
+        viewModel.textFromImage(bodySerialFromImage(image))
+            .observe(viewLifecycleOwner, { response ->
+                when (response) {
+                    is Resource.Success -> {
+                        DialogUtil.dismissDialog()
+                        when (response.data?.status) {
+                            1 -> {
+                                initCheckSerialViewModel(response.data.imageText!!)
+                                viewModel.textFromImage(bodySerialFromImage(image))
+                                    .removeObservers(viewLifecycleOwner)
+                            }
+                            else -> {
+                                showSnackbar(response.data?.message)
+                            }
+                        }
+                    }
+                    is Resource.Error -> {
+                        DialogUtil.dismissDialog()
+                    }
+                    is Resource.Loading -> {
+                        DialogUtil.showDialog(requireContext())
+                    }
+                }
+            })
+    }
+
+    private fun bodySerialFromImage(image: String): BodySerialFromImage {
+        return BodySerialFromImage(image)
+    }
+
+    private fun initCheckSerialViewModel(serial: String) {
+        Timber.d("initCheckSerialViewModel")
+        viewModel.checkSerial(bodyCheckSerial(serial))
+            .observe(viewLifecycleOwner, { response ->
+                when (response) {
+                    is Resource.Success -> {
+                        DialogUtil.dismissDialog()
+                        when (response.data?.status) {
+                            1 -> {
+                                chekedSerialList.add(serial)
+                                validSerialAdapter.submitList(chekedSerialList)
+                                validSerialAdapter.notifyDataSetChanged()
+                                binding.serialTextInput.editText?.text?.clear()
+                                viewModel.checkSerial(bodyCheckSerial(serial))
+                                    .removeObservers(viewLifecycleOwner)
+                            }
+                            else -> {
+                                showSnackbar(response.data?.message)
+                            }
+                        }
+                    }
+                    is Resource.Error -> {
+                        DialogUtil.dismissDialog()
+                    }
+                    is Resource.Loading -> {
+                        DialogUtil.showDialog(requireContext())
+                    }
+                }
+            })
+    }
+
+    private fun bodyCheckSerial(serial: String): BodyCheckSerial {
+        return BodyCheckSerial(serial)
+    }
+
+    private fun pickImage() {
+        val setup = PickSetup()
+            .setPickTypes(EPickType.CAMERA)
+            .setSystemDialog(false)
+
+        PickImageDialog.build(setup)
+            .setOnPickResult {
+                if (it.error == null) {
+                    imageBitmap = ImageUtil.encodeImage(it.bitmap)!!
+                    initSerialFromImageViewModel(imageBitmap!!)
+                } else {
+                    Toast.makeText(
+                        requireContext(),
+                        "حدث خطأ من فضلك حاول مرة اخري",
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+            }.setOnPickCancel {
+            }.show(childFragmentManager)
+    }
+
+    private fun deleteCheckedSerial(postion: Int) {
+        chekedSerialList.removeAt(postion)
+        validSerialAdapter.notifyDataSetChanged()
+    }
+
+
+    private fun visableCheckButton() {
+        binding.serialTextInput.editText?.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if (s.isNullOrEmpty()) {
+                    binding.checkBtn.visibility = View.INVISIBLE
+                } else {
+                    binding.checkBtn.visibility = View.VISIBLE
+                }
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+
+            }
+
+        })
+    }
+
+    private fun checkSerial(): Boolean {
+        return CheckValidData.checkSerial(binding.serialTextInput)
+    }
 
 }
