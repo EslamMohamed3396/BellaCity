@@ -89,4 +89,9 @@ dependencies {
     //capture image
     implementation 'com.github.jrvansuita:PickImage:2.5.2'
 
+
+    //maps
+    implementation 'com.google.android.gms:play-services-location:18.0.0'
+    implementation 'com.google.android.gms:play-services-maps:17.0.1'
+
 }

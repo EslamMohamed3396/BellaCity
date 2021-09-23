@@ -7,13 +7,13 @@
 
         <variable
             name="adapter"
-            type="com.bellacity.ui.fragment.previousPreviews.adapter.PreviousPreviewAdapter" />
+            type="com.bellacity.ui.fragment.previousGrnt.adapter.PreviewsGrntAdapter" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.fragment.previousPreviews.PreviousPreviewsFragment">
+        tools:context=".ui.fragment.previousGrnt.PreviousPreviewsFragment">
 
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="0dp"

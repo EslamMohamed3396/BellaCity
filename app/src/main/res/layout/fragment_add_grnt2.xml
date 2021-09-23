@@ -128,7 +128,7 @@
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintEnd_toEndOf="@+id/active_type_input"
                 app:layout_constraintStart_toStartOf="@+id/active_type_input"
-                app:layout_constraintTop_toBottomOf="@+id/active_type_input" />
+                app:layout_constraintTop_toBottomOf="@+id/textView9" />
 
             <TextView
                 android:id="@+id/textView4"
@@ -136,7 +136,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="@string/serial"
-                android:textSize="16sp"
+                android:textColor="@color/red"
+                android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="@+id/active_type_input"
                 app:layout_constraintTop_toBottomOf="@+id/rv_cobon" />
 
@@ -207,7 +208,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="@string/valid_serial_was_added"
-                android:textSize="16sp"
+                android:textColor="@color/red"
+                android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="@+id/check_btn"
                 app:layout_constraintTop_toBottomOf="@+id/check_btn" />
 
@@ -227,6 +229,18 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/rv_validte_serial" />
+
+            <TextView
+                android:id="@+id/textView9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:text="@string/please_choose_cobon"
+                android:textColor="@color/red"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/active_type_input" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

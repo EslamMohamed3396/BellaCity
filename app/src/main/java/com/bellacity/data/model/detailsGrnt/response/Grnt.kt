@@ -1,4 +1,4 @@
-package com.bellacity.data.model.previousPreview.response
+package com.bellacity.data.model.detailsGrnt.response
 
 
 import android.os.Parcelable

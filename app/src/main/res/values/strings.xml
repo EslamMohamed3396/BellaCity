@@ -24,12 +24,21 @@
     <string name="book_number">رقم الدفتر</string>
     <string name="product_type">نوع المنتج</string>
     <string name="active_type">نوع التفعيل</string>
-    <string name="serial">سريال القطع والمواسير</string>
+    <string name="serial">*سريال القطع والمواسير</string>
     <string name="check">تحقق من السريال</string>
-    <string name="valid_serial_was_added">السيريال الصحيح الذي تم اضافته</string>
+    <string name="valid_serial_was_added">*السيريال الصحيح الذي تم اضافته</string>
     <string name="items">المنتجات</string>
     <string name="choosed_items">المنتجات التي تم اختيارها</string>
     <string name="gifts">هدايا تشجيعية</string>
     <string name="send">ارسال المتابعة</string>
+    <string name="no_gifts">*اذا كان لا توجد هدية تشجيعية من فضلك اكتب لا يوجد</string>
+
+    <string name="permission">أذن تحقيق الموقع</string>
+    <string name="gps_required">من فضلد فعل تحديد الموقع لارسال المعاينة</string>
+    <string name="yes">حسناً</string>
+    <string name="play_services_required">خدمات جوجل مطلوبة من قبل هذا التطبيق </string>
+    <string name="dialog_cancelled">تم الالغاء بواسطة المتسخدم</string>
+    <string name="please_choose_cobon">*من فضلك اختر الكوبون</string>
+
 
 </resources>

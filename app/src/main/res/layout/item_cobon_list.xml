@@ -4,11 +4,9 @@
 
     <data>
 
-        0
-
         <variable
             name="cobon"
-            type="Integer" />
+            type="com.bellacity.data.model.cobon.response.Cobon" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -25,7 +23,7 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="16dp"
-            android:text="@{cobon.toString()}"
+            android:text="@{cobon.coubonSerial.toString()}"
             android:textColor="@color/black"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"

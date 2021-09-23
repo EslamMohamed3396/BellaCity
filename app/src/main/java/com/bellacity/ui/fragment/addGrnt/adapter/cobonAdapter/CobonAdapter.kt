@@ -1,13 +1,15 @@
 package com.bellacity.ui.fragment.addGrnt.adapter.cobonAdapter
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.RecyclerView
+import com.bellacity.data.model.cobon.response.Cobon
 import com.bellacity.databinding.ItemCobonListBinding
 import com.kadabradigital.ui.base.BaseViewHolder
 
-class CobonAdapter :
+class CobonAdapter(val actionSelectedCobon: (postion: Int, item: Cobon) -> Unit) :
     RecyclerView.Adapter<BaseViewHolder<*>>() {
     private val differ = AsyncListDiffer(this, CobonDiffCallback())
 
@@ -18,7 +20,7 @@ class CobonAdapter :
         return OffersViewHolder(binding)
     }
 
-    fun submitList(data: List<Int?>?) {
+    fun submitList(data: List<Cobon?>?) {
         differ.submitList(data)
     }
 
@@ -33,15 +35,16 @@ class CobonAdapter :
     }
 
     inner class OffersViewHolder(val binding: ItemCobonListBinding) :
-        BaseViewHolder<Int>(binding) {
-        override fun bind(item: Int) {
+        BaseViewHolder<Cobon>(binding) {
+        override fun bind(item: Cobon) {
             binding.cobon = item
             binding.executePendingBindings()
-//            binding.root.setBackgroundColor(if (model.isSelected()) Color.CYAN else Color.WHITE)
-//            binding.root.setOnClickListener {
-//                model.setSelected(!model.isSelected())
-//                binding.root.setBackgroundColor(if (model.isSelected()) Color.CYAN else Color.WHITE)
-//            }
+            binding.root.setBackgroundColor(if (item.isSelected) Color.RED else Color.WHITE)
+            binding.root.setOnClickListener {
+                item.isSelected = !item.isSelected
+                binding.root.setBackgroundColor(if (item.isSelected) Color.RED else Color.WHITE)
+                actionSelectedCobon(absoluteAdapterPosition, item)
+            }
         }
     }
 

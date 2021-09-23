@@ -7,7 +7,7 @@
 
         <variable
             name="preview"
-            type="com.bellacity.data.model.previousPreview.response.Grnt" />
+            type="com.bellacity.data.model.previewsGrnt.response.GrntSimple" />
     </data>
 
     <com.google.android.material.card.MaterialCardView

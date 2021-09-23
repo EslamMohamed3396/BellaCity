@@ -3,10 +3,10 @@ package com.pharmacitoretail.data.dataSource.history.historyDataSourceFactory
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.DataSource
-import androidx.paging.PageKeyedDataSource
+import androidx.paging.PagingSource
 import com.bellacity.data.callBack.ILoading
 import com.bellacity.data.dataSource.previousPreview.previousPreviewPagedKeyDataSource.PreviousPreviewDataSource
-import com.bellacity.data.model.previousPreview.response.Grnt
+import com.bellacity.data.model.detailsGrnt.response.Grnt
 
 class PreviousPreviewDataSourceFactory(
     var iLoading: ILoading
@@ -14,7 +14,7 @@ class PreviousPreviewDataSourceFactory(
     DataSource.Factory<Int, Grnt>() {
 
     private val historyMutableLiveData =
-        MutableLiveData<PageKeyedDataSource<Int, Grnt>>()
+        MutableLiveData<PagingSource<Int, Grnt>>()
 
     override fun create(): DataSource<Int, Grnt> {
         val itemDataSource = PreviousPreviewDataSource(iLoading)
@@ -22,7 +22,7 @@ class PreviousPreviewDataSourceFactory(
         return itemDataSource
     }
 
-    fun get(): LiveData<PageKeyedDataSource<Int, Grnt>> {
+    fun get(): LiveData<PagingSource<Int, Grnt>> {
         return historyMutableLiveData
     }
 }

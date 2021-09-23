@@ -31,7 +31,6 @@ class AddGrnt1Fragment : BaseFragment<FragmentAddGrnt1Binding>() {
 
         binding.nextBtn.setOnClickListener {
             if (checkData()) {
-                sharedViewModel.saveAddGrnt(bodyAddGrnt())
                 goToAddGrant2()
             }
         }
@@ -44,8 +43,8 @@ class AddGrnt1Fragment : BaseFragment<FragmentAddGrnt1Binding>() {
     }
 
     private fun goToAddGrant2() {
-        val action = AddGrnt1FragmentDirections.actionAddGrnt1FragmentToAddGrnt2Fragment(techId!!)
-        findNavController().navigate(action)
+        sharedViewModel.saveAddGrnt(bodyAddGrnt())
+        findNavController().navigate(R.id.action_addGrnt1Fragment_to_addGrnt2Fragment)
     }
 
     override fun initViewModel() {

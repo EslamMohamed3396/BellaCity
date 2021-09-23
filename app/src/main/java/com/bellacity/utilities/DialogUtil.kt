@@ -8,6 +8,7 @@ import android.graphics.drawable.ColorDrawable
 import android.view.LayoutInflater
 import android.view.Window
 import com.bellacity.R
+import com.bellacity.databinding.CongrtsDialogBinding
 import com.bellacity.databinding.SomethingWrongBinding
 
 
@@ -54,6 +55,39 @@ object DialogUtil {
 
             view.retryBtn.setOnClickListener {
                 retryListener.invoke()
+                dismiss()
+            }
+
+
+            window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        }.show()
+        return alertDialog
+
+    }
+
+    fun showGeneraCongrts(
+        context: Context,
+        congrtsListener: () -> Unit,
+        view: CongrtsDialogBinding = CongrtsDialogBinding.inflate(
+            LayoutInflater.from(context),
+            null,
+            false
+        ),
+        totalPoints: String
+    ): AlertDialog {
+        val alertDialog = AlertDialog.Builder(context).apply {
+            setView(view.root)
+        }.create()
+
+        alertDialog.apply {
+
+
+            setCancelable(false)
+
+            view.title.text = totalPoints
+
+            view.retryBtn.setOnClickListener {
+                congrtsListener.invoke()
                 dismiss()
             }
 

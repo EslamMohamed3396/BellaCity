@@ -1,18 +1,19 @@
 package com.bellacity.ui.fragment.addGrnt.adapter.cobonAdapter
 
 import androidx.recyclerview.widget.DiffUtil
+import com.bellacity.data.model.cobon.response.Cobon
 
-class CobonDiffCallback : DiffUtil.ItemCallback<Int>() {
+class CobonDiffCallback : DiffUtil.ItemCallback<Cobon>() {
     override fun areItemsTheSame(
-        oldItem: Int,
-        newItem: Int
+        oldItem: Cobon,
+        newItem: Cobon
     ): Boolean {
-        return oldItem == newItem
+        return oldItem.coubonSerial == newItem.coubonSerial
     }
 
     override fun areContentsTheSame(
-        oldItem: Int,
-        newItem: Int
+        oldItem: Cobon,
+        newItem: Cobon
     ): Boolean {
         return oldItem == newItem
     }

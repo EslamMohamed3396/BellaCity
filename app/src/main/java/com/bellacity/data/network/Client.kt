@@ -1,6 +1,8 @@
 package com.bellacity.data.network
 
 import com.bellacity.data.model.activeType.response.ResponseActiveType
+import com.bellacity.data.model.addGrnt.request.BodyAddGrnt
+import com.bellacity.data.model.addGrnt.response.ResponseAddGrnt
 import com.bellacity.data.model.bookNumber.request.BodyBookNumber
 import com.bellacity.data.model.bookNumber.response.ResponseBookNumber
 import com.bellacity.data.model.checkLogin.response.ResonseCheckLogin
@@ -8,12 +10,13 @@ import com.bellacity.data.model.checkSerial.request.BodyCheckSerial
 import com.bellacity.data.model.checkSerial.response.ResponseCheckSerial
 import com.bellacity.data.model.cobon.request.BodyCobon
 import com.bellacity.data.model.cobon.response.ResponseCobon
+import com.bellacity.data.model.detailsGrnt.request.BodyPreviousPreview
+import com.bellacity.data.model.detailsGrnt.response.ResponsePreviousPreviews
 import com.bellacity.data.model.distributor.response.ResponseDistributor
 import com.bellacity.data.model.items.response.ResponseItems
 import com.bellacity.data.model.login.request.BodyLogin
 import com.bellacity.data.model.login.response.ResponseLogin
-import com.bellacity.data.model.previousPreview.request.BodyPreviousPreview
-import com.bellacity.data.model.previousPreview.response.ResponsePreviousPreviews
+import com.bellacity.data.model.previewsGrnt.response.ResponsePreviewsGrnt
 import com.bellacity.data.model.productType.response.ResponseProductType
 import com.bellacity.data.model.refreshToken.response.BodyRefreshToken
 import com.bellacity.data.model.serialFromImage.request.BodySerialFromImage
@@ -168,6 +171,14 @@ object Client {
 
     fun grntItems(): Single<ResponseItems> {
         return apiService?.grntItems()!!
+    }
+
+    fun addGrnt(bodyAddGrnt: BodyAddGrnt): Single<ResponseAddGrnt> {
+        return apiService?.addGrnt(bodyAddGrnt)!!
+    }
+
+    fun getGrnt(): Single<ResponsePreviewsGrnt> {
+        return apiService?.getGrnt()!!
     }
 
 }

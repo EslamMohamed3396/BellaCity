@@ -1,4 +1,4 @@
-package com.bellacity.data.model.previousPreview.response
+package com.bellacity.data.model.addGrnt.response
 
 
 import android.os.Parcelable
@@ -6,13 +6,13 @@ import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class ResponsePreviousPreviews(
+data class ResponseAddGrnt(
     @SerializedName("Status")
     val status: Int?,
     @SerializedName("Message")
     val message: String?,
-    @SerializedName("GrntList")
-    val grntList: List<Grnt>?,
-    @SerializedName("NextPage")
-    val nextPage: Int?
+    @SerializedName("GrntID")
+    val grntID: Int?,
+    @SerializedName("TotalPoints")
+    val totalPoints: Int?
 ) : Parcelable

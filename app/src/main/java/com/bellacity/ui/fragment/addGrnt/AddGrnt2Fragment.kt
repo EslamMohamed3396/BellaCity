@@ -17,6 +17,7 @@ import com.bellacity.data.model.bookNumber.request.BodyBookNumber
 import com.bellacity.data.model.bookNumber.response.BookNo
 import com.bellacity.data.model.checkSerial.request.BodyCheckSerial
 import com.bellacity.data.model.cobon.request.BodyCobon
+import com.bellacity.data.model.cobon.response.Cobon
 import com.bellacity.data.model.productType.response.GrntItemsType
 import com.bellacity.data.model.serialFromImage.request.BodySerialFromImage
 import com.bellacity.databinding.FragmentAddGrnt2Binding
@@ -35,14 +36,15 @@ import timber.log.Timber
 
 class AddGrnt2Fragment : BaseFragment<FragmentAddGrnt2Binding>() {
     private var imageBitmap: String? = null
-    private var cobonList: List<Int>? = null
-    private var activeTypeId: Int? = null
+    private var cobonList: List<Cobon>? = null
+    private var selectedCobonsList = ArrayList<Int>()
+    private var activeTypeId: Int? = -1
     private val viewModel: AddGrntViewModel by viewModels()
-    private var bookId: Int? = null
-    private var productTypeId: Int? = null
+    private var bookId: Int? = -1
+    private var productTypeId: Int? = -1
     private var bodyAddGrnt: BodyAddGrnt? = null
     private val args: AddGrnt2FragmentArgs by navArgs()
-    private val cobonAdapter: CobonAdapter by lazy { CobonAdapter() }
+    private val cobonAdapter: CobonAdapter by lazy { CobonAdapter(::clickOnCobon) }
     private val validSerialAdapter: ValidSerialAdapter by lazy { ValidSerialAdapter(::deleteCheckedSerial) }
     private val chekedSerialList = ArrayList<String>()
 
@@ -64,45 +66,82 @@ class AddGrnt2Fragment : BaseFragment<FragmentAddGrnt2Binding>() {
 
         binding.toolbar.backBtn.setOnClickListener {
             findNavController().navigateUp()
+            //  Timber.d("$selectedCobonsList")
         }
+
+        binding.nextBtn.setOnClickListener {
+            if (checkData()) {
+                goToAddGrant2()
+            } else {
+                showSnackbar("من فضلك اكمل جميع البيانات")
+            }
+        }
+    }
+
+    private fun checkData(): Boolean {
+        return productTypeId != -1 && activeTypeId != -1 && bookId != -1
     }
 
     private fun getGrntSharedViewModel() {
         sharedViewModel.addGrnt.observe(viewLifecycleOwner, { response ->
             bodyAddGrnt = response
+            initBookListViewModel(bodyAddGrnt?.techID!!)
         })
-
 
     }
 
+    private fun goToAddGrant2() {
+        sharedViewModel.saveAddGrnt(bodyAddGrnt())
+        findNavController().navigate(R.id.action_addGrnt2Fragment_to_addGrnt3Fragment)
+    }
+
+
+    private fun bodyAddGrnt(): BodyAddGrnt {
+        return BodyAddGrnt(
+            bodyAddGrnt?.techID,
+            bodyAddGrnt?.distributorID,
+            bodyAddGrnt?.consumerName,
+            bodyAddGrnt?.consumerPhone,
+            bodyAddGrnt?.consumerAddress,
+            null,
+            chekedSerialList,
+            bookId,
+            activeTypeId,
+            selectedCobonsList,
+            productTypeId,
+            bodyAddGrnt?.grntMerchant,
+            null,
+            null,
+            null
+        )
+    }
+
     override fun initViewModel() {
-//        initBookListViewModel()
-//        initProductTypeListViewModel()
-//        initActiveTypeListViewModel()
+        initProductTypeListViewModel()
+        initActiveTypeListViewModel()
     }
 
     override fun onCreateInit() {
         getGrntSharedViewModel()
         bindData()
-        visableCheckButton()
+        visableCheckSerialButton()
         hideNavBtn()
     }
 
 
     private fun emptyRecycler() {
         cobonAdapter.submitList(null)
+        selectedCobonsList.clear()
         binding.rvCobon.visibility = View.GONE
-
     }
 
     private fun visiableRecycler() {
         cobonAdapter.submitList(cobonList)
         binding.rvCobon.visibility = View.VISIBLE
-
     }
 
-    private fun initBookListViewModel() {
-        viewModel.bookNumber(bodyBookNumber()).observe(viewLifecycleOwner, { response ->
+    private fun initBookListViewModel(techId: Int) {
+        viewModel.bookNumber(bodyBookNumber(techId)).observe(viewLifecycleOwner, { response ->
             when (response) {
                 is Resource.Success -> {
                     DialogUtil.dismissDialog()
@@ -142,8 +181,8 @@ class AddGrnt2Fragment : BaseFragment<FragmentAddGrnt2Binding>() {
         }
     }
 
-    private fun bodyBookNumber(): BodyBookNumber {
-        return BodyBookNumber(null)
+    private fun bodyBookNumber(techId: Int): BodyBookNumber {
+        return BodyBookNumber(techId)
     }
 
     private fun initProductTypeListViewModel() {
@@ -264,6 +303,16 @@ class AddGrnt2Fragment : BaseFragment<FragmentAddGrnt2Binding>() {
         return BodyCobon(activeType)
     }
 
+    private fun clickOnCobon(postion: Int, item: Cobon) {
+        Timber.d("$item")
+        if (item.isSelected) {
+            selectedCobonsList.add(item.coubonSerial!!)
+        } else {
+            selectedCobonsList.remove(item.coubonSerial)
+        }
+    }
+
+
     private fun bindData() {
         binding.cobonAdapter = cobonAdapter
         binding.validSerialAdapter = validSerialAdapter
@@ -363,7 +412,7 @@ class AddGrnt2Fragment : BaseFragment<FragmentAddGrnt2Binding>() {
     }
 
 
-    private fun visableCheckButton() {
+    private fun visableCheckSerialButton() {
         binding.serialTextInput.editText?.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 

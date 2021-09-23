@@ -1,10 +1,10 @@
 package com.bellacity.data.dataSource.previousPreview.previousPreviewPagedKeyDataSource
 
-import androidx.paging.PageKeyedDataSource
+import androidx.paging.PagingSource
 import com.bellacity.data.callBack.ILoading
-import com.bellacity.data.model.previousPreview.request.BodyPreviousPreview
-import com.bellacity.data.model.previousPreview.response.Grnt
-import com.bellacity.data.model.previousPreview.response.ResponsePreviousPreviews
+import com.bellacity.data.model.detailsGrnt.request.BodyPreviousPreview
+import com.bellacity.data.model.detailsGrnt.response.Grnt
+import com.bellacity.data.model.detailsGrnt.response.ResponsePreviousPreviews
 import com.bellacity.data.network.Client
 import io.reactivex.SingleObserver
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -14,7 +14,7 @@ import timber.log.Timber
 
 class PreviousPreviewDataSource(
     var iLoading: ILoading,
-) : PageKeyedDataSource<Int, Grnt>() {
+) : PagingSource<Int, Grnt>() {
 
 
     private var PAGE_NUMBER: Int = 0
@@ -27,7 +27,7 @@ class PreviousPreviewDataSource(
         Client.getInstance()?.previousPreview(bodyPreviousPreview())!!.subscribeOn(
             Schedulers.io()
         )?.observeOn(AndroidSchedulers.mainThread())
-            ?.subscribe(object : SingleObserver<ResponsePreviousPreviews> {
+            .subscribe(object : SingleObserver<ResponsePreviousPreviews> {
                 override fun onSubscribe(d: Disposable) {
                 }
 

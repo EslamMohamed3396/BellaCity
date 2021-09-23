@@ -25,6 +25,8 @@ object Constant {
     const val TEXT_FROM_IMAGE = BASE_ROUTS + "GetTextFromImage"
     const val CHECK_SERIAL = BASE_ROUTS + "ValidateSerial"
     const val GRNT_ITEMS = BASE_ROUTS + "GetGrntItemList"
+    const val ADD_GRNT = BASE_ROUTS + "AddGrnt"
+    const val GET_GRNT = BASE_ROUTS + "GetGrntSimpleList"
 
     //endregion
 
@@ -38,5 +40,7 @@ object Constant {
     const val IS_USER_LOGIN = "login_key"
     const val USER_DATA_KEY = "user_data_key"
 
+    //region error
+    const val ERROR_DIALOG_REQUEST = 9004
 
 }

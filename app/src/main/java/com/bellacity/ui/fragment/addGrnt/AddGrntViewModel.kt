@@ -3,6 +3,8 @@ package com.bellacity.ui.fragment.addGrnt
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.bellacity.data.model.activeType.response.ResponseActiveType
+import com.bellacity.data.model.addGrnt.request.BodyAddGrnt
+import com.bellacity.data.model.addGrnt.response.ResponseAddGrnt
 import com.bellacity.data.model.bookNumber.request.BodyBookNumber
 import com.bellacity.data.model.bookNumber.response.ResponseBookNumber
 import com.bellacity.data.model.checkSerial.request.BodyCheckSerial
@@ -92,6 +94,15 @@ class AddGrntViewModel : BaseViewModel() {
     fun grntItems(): LiveData<Resource<ResponseItems>> {
         return callApi(
             Client.getInstance()?.grntItems()!!, _grntItemsMutableLiveData
+        )
+    }
+
+    var _addGrntMutableLiveData =
+        MutableLiveData<Resource<ResponseAddGrnt>>()
+
+    fun addGrnt(bodyAddGrnt: BodyAddGrnt): LiveData<Resource<ResponseAddGrnt>> {
+        return callApi(
+            Client.getInstance()?.addGrnt(bodyAddGrnt)!!, _addGrntMutableLiveData
         )
     }
 

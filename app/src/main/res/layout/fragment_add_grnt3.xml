@@ -87,7 +87,7 @@
 
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/merchant_text_input"
+                android:id="@+id/gift_text_input"
                 style="@style/TextInputLayoutStyle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -98,7 +98,7 @@
                 app:errorEnabled="false"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/recyclerView">
+                app:layout_constraintTop_toBottomOf="@+id/textView8">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
@@ -117,13 +117,29 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
+                android:layout_marginTop="32dp"
                 android:layout_marginEnd="16dp"
-                android:layout_marginBottom="16dp"
                 android:text="@string/send"
                 app:backgroundTint="@color/red"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/gift_text_input" />
+
+            <TextView
+                android:id="@+id/textView8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:text="@string/no_gifts"
+                android:textColor="@color/red"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/recyclerView" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
