@@ -3,6 +3,7 @@ package com.bellacity.ui.fragment.grntDetails
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.bellacity.data.model.detailsGrnt.request.BodyPreviousPreview
 import com.bellacity.databinding.FragmentDetailsGrntBinding
 import com.bellacity.ui.base.BaseFragment
@@ -20,16 +21,20 @@ class DetailsGrntFragment : BaseFragment<FragmentDetailsGrntBinding>() {
     ) = FragmentDetailsGrntBinding.inflate(inflater, container, false)
 
     override fun initClicks() {
-
+        binding.toolbar.backBtn.setOnClickListener {
+            findNavController().navigateUp()
+        }
     }
 
     override fun initViewModel() {
         getGrntDetailsSharedViewModel()
+
     }
 
     override fun onCreateInit() {
-
+        hideNavBtn()
     }
+
 
     private fun getGrntDetailsSharedViewModel() {
         sharedViewModel.serialGrntId.observe(viewLifecycleOwner, { response ->
@@ -39,14 +44,13 @@ class DetailsGrntFragment : BaseFragment<FragmentDetailsGrntBinding>() {
     }
 
     private fun initGetGrntDetailstViewModel(serialId: Int) {
-        viewModel.grntDetails(bodyPreviewGrnt(serialId))
-        viewModel._grntDetailstMutableLiveData.observe(viewLifecycleOwner, { response ->
+        viewModel.grntDetails(bodyPreviewGrnt(serialId)).observe(viewLifecycleOwner, { response ->
             when (response) {
                 is Resource.Success -> {
                     DialogUtil.dismissDialog()
                     when (response.data?.status) {
                         1 -> {
-                            binding.grntData = response.data.grntList?.get(0)
+                            binding.grntData = response.data.grntList!![0]
                             binding.userData =
                                 PreferencesUtils(requireContext()).getInstance()?.getUserData(
                                     Constant.USER_DATA_KEY

@@ -9,7 +9,7 @@ import com.bellacity.ui.base.BaseViewModel
 import com.bellacity.utilities.Resource
 
 class GrntDetailsViewModel : BaseViewModel() {
-    var _grntDetailstMutableLiveData =
+    private var _grntDetailstMutableLiveData =
         MutableLiveData<Resource<ResponseGrntDetails>>()
 
     fun grntDetails(bodyPreviousPreview: BodyPreviousPreview): LiveData<Resource<ResponseGrntDetails>> {

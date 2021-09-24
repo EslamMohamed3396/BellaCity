@@ -50,15 +50,17 @@ data class Grnt(
     @SerializedName("GrntTypeID")
     val grntTypeID: Int?,
     @SerializedName("GrntCoubonSerial")
-    val grntCoubonSerial: String?,
+    val grntCoubonSerial: List<String>?,
     @SerializedName("GrntPartSerials")
     val grntPartSerials: List<String>?,
     @SerializedName("GrntItems")
     val grntItems: List<GrntItem>?,
     @SerializedName("GrntLat")
-    val grntLat: Double?,
+    val grntLat: String?,
     @SerializedName("GrntLng")
-    val grntLng: Double?,
+    val grntLng: String?,
+    @SerializedName("GrntGift")
+    val grntGift: String?,
     @SerializedName("GrntDateTime")
     val grntDateTime: String?
 ) : Parcelable

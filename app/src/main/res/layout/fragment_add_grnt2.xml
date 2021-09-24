@@ -128,7 +128,7 @@
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintEnd_toEndOf="@+id/active_type_input"
                 app:layout_constraintStart_toStartOf="@+id/active_type_input"
-                app:layout_constraintTop_toBottomOf="@+id/textView9" />
+                app:layout_constraintTop_toBottomOf="@+id/tv_cobon" />
 
             <TextView
                 android:id="@+id/textView4"
@@ -231,7 +231,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/rv_validte_serial" />
 
             <TextView
-                android:id="@+id/textView9"
+                android:id="@+id/tv_cobon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"

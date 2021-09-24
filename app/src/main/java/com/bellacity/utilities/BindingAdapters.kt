@@ -28,9 +28,22 @@ fun viewBoolean(textView: View, text: Boolean?) {
 }
 
 @BindingAdapter("timeConvert")
-fun timeConvert(textView: TextView, timestamp: Long) {
-    val dateFormat = SimpleDateFormat("h:mm a", Locale.getDefault())
-    textView.text = dateFormat.format(timestamp)
+fun timeConvert(textView: TextView, timestamp: String) {
+    var result = ""
+    if (!timestamp.isNullOrEmpty()) {
+        val formatterOld = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
+        val formatterNew = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        var date: Date? = null
+        try {
+            date = formatterOld.parse(timestamp)
+        } catch (e: ParseException) {
+            e.printStackTrace()
+        }
+        if (date != null) {
+            result = formatterNew.format(date)
+        }
+        textView.text = result
+    }
 }
 
 @BindingAdapter("app:changeDateFormat")

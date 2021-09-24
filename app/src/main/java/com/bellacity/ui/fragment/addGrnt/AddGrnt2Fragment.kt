@@ -133,6 +133,7 @@ class AddGrnt2Fragment : BaseFragment<FragmentAddGrnt2Binding>() {
         cobonAdapter.submitList(null)
         selectedCobonsList.clear()
         binding.rvCobon.visibility = View.GONE
+        binding.tvCobon.text = "*لا توجد كوبونات"
     }
 
     private fun visiableRecycler() {
@@ -267,6 +268,7 @@ class AddGrnt2Fragment : BaseFragment<FragmentAddGrnt2Binding>() {
             activeTypeId = activeTypeList[position].grntTypeID
 
             if (activeTypeId == 1) {
+
                 emptyRecycler()
             } else {
                 visiableRecycler()
@@ -282,7 +284,14 @@ class AddGrnt2Fragment : BaseFragment<FragmentAddGrnt2Binding>() {
                     when (response.data?.status) {
                         1 -> {
                             cobonList = response.data.cobonList
-                            cobonAdapter.submitList(response.data.cobonList!!)
+                            if (!response.data.cobonList.isNullOrEmpty()) {
+                                cobonAdapter.submitList(response.data.cobonList)
+                                binding.rvCobon.visibility = View.VISIBLE
+                                binding.tvCobon.text = getString(R.string.please_choose_cobon)
+                            } else {
+                                binding.tvCobon.text = "*لا توجد كوبونات"
+                                binding.rvCobon.visibility = View.GONE
+                            }
                         }
                         else -> {
                             showSnackbar(response.data?.message)
