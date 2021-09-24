@@ -11,7 +11,7 @@ import com.bellacity.data.model.checkSerial.response.ResponseCheckSerial
 import com.bellacity.data.model.cobon.request.BodyCobon
 import com.bellacity.data.model.cobon.response.ResponseCobon
 import com.bellacity.data.model.detailsGrnt.request.BodyPreviousPreview
-import com.bellacity.data.model.detailsGrnt.response.ResponsePreviousPreviews
+import com.bellacity.data.model.detailsGrnt.response.ResponseGrntDetails
 import com.bellacity.data.model.distributor.response.ResponseDistributor
 import com.bellacity.data.model.items.response.ResponseItems
 import com.bellacity.data.model.login.request.BodyLogin
@@ -133,7 +133,7 @@ object Client {
         return apiService?.checkLogin()!!
     }
 
-    fun previousPreview(bodyPreviousPreview: BodyPreviousPreview): Single<ResponsePreviousPreviews> {
+    fun previousPreview(bodyPreviousPreview: BodyPreviousPreview): Single<ResponseGrntDetails> {
         return apiService?.previousPreview(bodyPreviousPreview)!!
     }
 

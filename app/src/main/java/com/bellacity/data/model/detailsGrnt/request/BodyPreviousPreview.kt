@@ -8,5 +8,7 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class BodyPreviousPreview(
     @SerializedName("Page")
-    val page: Int?
+    val page: Int?,
+    @SerializedName("GrntSerial")
+    val GrntSerial: Int?
 ) : Parcelable

@@ -46,7 +46,11 @@
     <fragment
         android:id="@+id/edit_button_navigation"
         android:name="com.bellacity.ui.fragment.previousGrnt.PreviousPreviewsFragment"
-        android:label="PreviousPreviewsFragment" />
+        android:label="PreviousPreviewsFragment">
+        <action
+            android:id="@+id/action_edit_button_navigation_to_detailsGrntFragment"
+            app:destination="@id/detailsGrntFragment" />
+    </fragment>
     <fragment
         android:id="@+id/addGrnt1Fragment"
         android:name="com.bellacity.ui.fragment.addGrnt.AddGrnt1Fragment"
@@ -76,4 +80,8 @@
             app:popUpTo="@id/home_button_navigation"
             app:popUpToInclusive="true" />
     </fragment>
+    <fragment
+        android:id="@+id/detailsGrntFragment"
+        android:name="com.bellacity.ui.fragment.grntDetails.DetailsGrntFragment"
+        android:label="DetailsGrntFragment" />
 </navigation>

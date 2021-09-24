@@ -3,6 +3,8 @@ package com.bellacity.ui.fragment.previousGrnt
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import com.bellacity.R
 import com.bellacity.data.callBack.ILoading
 import com.bellacity.data.model.previewsGrnt.response.GrntSimple
 import com.bellacity.databinding.FragmentPreviousPreviewsBinding
@@ -32,6 +34,7 @@ class PreviousPreviewsFragment : BaseFragment<FragmentPreviousPreviewsBinding>()
         bindData()
         showNavBtn()
     }
+
 
     private fun bindData() {
         binding.adapter = previousPreviewAdapter
@@ -74,7 +77,8 @@ class PreviousPreviewsFragment : BaseFragment<FragmentPreviousPreviewsBinding>()
 
 
     private fun clickOnItem(postion: Int, item: GrntSimple) {
-        showSnackbar("${item.grntSerial}")
+        sharedViewModel.saveSerialGrntId(item.grntSerial!!)
+        findNavController().navigate(R.id.action_edit_button_navigation_to_detailsGrntFragment)
     }
 
 }

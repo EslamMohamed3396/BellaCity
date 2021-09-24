@@ -13,4 +13,11 @@ class SharedViewModel : ViewModel() {
         _addGrnt.value = addGrnt
     }
 
+    private var _serialGrntId = MutableLiveData<Int>()
+    val serialGrntId: LiveData<Int> get() = _serialGrntId
+
+    fun saveSerialGrntId(serialGrntId: Int) {
+        _serialGrntId.value = serialGrntId
+    }
+
 }

@@ -11,7 +11,7 @@ import com.bellacity.data.model.checkSerial.response.ResponseCheckSerial
 import com.bellacity.data.model.cobon.request.BodyCobon
 import com.bellacity.data.model.cobon.response.ResponseCobon
 import com.bellacity.data.model.detailsGrnt.request.BodyPreviousPreview
-import com.bellacity.data.model.detailsGrnt.response.ResponsePreviousPreviews
+import com.bellacity.data.model.detailsGrnt.response.ResponseGrntDetails
 import com.bellacity.data.model.distributor.response.ResponseDistributor
 import com.bellacity.data.model.items.response.ResponseItems
 import com.bellacity.data.model.login.request.BodyLogin
@@ -39,7 +39,7 @@ interface ApiService {
     fun checkLogin(): Single<ResonseCheckLogin>
 
     @POST(Constant.PREVIOUS_PREVIEW)
-    fun previousPreview(@Body bodyPreviousPreview: BodyPreviousPreview): Single<ResponsePreviousPreviews>
+    fun previousPreview(@Body bodyPreviousPreview: BodyPreviousPreview): Single<ResponseGrntDetails>
 
     @POST(Constant.TECH_LIST)
     fun techList(): Single<ResponseTech>

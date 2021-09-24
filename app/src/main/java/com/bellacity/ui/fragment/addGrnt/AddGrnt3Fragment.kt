@@ -330,8 +330,7 @@ class AddGrnt3Fragment : BaseFragment<FragmentAddGrnt3Binding>() {
     }
 
     private fun checkData(): Boolean {
-        return binding.giftTextInput.editText?.text.toString().trim().length > 2
-                && items.isNotEmpty()
+        return items.isNotEmpty()
                 && latLng != null
     }
 

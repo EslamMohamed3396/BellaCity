@@ -39,6 +39,8 @@
     <string name="play_services_required">خدمات جوجل مطلوبة من قبل هذا التطبيق </string>
     <string name="dialog_cancelled">تم الالغاء بواسطة المتسخدم</string>
     <string name="please_choose_cobon">*من فضلك اختر الكوبون</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
 </resources>
