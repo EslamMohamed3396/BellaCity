@@ -18,7 +18,7 @@
         android:id="@+id/frameLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.fragment.addGrnt.AddGrnt1Fragment">
+       >
 
 
         <include
@@ -52,7 +52,7 @@
                     android:layout_marginTop="16dp"
                     android:hint="@string/enter_your_name"
                     app:errorEnabled="false"
-                    android:enabled="false"
+
                     app:layout_constraintEnd_toStartOf="@+id/date_text_input"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintHorizontal_weight="0.03"
@@ -80,7 +80,7 @@
                     android:layout_marginEnd="8dp"
                     android:hint="@string/date"
                     app:errorEnabled="false"
-                    android:enabled="false"
+
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_weight="0.02"
                     app:layout_constraintStart_toEndOf="@+id/name_text_input"
@@ -108,7 +108,7 @@
                     android:layout_marginEnd="8dp"
                     android:hint="@string/general_super_name"
                     app:errorEnabled="false"
-                    android:enabled="false"
+
                     app:layout_constraintEnd_toStartOf="@+id/general_super_text_input"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/name_text_input">
@@ -134,7 +134,7 @@
                     android:layout_marginEnd="8dp"
                     android:hint="@string/super_name"
                     app:errorEnabled="false"
-                    android:enabled="false"
+
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/super_text_input"
                     app:layout_constraintTop_toTopOf="@+id/super_text_input">
@@ -158,7 +158,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="8dp"
-                    android:enabled="false"
+
                     android:hint="@string/tech_name"
                     app:errorEnabled="false"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -185,7 +185,7 @@
                     android:layout_marginEnd="8dp"
                     android:hint="@string/city"
                     app:errorEnabled="false"
-                    android:enabled="false"
+
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/government_tech_text_input"
                     app:layout_constraintTop_toBottomOf="@+id/tech_text_input">
@@ -210,7 +210,7 @@
                     android:layout_marginEnd="16dp"
                     android:hint="@string/government_name"
                     app:errorEnabled="false"
-                    android:enabled="false"
+
                     app:layout_constraintEnd_toStartOf="@+id/city_tech_text_input"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/city_tech_text_input">
@@ -236,7 +236,7 @@
                     android:layout_marginEnd="8dp"
                     android:hint="@string/consumer_name"
                     app:errorEnabled="false"
-                    android:enabled="false"
+
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/super_text_input"
                     app:layout_constraintTop_toBottomOf="@+id/city_tech_text_input">
@@ -262,7 +262,7 @@
                     android:layout_marginEnd="8dp"
                     android:hint="@string/consumer_phone"
                     app:errorEnabled="false"
-                    android:enabled="false"
+
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_weight="0.2"
                     app:layout_constraintStart_toEndOf="@+id/consumer_address_text_input"
@@ -291,7 +291,7 @@
                     android:layout_marginEnd="8dp"
                     android:hint="@string/consumer_address"
                     app:errorEnabled="false"
-                    android:enabled="false"
+
                     app:layout_constraintEnd_toStartOf="@+id/consumer_phone_text_input"
                     app:layout_constraintHorizontal_weight="0.3"
                     app:layout_constraintStart_toStartOf="parent"
@@ -319,7 +319,7 @@
                     android:layout_marginEnd="8dp"
                     android:hint="@string/distributor_name"
                     app:errorEnabled="false"
-                    android:enabled="false"
+
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/super_text_input"
                     app:layout_constraintTop_toBottomOf="@+id/consumer_address_text_input">
@@ -344,7 +344,7 @@
                     android:layout_marginEnd="8dp"
                     android:hint="@string/city"
                     app:errorEnabled="false"
-                    android:enabled="false"
+
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/government_distributor_text_input"
                     app:layout_constraintTop_toBottomOf="@+id/distributor_text_input">
@@ -369,7 +369,7 @@
                     android:layout_marginEnd="16dp"
                     android:hint="@string/government_name"
                     app:errorEnabled="false"
-                    android:enabled="false"
+
                     app:layout_constraintEnd_toStartOf="@+id/city_distributor_text_input"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/city_distributor_text_input">
@@ -395,7 +395,7 @@
                     android:layout_marginEnd="8dp"
                     android:hint="@string/merchant_name"
                     app:errorEnabled="false"
-                    android:enabled="false"
+
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/super_text_input"
                     app:layout_constraintTop_toBottomOf="@+id/government_distributor_text_input">

@@ -1,4 +1,4 @@
-package com.bellacity.ui.fragment.grntDetails
+package com.bellacity.ui.fragment.editGrnt
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

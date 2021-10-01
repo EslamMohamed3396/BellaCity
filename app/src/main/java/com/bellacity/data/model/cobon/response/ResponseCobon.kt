@@ -13,5 +13,4 @@ data class ResponseCobon(
     val message: String?,
     @SerializedName("CobonList")
     val cobonList: List<Cobon>?,
-
-    ) : Parcelable
+) : Parcelable

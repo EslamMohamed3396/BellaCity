@@ -2,6 +2,7 @@ package com.bellacity.data.model.detailsGrnt.response
 
 
 import android.os.Parcelable
+import com.bellacity.data.model.cobon.response.Cobon
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 
@@ -49,8 +50,8 @@ data class Grnt(
     val grntType: String?,
     @SerializedName("GrntTypeID")
     val grntTypeID: Int?,
-    @SerializedName("GrntCoubonSerial")
-    val grntCoubonSerial: List<String>?,
+    @SerializedName("CoubonList")
+    val grntCoubonSerial: List<Cobon>?,
     @SerializedName("GrntPartSerials")
     val grntPartSerials: List<String>?,
     @SerializedName("GrntItems")

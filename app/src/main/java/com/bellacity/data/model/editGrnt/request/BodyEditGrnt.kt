@@ -1,4 +1,4 @@
-package com.bellacity.data.model.addGrnt.request
+package com.bellacity.data.model.editGrnt.request
 
 
 import android.os.Parcelable
@@ -7,7 +7,9 @@ import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class BodyAddGrnt(
+data class BodyEditGrnt(
+    @SerializedName("GrntID")
+    val grntID: Int?,
     @SerializedName("TechID")
     val techID: Int?,
     @SerializedName("DistributorID")
@@ -30,7 +32,7 @@ data class BodyAddGrnt(
     val grntCobonSerial: List<Int>?,
     @SerializedName("GrntItemsType")
     val grntItemsType: Int?,
-    @SerializedName("MerchantName")
+    @SerializedName("GrntMerchant")
     val grntMerchant: String?,
     @SerializedName("GrntGift")
     val grntGift: String?,

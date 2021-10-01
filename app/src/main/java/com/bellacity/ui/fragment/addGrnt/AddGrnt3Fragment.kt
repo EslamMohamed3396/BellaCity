@@ -22,7 +22,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.bellacity.R
 import com.bellacity.data.model.addGrnt.request.BodyAddGrnt
-import com.bellacity.data.model.addGrnt.request.GrntItem
+import com.bellacity.data.model.base.grntItems.GrntItem
 import com.bellacity.data.model.items.response.GrntItems
 import com.bellacity.databinding.FragmentAddGrnt3Binding
 import com.bellacity.ui.base.BaseFragment

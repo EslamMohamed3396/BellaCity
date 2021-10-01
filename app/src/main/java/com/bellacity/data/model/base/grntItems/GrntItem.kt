@@ -1,4 +1,4 @@
-package com.bellacity.data.model.addGrnt.request
+package com.bellacity.data.model.base.grntItems
 
 
 import android.os.Parcelable

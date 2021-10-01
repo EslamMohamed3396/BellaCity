@@ -29,9 +29,9 @@ abstract class BaseFragment<VDB : ViewDataBinding> : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        onCreateInit()
-        initClicks()
         initViewModel()
+        initClicks()
+        onCreateInit()
 
     }
 

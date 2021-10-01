@@ -9,6 +9,6 @@ import kotlinx.parcelize.Parcelize
 data class Cobon(
     @SerializedName("CoubonSerial")
     val coubonSerial: Int?,
-    var isSelected: Boolean = false
 
+    var isSelected: Boolean = false
 ) : Parcelable
