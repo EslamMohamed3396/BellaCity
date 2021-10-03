@@ -39,10 +39,10 @@ class CobonAdapter(val actionSelectedCobon: (postion: Int, item: Cobon) -> Unit)
         override fun bind(item: Cobon) {
             binding.cobon = item
             binding.executePendingBindings()
-            binding.root.setBackgroundColor(if (item.isSelected) Color.RED else Color.WHITE)
-            binding.root.setOnClickListener {
+            binding.cardView.setCardBackgroundColor(if (item.isSelected) Color.RED else Color.WHITE)
+            binding.cardView.setOnClickListener {
                 item.isSelected = !item.isSelected
-                binding.root.setBackgroundColor(if (item.isSelected) Color.RED else Color.WHITE)
+                binding.cardView.setCardBackgroundColor(if (item.isSelected) Color.RED else Color.WHITE)
                 actionSelectedCobon(absoluteAdapterPosition, item)
             }
         }

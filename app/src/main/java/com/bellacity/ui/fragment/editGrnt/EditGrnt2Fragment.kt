@@ -31,10 +31,10 @@ class EditGrnt2Fragment : BaseFragment<FragmentEditGrnt2Binding>() {
     private var bodyEditGrnt: BodyEditGrnt? = null
     private var productTypeId: Int? = null
     private val viewModel: AddGrntViewModel by viewModels()
-    private var cobonList: ArrayList<Cobon>? = null
+    private var cobonList = ArrayList<Cobon>()
     private val cobonAdapter: CobonAdapter by lazy { CobonAdapter(::clickOnCobon) }
-    private var selectedCobonsList = ArrayList<Cobon>()
-
+    private var selectedCobonsList = ArrayList<Int>()
+    private val cobons = ArrayList<Cobon>()
     override fun getViewBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
@@ -48,14 +48,13 @@ class EditGrnt2Fragment : BaseFragment<FragmentEditGrnt2Binding>() {
 
 
         binding.nextBtn.setOnClickListener {
-            Timber.d("${getSerialSelectedCobon()}")
+            Timber.d("${selectedCobonsList}")
         }
     }
 
     override fun initViewModel() {
         getGrntSharedViewModel()
-        initProductTypeListViewModel()
-        initActiveTypeListViewModel()
+
     }
 
     override fun onCreateInit() {
@@ -67,11 +66,14 @@ class EditGrnt2Fragment : BaseFragment<FragmentEditGrnt2Binding>() {
         sharedViewModel.editGrnt.observe(viewLifecycleOwner, { response ->
             bodyEditGrnt = response
             initBookListViewModel(bodyEditGrnt?.techID!!)
+
         })
         sharedViewModel.grntDetails.observe(viewLifecycleOwner, { response ->
             grntDetails = response
-
             bindData()
+            setSelectedCobon()
+            initProductTypeListViewModel()
+            initActiveTypeListViewModel()
             //bindSelectedCobon()
         })
 
@@ -253,17 +255,22 @@ class EditGrnt2Fragment : BaseFragment<FragmentEditGrnt2Binding>() {
     //region cobon (الكوبونات)
 
     private fun initCobonListViewModel(activeType: Int?) {
+
         viewModel.cobonList(bodyCobon(activeType)).observe(viewLifecycleOwner, { response ->
             when (response) {
                 is Resource.Success -> {
                     DialogUtil.dismissDialog()
                     when (response.data?.status) {
                         1 -> {
-                            cobonList = (response.data.cobonList as ArrayList<Cobon>?)!!
-                            if (!response.data.cobonList.isNullOrEmpty()) {
-                                cobonList?.clear()
-                                cobonList!!.addAll(setSelectedCobon() as ArrayList)
-                                cobonAdapter.submitList(response.data.cobonList)
+
+                            cobonList.clear()
+                            //    cobonList = (response.data.cobonList as ArrayList<Cobon>?)!!
+                            cobonList.addAll(cobons)
+                            cobonList.addAll(response.data.cobonList as ArrayList<Cobon>)
+                            Timber.d("$cobonList")
+
+                            if (!cobonList.isNullOrEmpty()) {
+                                cobonAdapter.submitList(cobonList)
                                 binding.rvCobon.visibility = View.VISIBLE
                                 binding.tvCobon.text = getString(R.string.please_choose_cobon)
                             } else {
@@ -293,9 +300,9 @@ class EditGrnt2Fragment : BaseFragment<FragmentEditGrnt2Binding>() {
     private fun clickOnCobon(postion: Int, item: Cobon) {
         Timber.d("$item")
         if (item.isSelected) {
-            selectedCobonsList.add(item)
+            selectedCobonsList.add(item.coubonSerial!!)
         } else {
-            selectedCobonsList.remove(item)
+            selectedCobonsList.remove(item.coubonSerial!!)
         }
     }
 
@@ -307,28 +314,31 @@ class EditGrnt2Fragment : BaseFragment<FragmentEditGrnt2Binding>() {
     }
 
     private fun visiableRecycler() {
+        setSelectedCobon()
         binding.tvCobon.text = getString(R.string.cobons)
         cobonAdapter.submitList(cobonList)
         binding.rvCobon.visibility = View.VISIBLE
     }
 
-    private fun setSelectedCobon(): List<Cobon> {
-        val cobons = ArrayList<Cobon>()
+    private fun setSelectedCobon() {
+        selectedCobonsList.clear()
+        cobons.clear()
         grntDetails?.grntCoubonSerial?.forEach {
             cobons.add(Cobon(it.coubonSerial, true))
+            selectedCobonsList.add(it.coubonSerial!!)
         }
-        return cobons
+
     }
 
 
-    private fun getSerialSelectedCobon(): List<Int> {
-        val serialCobon = ArrayList<Int>()
-
-        selectedCobonsList.forEach {
-            serialCobon.add(it.coubonSerial!!)
-        }
-        return serialCobon
-    }
+//    private fun getSerialSelectedCobon(): List<Int> {
+//        val serialCobon = ArrayList<Int>()
+//
+//        selectedCobonsList.forEach {
+//            serialCobon.add(it.coubonSerial!!)
+//        }
+//        return serialCobon
+//    }
 
 
     //endregion
