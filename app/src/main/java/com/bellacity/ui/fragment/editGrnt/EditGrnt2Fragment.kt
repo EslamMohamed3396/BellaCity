@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.afollestad.materialdialogs.MaterialDialog
 import com.bellacity.R
 import com.bellacity.data.model.activeType.response.GrntTypes
 import com.bellacity.data.model.bookNumber.request.BodyBookNumber
@@ -19,6 +20,7 @@ import com.bellacity.databinding.FragmentEditGrnt2Binding
 import com.bellacity.ui.base.BaseFragment
 import com.bellacity.ui.fragment.addGrnt.AddGrntViewModel
 import com.bellacity.ui.fragment.addGrnt.adapter.cobonAdapter.CobonAdapter
+import com.bellacity.ui.fragment.editGrnt.adapter.selectedCobonAdapter.SelectedCobonAdapter
 import com.bellacity.utilities.DialogUtil
 import com.bellacity.utilities.Resource
 import timber.log.Timber
@@ -33,8 +35,11 @@ class EditGrnt2Fragment : BaseFragment<FragmentEditGrnt2Binding>() {
     private val viewModel: AddGrntViewModel by viewModels()
     private var cobonList = ArrayList<Cobon>()
     private val cobonAdapter: CobonAdapter by lazy { CobonAdapter(::clickOnCobon) }
+    private val selectedCobonBeforeAdapter:
+            SelectedCobonAdapter by lazy { SelectedCobonAdapter(::clickOnDeleteCobon) }
     private var selectedCobonsList = ArrayList<Int>()
-    private val cobons = ArrayList<Cobon>()
+    private var selectedCobonBeforeList = ArrayList<Cobon>()
+
     override fun getViewBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
@@ -48,7 +53,7 @@ class EditGrnt2Fragment : BaseFragment<FragmentEditGrnt2Binding>() {
 
 
         binding.nextBtn.setOnClickListener {
-            Timber.d("${selectedCobonsList}")
+            goToEditGrant3()
         }
     }
 
@@ -74,9 +79,38 @@ class EditGrnt2Fragment : BaseFragment<FragmentEditGrnt2Binding>() {
             setSelectedCobon()
             initProductTypeListViewModel()
             initActiveTypeListViewModel()
+            bindSelectedCobonRecycler()
             //bindSelectedCobon()
         })
 
+    }
+
+
+    private fun bodyEditGrnt(): BodyEditGrnt {
+        return BodyEditGrnt(
+            bodyEditGrnt?.grntID,
+            bodyEditGrnt?.techID,
+            bodyEditGrnt?.distributorID,
+            bodyEditGrnt?.consumerName,
+            bodyEditGrnt?.consumerPhone,
+            bodyEditGrnt?.consumerAddress,
+            null,
+            grntDetails?.grntPartSerials,
+            bookId,
+            activeTypeId,
+            selectedCobonsList,
+            productTypeId,
+            bodyEditGrnt?.grntMerchant,
+            grntDetails?.grntGift,
+            grntDetails?.grntLat?.toDouble(),
+            grntDetails?.grntLng?.toDouble()
+        )
+    }
+
+    private fun goToEditGrant3() {
+        sharedViewModel.saveEditGrnt(bodyEditGrnt())
+        sharedViewModel.saveGrntDetails(grntDetails!!)
+        findNavController().navigate(R.id.action_editGrnt2Fragment_to_editGrnt3Fragment)
     }
 
 
@@ -262,15 +296,10 @@ class EditGrnt2Fragment : BaseFragment<FragmentEditGrnt2Binding>() {
                     DialogUtil.dismissDialog()
                     when (response.data?.status) {
                         1 -> {
+                            cobonList = (response.data.cobonList as ArrayList<Cobon>?)!!
 
-                            cobonList.clear()
-                            //    cobonList = (response.data.cobonList as ArrayList<Cobon>?)!!
-                            cobonList.addAll(cobons)
-                            cobonList.addAll(response.data.cobonList as ArrayList<Cobon>)
-                            Timber.d("$cobonList")
-
-                            if (!cobonList.isNullOrEmpty()) {
-                                cobonAdapter.submitList(cobonList)
+                            if (!response.data.cobonList.isNullOrEmpty()) {
+                                cobonAdapter.submitList(response.data.cobonList)
                                 binding.rvCobon.visibility = View.VISIBLE
                                 binding.tvCobon.text = getString(R.string.please_choose_cobon)
                             } else {
@@ -309,22 +338,25 @@ class EditGrnt2Fragment : BaseFragment<FragmentEditGrnt2Binding>() {
     private fun emptyRecycler() {
         cobonAdapter.submitList(null)
         selectedCobonsList.clear()
+        selectedCobonBeforeAdapter.submitList(null)
         binding.rvCobon.visibility = View.GONE
         binding.tvCobon.text = "*لا توجد كوبونات"
+        binding.textView5.visibility = View.GONE
     }
 
     private fun visiableRecycler() {
         setSelectedCobon()
+        bindSelectedCobonRecycler()
         binding.tvCobon.text = getString(R.string.cobons)
         cobonAdapter.submitList(cobonList)
         binding.rvCobon.visibility = View.VISIBLE
+        binding.textView5.visibility = View.VISIBLE
+
     }
 
     private fun setSelectedCobon() {
         selectedCobonsList.clear()
-        cobons.clear()
         grntDetails?.grntCoubonSerial?.forEach {
-            cobons.add(Cobon(it.coubonSerial, true))
             selectedCobonsList.add(it.coubonSerial!!)
         }
 
@@ -344,9 +376,44 @@ class EditGrnt2Fragment : BaseFragment<FragmentEditGrnt2Binding>() {
     //endregion
 
 
+    private fun clickOnDeleteCobon(postion: Int, item: Cobon) {
+        Timber.d("$item")
+        confirmDeleteCobon(postion, item)
+    }
+
+
+    private fun confirmDeleteCobon(postion: Int, item: Cobon) {
+        MaterialDialog(requireContext()).show {
+            title(text = " تأكيد")
+            message(text = " هل انت متأكد انك تريد حذف الكوبون رقم ${item.coubonSerial}")
+            positiveButton(R.string.yes) { dialog ->
+                selectedCobonsList.remove(item.coubonSerial!!)
+                selectedCobonBeforeList.removeAt(postion)
+                selectedCobonBeforeAdapter.notifyDataSetChanged()
+                dialog.dismiss()
+            }
+            negativeButton(R.string.cancel) { dialog ->
+                dialog.dismiss()
+            }
+        }
+    }
+
+
     private fun bindData() {
         binding.grntData = grntDetails
         binding.cobonAdapter = cobonAdapter
+        binding.selectedCobonAdapter = selectedCobonBeforeAdapter
+    }
+
+    private fun bindSelectedCobonRecycler() {
+        selectedCobonBeforeList = grntDetails?.grntCoubonSerial as ArrayList<Cobon>
+        if (!grntDetails?.grntCoubonSerial.isNullOrEmpty()) {
+            binding.rvSelectedCobon.visibility = View.VISIBLE
+            selectedCobonBeforeAdapter.submitList(selectedCobonBeforeList)
+        } else {
+            binding.rvSelectedCobon.visibility = View.VISIBLE
+            binding.textView5.text = "لا توجد كوبونات من قبل"
+        }
     }
 
 }

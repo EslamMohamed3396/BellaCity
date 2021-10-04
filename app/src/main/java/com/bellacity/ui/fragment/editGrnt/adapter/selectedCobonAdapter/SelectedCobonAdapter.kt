@@ -1,21 +1,19 @@
-package com.bellacity.ui.fragment.addGrnt.adapter.cobonAdapter
+package com.bellacity.ui.fragment.editGrnt.adapter.selectedCobonAdapter
 
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.RecyclerView
 import com.bellacity.data.model.cobon.response.Cobon
-import com.bellacity.databinding.ItemCobonListBinding
-import com.bellacity.ui.fragment.editGrnt.adapter.selectedCobonAdapter.SelectedCobonDiffCallback
+import com.bellacity.databinding.ItemSelectedCobonBeforeBinding
 import com.kadabradigital.ui.base.BaseViewHolder
 
-class CobonAdapter(val actionSelectedCobon: (postion: Int, item: Cobon) -> Unit) :
+class SelectedCobonAdapter(val actionSelectedCobon: (postion: Int, item: Cobon) -> Unit) :
     RecyclerView.Adapter<BaseViewHolder<*>>() {
     private val differ = AsyncListDiffer(this, SelectedCobonDiffCallback())
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<*> {
-        val binding: ItemCobonListBinding = ItemCobonListBinding.inflate(
+        val binding: ItemSelectedCobonBeforeBinding = ItemSelectedCobonBeforeBinding.inflate(
             LayoutInflater.from(parent.context), parent, false
         )
         return OffersViewHolder(binding)
@@ -35,15 +33,12 @@ class CobonAdapter(val actionSelectedCobon: (postion: Int, item: Cobon) -> Unit)
         (holder as OffersViewHolder).bind(item)
     }
 
-    inner class OffersViewHolder(val binding: ItemCobonListBinding) :
+    inner class OffersViewHolder(val binding: ItemSelectedCobonBeforeBinding) :
         BaseViewHolder<Cobon>(binding) {
         override fun bind(item: Cobon) {
             binding.cobon = item
             binding.executePendingBindings()
-            binding.cardView.setCardBackgroundColor(if (item.isSelected) Color.RED else Color.WHITE)
-            binding.cardView.setOnClickListener {
-                item.isSelected = !item.isSelected
-                binding.cardView.setCardBackgroundColor(if (item.isSelected) Color.RED else Color.WHITE)
+            binding.imageView2.setOnClickListener {
                 actionSelectedCobon(absoluteAdapterPosition, item)
             }
         }

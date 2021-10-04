@@ -34,9 +34,11 @@
     <string name="permission">أذن تحقيق الموقع</string>
     <string name="gps_required">من فضلك فعل تحديد الموقع لارسال المعاينة</string>
     <string name="yes">حسناً</string>
+    <string name="cancel">الغاء</string>
     <string name="play_services_required">خدمات جوجل مطلوبة من قبل هذا التطبيق </string>
     <string name="dialog_cancelled">تم الالغاء بواسطة المتسخدم</string>
     <string name="please_choose_cobon">*من فضلك اختر الكوبون</string>
     <string name="cobons">الكوبونات</string>
+    <string name="selected_cobon_before">الكوبونات التي تم اختياراها من قبل</string>
 
 </resources>

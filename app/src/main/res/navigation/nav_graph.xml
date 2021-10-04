@@ -93,5 +93,15 @@
     <fragment
         android:id="@+id/editGrnt2Fragment"
         android:name="com.bellacity.ui.fragment.editGrnt.EditGrnt2Fragment"
-        android:label="EditGrnt2Fragment" />
+        android:label="EditGrnt2Fragment">
+        <action
+            android:id="@+id/action_editGrnt2Fragment_to_editGrnt3Fragment"
+            app:destination="@id/editGrnt3Fragment"
+            app:enterAnim="@anim/anim_slide_in_left"
+            app:exitAnim="@anim/anim_slide_out_left" />
+    </fragment>
+    <fragment
+        android:id="@+id/editGrnt3Fragment"
+        android:name="com.bellacity.ui.fragment.editGrnt.EditGrnt3Fragment"
+        android:label="EditGrnt3Fragment" />
 </navigation>
