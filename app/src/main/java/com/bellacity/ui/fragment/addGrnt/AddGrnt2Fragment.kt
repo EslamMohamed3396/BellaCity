@@ -71,7 +71,11 @@ class AddGrnt2Fragment : BaseFragment<FragmentAddGrnt2Binding>() {
 
         binding.nextBtn.setOnClickListener {
             if (checkData()) {
-                goToAddGrant2()
+                if (checkParSerial()) {
+                    goToAddGrant2()
+                } else {
+                    showSnackbar("من فضلك ادخل سريال القطع")
+                }
             } else {
                 showSnackbar("من فضلك اكمل جميع البيانات")
             }
@@ -80,6 +84,10 @@ class AddGrnt2Fragment : BaseFragment<FragmentAddGrnt2Binding>() {
 
     private fun checkData(): Boolean {
         return productTypeId != -1 && activeTypeId != -1 && bookId != -1
+    }
+
+    private fun checkParSerial(): Boolean {
+        return !chekedSerialList.isNullOrEmpty()
     }
 
     private fun getGrntSharedViewModel() {

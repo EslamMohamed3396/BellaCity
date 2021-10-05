@@ -64,7 +64,6 @@ class EditGrnt2Fragment : BaseFragment<FragmentEditGrnt2Binding>() {
 
     override fun onCreateInit() {
         hideNavBtn()
-
     }
 
 
@@ -72,17 +71,20 @@ class EditGrnt2Fragment : BaseFragment<FragmentEditGrnt2Binding>() {
         sharedViewModel.editGrnt.observe(viewLifecycleOwner, { response ->
             bodyEditGrnt = response
             initBookListViewModel(bodyEditGrnt?.techID!!)
-
+            sharedViewModel.editGrnt.removeObservers(viewLifecycleOwner)
         })
         sharedViewModel.grntDetails.observe(viewLifecycleOwner, { response ->
             grntDetails = response
             bindData()
             setSelectedCobon()
-            initProductTypeListViewModel()
             initActiveTypeListViewModel()
+            initProductTypeListViewModel()
             bindSelectedCobonRecycler()
+            sharedViewModel.grntDetails.removeObservers(viewLifecycleOwner)
+
             //bindSelectedCobon()
         })
+
 
     }
 
@@ -144,14 +146,12 @@ class EditGrnt2Fragment : BaseFragment<FragmentEditGrnt2Binding>() {
         val productType = ArrayList<String>()
         productTypeList.forEach {
             if (it.grntItemsTypeName.equals(grntDetails?.grntItemsType)) {
-                productType.add(0, grntDetails?.grntItemsType!!)
                 productTypeId = grntDetails?.grntItemsTypeID
-                initCobonListViewModel(productTypeId)
-
-            } else {
-                productType.add(it.grntItemsTypeName!!)
+                if (activeTypeId != 1) {
+                    initCobonListViewModel(productTypeId)
+                }
             }
-
+            productType.add(it.grntItemsTypeName!!)
         }
         val dataAdapter: ArrayAdapter<String> =
             ArrayAdapter(
@@ -162,7 +162,9 @@ class EditGrnt2Fragment : BaseFragment<FragmentEditGrnt2Binding>() {
         binding.autoProductType.setAdapter(dataAdapter)
         binding.autoProductType.setOnItemClickListener { parent, view, position, id ->
             productTypeId = productTypeList[position].grntItemsTypeID
-            initCobonListViewModel(productTypeId)
+            if (activeTypeId != 1) {
+                initCobonListViewModel(productTypeId)
+            }
         }
     }
 
@@ -202,13 +204,10 @@ class EditGrnt2Fragment : BaseFragment<FragmentEditGrnt2Binding>() {
         val bookNumber = ArrayList<Int>()
         bookNumberList.forEach {
             if (it.bookNo?.equals(grntDetails?.grntBookNumber?.toInt())!!) {
-                bookNumber.add(0, grntDetails?.grntBookNumber?.toInt()!!)
                 bookId = grntDetails?.grntBookNumber?.toInt()
-            } else {
-                bookNumber.add(it.bookNo)
             }
 
-
+            bookNumber.add(it.bookNo)
         }
         val dataAdapter: ArrayAdapter<Int> =
             ArrayAdapter(
@@ -255,16 +254,15 @@ class EditGrnt2Fragment : BaseFragment<FragmentEditGrnt2Binding>() {
         val activeType = ArrayList<String>()
         activeTypeList.forEach {
             if (it.grntTypeName.equals(grntDetails?.grntType)) {
-                activeType.add(0, grntDetails?.grntType!!)
                 activeTypeId = grntDetails?.grntTypeID
                 if (activeTypeId == 1) {
                     emptyRecycler()
                 } else {
                     visiableRecycler()
                 }
-            } else {
-                activeType.add(it.grntTypeName!!)
             }
+            activeType.add(it.grntTypeName!!)
+
         }
         val dataAdapter: ArrayAdapter<String> =
             ArrayAdapter(
