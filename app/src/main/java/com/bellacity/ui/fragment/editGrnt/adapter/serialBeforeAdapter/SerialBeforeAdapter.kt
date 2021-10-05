@@ -1,13 +1,14 @@
-package com.bellacity.ui.fragment.addGrnt.adapter.vaildSerialAdapter
+package com.bellacity.ui.fragment.editGrnt.adapter.serialBeforeAdapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.RecyclerView
 import com.bellacity.databinding.ItemCheckedSerialBinding
+import com.bellacity.ui.fragment.addGrnt.adapter.vaildSerialAdapter.VaildSerialDiffCallback
 import com.kadabradigital.ui.base.BaseViewHolder
 
-class ValidSerialAdapter(
+class SerialBeforeAdapter(
     val actionDelete: (postion: Int, item: String) -> Unit
 ) :
     RecyclerView.Adapter<BaseViewHolder<*>>() {

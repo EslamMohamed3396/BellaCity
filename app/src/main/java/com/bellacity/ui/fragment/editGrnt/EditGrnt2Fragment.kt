@@ -63,6 +63,7 @@ class EditGrnt2Fragment : BaseFragment<FragmentEditGrnt2Binding>() {
     }
 
     override fun onCreateInit() {
+        hideNavBtn()
 
     }
 

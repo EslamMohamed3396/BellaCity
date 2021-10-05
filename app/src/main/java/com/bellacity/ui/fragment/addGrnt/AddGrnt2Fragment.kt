@@ -415,7 +415,7 @@ class AddGrnt2Fragment : BaseFragment<FragmentAddGrnt2Binding>() {
             }.show(childFragmentManager)
     }
 
-    private fun deleteCheckedSerial(postion: Int) {
+    private fun deleteCheckedSerial(postion: Int, item: String) {
         chekedSerialList.removeAt(postion)
         validSerialAdapter.notifyDataSetChanged()
     }
