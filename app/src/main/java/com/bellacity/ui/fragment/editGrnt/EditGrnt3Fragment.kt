@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.afollestad.materialdialogs.MaterialDialog
 import com.bellacity.R
 import com.bellacity.data.model.checkSerial.request.BodyCheckSerial
@@ -57,12 +58,13 @@ class EditGrnt3Fragment : BaseFragment<FragmentEditGrnt3Binding>() {
             }
         }
         binding.toolbar.backBtn.setOnClickListener {
-            //  findNavController().navigateUp()
+            findNavController().navigateUp()
             Timber.d("$selectedSerialList")
         }
         binding.imTakePhoto.setOnClickListener {
             pickImage()
         }
+
     }
 
     override fun initViewModel() {
@@ -75,6 +77,35 @@ class EditGrnt3Fragment : BaseFragment<FragmentEditGrnt3Binding>() {
 
     }
 
+
+    private fun bodyEditGrnt(): BodyEditGrnt {
+        return BodyEditGrnt(
+            bodyEditGrnt?.grntID,
+            bodyEditGrnt?.techID,
+            bodyEditGrnt?.distributorID,
+            bodyEditGrnt?.consumerName,
+            bodyEditGrnt?.consumerPhone,
+            bodyEditGrnt?.consumerAddress,
+            null,
+            selectedSerialList,
+            bodyEditGrnt?.bookNo,
+            bodyEditGrnt?.grntType,
+            bodyEditGrnt?.grntCobonSerial,
+            bodyEditGrnt?.grntItemsType,
+            bodyEditGrnt?.grntMerchant,
+            grntDetails?.grntGift,
+            grntDetails?.grntLat?.toDouble(),
+            grntDetails?.grntLng?.toDouble()
+        )
+    }
+
+
+    private fun goToEditGrant4() {
+        sharedViewModel.saveEditGrnt(bodyEditGrnt())
+        sharedViewModel.saveGrntDetails(grntDetails!!)
+        findNavController().navigate(R.id.action_editGrnt3Fragment_to_editGrnt4Fragment)
+    }
+
     private fun bindData() {
         binding.serialBeforeAdapter = serialBeforeAdapter
         binding.validSerialAdapter = validSerialAdapter
@@ -85,13 +116,14 @@ class EditGrnt3Fragment : BaseFragment<FragmentEditGrnt3Binding>() {
     private fun getGrntSharedViewModel() {
         sharedViewModel.editGrnt.observe(viewLifecycleOwner, { response ->
             bodyEditGrnt = response
-
+            sharedViewModel.editGrnt.removeObservers(viewLifecycleOwner)
         })
         sharedViewModel.grntDetails.observe(viewLifecycleOwner, { response ->
             grntDetails = response
             bindData()
             setSelectedSerial()
             bindSelectedSerialRecycler()
+            sharedViewModel.grntDetails.removeObservers(viewLifecycleOwner)
         })
 
     }

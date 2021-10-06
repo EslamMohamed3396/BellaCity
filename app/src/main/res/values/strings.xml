@@ -28,7 +28,7 @@
     <string name="check">تحقق من السريال</string>
     <string name="valid_serial_was_added">*السيريال الصحيح الذي تم اضافته</string>
     <string name="items">المنتجات</string>
-    <string name="choosed_items">المنتجات التي تم اختيارها</string>
+    <string name="choosed_items">المنتجات التي تم اختيارها الان</string>
     <string name="gifts">هدايا تشجيعية</string>
     <string name="send">ارسال المتابعة</string>
     <string name="no_gifts">*اذا كان لا توجد هدية تشجيعية من فضلك اترك الخانة فارغة</string>

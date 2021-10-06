@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
     app:startDestination="@id/splashFragment">
 
@@ -103,5 +104,16 @@
     <fragment
         android:id="@+id/editGrnt3Fragment"
         android:name="com.bellacity.ui.fragment.editGrnt.EditGrnt3Fragment"
-        android:label="EditGrnt3Fragment" />
+        android:label="EditGrnt3Fragment">
+        <action
+            android:id="@+id/action_editGrnt3Fragment_to_editGrnt4Fragment"
+            app:destination="@id/editGrnt4Fragment"
+            app:enterAnim="@anim/anim_slide_in_left"
+            app:exitAnim="@anim/anim_slide_out_left" />
+    </fragment>
+    <fragment
+        android:id="@+id/editGrnt4Fragment"
+        android:name="com.bellacity.ui.fragment.editGrnt.EditGrnt4Fragment"
+        android:label="fragment_edit_grnt4"
+        tools:layout="@layout/fragment_edit_grnt4" />
 </navigation>
