@@ -13,6 +13,7 @@ import com.bellacity.data.model.cobon.response.ResponseCobon
 import com.bellacity.data.model.detailsGrnt.request.BodyPreviousPreview
 import com.bellacity.data.model.detailsGrnt.response.ResponseGrntDetails
 import com.bellacity.data.model.distributor.response.ResponseDistributor
+import com.bellacity.data.model.editGrnt.request.BodyEditGrnt
 import com.bellacity.data.model.items.response.ResponseItems
 import com.bellacity.data.model.login.request.BodyLogin
 import com.bellacity.data.model.login.response.ResponseLogin
@@ -175,6 +176,10 @@ object Client {
 
     fun addGrnt(bodyAddGrnt: BodyAddGrnt): Single<ResponseAddGrnt> {
         return apiService?.addGrnt(bodyAddGrnt)!!
+    }
+
+    fun editGrnt(bodyEditGrnt: BodyEditGrnt): Single<ResponseAddGrnt> {
+        return apiService?.editGrnt(bodyEditGrnt)!!
     }
 
     fun getGrnt(): Single<ResponsePreviewsGrnt> {

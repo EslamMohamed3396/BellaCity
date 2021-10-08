@@ -23,7 +23,7 @@ class EditGrnt1Fragment : BaseFragment<FragmentEditGrnt1Binding>() {
     private var distributorId: Int? = null
     private var techId: Int? = null
     private lateinit var grntDetails: Grnt
-    private val viewModelGrntDetails: GrntDetailsViewModel by viewModels()
+    private val viewModelGrntDetails: GrntEditViewModel by viewModels()
     private val viewModel: AddGrntViewModel by viewModels()
     override fun getViewBinding(
         inflater: LayoutInflater,

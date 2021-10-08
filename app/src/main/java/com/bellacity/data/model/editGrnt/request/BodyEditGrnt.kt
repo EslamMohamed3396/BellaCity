@@ -32,7 +32,7 @@ data class BodyEditGrnt(
     val grntCobonSerial: List<Int>?,
     @SerializedName("GrntItemsType")
     val grntItemsType: Int?,
-    @SerializedName("GrntMerchant")
+    @SerializedName("MerchantName")
     val grntMerchant: String?,
     @SerializedName("GrntGift")
     val grntGift: String?,

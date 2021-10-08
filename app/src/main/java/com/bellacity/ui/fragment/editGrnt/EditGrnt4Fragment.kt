@@ -11,17 +11,28 @@ import android.os.Looper
 import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.bellacity.R
 import com.bellacity.data.model.detailsGrnt.response.Grnt
+import com.bellacity.data.model.detailsGrnt.response.GrntItem
 import com.bellacity.data.model.editGrnt.request.BodyEditGrnt
+import com.bellacity.data.model.items.response.GrntItems
 import com.bellacity.databinding.FragmentEditGrnt4Binding
 import com.bellacity.ui.base.BaseFragment
+import com.bellacity.ui.fragment.addGrnt.AddGrntViewModel
+import com.bellacity.ui.fragment.addGrnt.adapter.itemsAdapter.GrntItemsAdapter
+import com.bellacity.ui.fragment.editGrnt.adapter.itemBeforeAdapter.GrntItemsBeforeAdapter
 import com.bellacity.utilities.Constant
+import com.bellacity.utilities.DialogUtil
+import com.bellacity.utilities.Resource
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
 import com.google.android.gms.location.*
@@ -36,6 +47,29 @@ class EditGrnt4Fragment : BaseFragment<FragmentEditGrnt4Binding>() {
     private var grntDetails: Grnt? = null
     private var bodyEditGrnt: BodyEditGrnt? = null
 
+
+    private var itemsBefore = ArrayList<GrntItem>()
+    private var itemsBeforeHashSet = HashSet<GrntItem>()
+
+
+    private var itemsHashSet = HashSet<GrntItems>()
+    private var items = ArrayList<GrntItems>()
+    private val grntItemsBeforeAdapter: GrntItemsBeforeAdapter by lazy {
+        GrntItemsBeforeAdapter(
+            ::plusBeforeQuantity,
+            ::minuesBeforeQuantity
+        )
+    }
+    private val viewModel: AddGrntViewModel by viewModels()
+    private val viewModelEdit: GrntEditViewModel by viewModels()
+
+    private val grntItemsAdapter: GrntItemsAdapter by lazy {
+        GrntItemsAdapter(
+            ::plusQuantity,
+            ::minuesQuantity
+        )
+    }
+    private val bodyGrntItem = ArrayList<com.bellacity.data.model.base.grntItems.GrntItem>()
 
     val requestPermissionLocation =
         registerForActivityResult(
@@ -268,6 +302,12 @@ class EditGrnt4Fragment : BaseFragment<FragmentEditGrnt4Binding>() {
 
     override fun initClicks() {
 
+        binding.toolbar.backBtn.setOnClickListener {
+            findNavController().navigateUp()
+        }
+        binding.nextBtn.setOnClickListener {
+            initEditViewModel()
+        }
     }
 
     override fun initViewModel() {
@@ -287,14 +327,211 @@ class EditGrnt4Fragment : BaseFragment<FragmentEditGrnt4Binding>() {
         })
         sharedViewModel.grntDetails.observe(viewLifecycleOwner, { response ->
             grntDetails = response
-
+            bindData()
+            setSelectedItemBefore()
+            initItemsViewModel()
             sharedViewModel.grntDetails.removeObservers(viewLifecycleOwner)
         })
 
     }
-//
-//    private fun checkData(): Boolean {
-//        return items.isNotEmpty()
-//                && latLng != null
-//    }
+
+
+    private fun plusBeforeQuantity(postion: Int, item: GrntItem, quantity: TextView) {
+        val newQuantity = item.itemQuantity?.inc()
+        Timber.d("" + newQuantity)
+        quantity.text = "$newQuantity"
+        itemsBefore[postion].itemQuantity = newQuantity
+        grntItemsBeforeAdapter.notifyDataSetChanged()
+    }
+
+    private fun minuesBeforeQuantity(postion: Int, item: GrntItem, quantity: TextView) {
+        val newQuantity = item.itemQuantity?.dec()
+        Timber.d("" + newQuantity)
+        if (newQuantity == 0) {
+            itemsBefore.remove(item)
+            //   itemsBeforeHashSet.remove(item)
+        } else {
+            quantity.text = "$newQuantity"
+            itemsBefore[postion].itemQuantity = newQuantity
+        }
+        grntItemsBeforeAdapter.notifyDataSetChanged()
+    }
+
+
+    private fun setSelectedItemBefore() {
+        itemsBefore.clear()
+        grntDetails?.grntItems?.forEach {
+            itemsBefore.add(it)
+        }
+        submitDataRecycler()
+    }
+
+
+    private fun bindData() {
+        binding.grntItemsBeforeAdapter = grntItemsBeforeAdapter
+        binding.grntItemsAdapter = grntItemsAdapter
+    }
+
+    private fun submitDataRecycler() {
+        grntItemsBeforeAdapter.submitList(itemsBefore)
+    }
+
+
+    private fun initItemsViewModel() {
+        viewModel.grntItems()
+        viewModel._grntItemsMutableLiveData.observe(viewLifecycleOwner, { response ->
+            when (response) {
+                is Resource.Success -> {
+                    DialogUtil.dismissDialog()
+                    when (response.data?.status) {
+                        1 -> {
+                            fillSpinnerItems(response.data.grntItemsList!!)
+                        }
+                        else -> {
+                            showSnackbar(response.data?.message)
+                        }
+                    }
+                }
+                is Resource.Error -> {
+                    DialogUtil.dismissDialog()
+                }
+                is Resource.Loading -> {
+                    DialogUtil.showDialog(requireContext())
+                }
+            }
+        })
+    }
+
+
+    private fun fillSpinnerItems(grntItemsList: List<GrntItems>) {
+        val grntItems = ArrayList<String>()
+        grntItemsList.forEach {
+            grntItems.add(it.itemName!!)
+        }
+        val dataAdapter: ArrayAdapter<String> =
+            ArrayAdapter(
+                requireContext(),
+                R.layout.item_drop_down,
+                grntItems
+            )
+        binding.autoItems.setAdapter(dataAdapter)
+        binding.autoItems.setOnItemClickListener { parent, view, position, id ->
+
+            items = addGrntITems(grntItemsList, position).distinctBy {
+                it.itemID
+            } as ArrayList<GrntItems>
+
+            Timber.d("$items")
+            grntItemsAdapter.submitList(items)
+            grntItemsAdapter.notifyDataSetChanged()
+        }
+    }
+
+
+    private fun addGrntITems(grntItemsList: List<GrntItems>, position: Int): List<GrntItems> {
+        var grntItems: GrntItems? = null
+        grntItems = GrntItems(
+            grntItemsList[position].itemID,
+            grntItemsList[position].itemName,
+            1
+        )
+        itemsHashSet.add(grntItems)
+
+        return itemsHashSet.toMutableList()
+    }
+
+
+    private fun plusQuantity(postion: Int, item: GrntItems, quantity: TextView) {
+        val newQuantity = item.itemQuantity?.inc()
+        Timber.d("" + newQuantity)
+        quantity.text = "$newQuantity"
+        items[postion].itemQuantity = newQuantity
+        grntItemsAdapter.notifyDataSetChanged()
+    }
+
+    private fun minuesQuantity(postion: Int, item: GrntItems, quantity: TextView) {
+        val newQuantity = item.itemQuantity?.dec()
+        Timber.d("" + newQuantity)
+        if (newQuantity == 0) {
+            items.removeAt(postion)
+            itemsHashSet.remove(item)
+        } else {
+            quantity.text = "$newQuantity"
+            items[postion].itemQuantity = newQuantity
+        }
+        grntItemsAdapter.notifyDataSetChanged()
+    }
+
+
+    private fun fillGrntItems(): ArrayList<com.bellacity.data.model.base.grntItems.GrntItem> {
+        bodyGrntItem.clear()
+        items.forEach {
+            val grntItem =
+                com.bellacity.data.model.base.grntItems.GrntItem(it.itemID, it.itemQuantity)
+            bodyGrntItem.add(grntItem)
+        }
+        itemsBefore.forEach {
+            val grntItem =
+                com.bellacity.data.model.base.grntItems.GrntItem(it.itemID, it.itemQuantity)
+            bodyGrntItem.add(grntItem)
+        }
+
+        return bodyGrntItem
+    }
+
+
+    private fun initEditViewModel() {
+        viewModelEdit.editGrnt(bodyEditGrnt()).observe(viewLifecycleOwner,
+            { response ->
+                when (response) {
+                    is Resource.Success -> {
+                        DialogUtil.dismissDialog()
+                        when (response.data?.status) {
+                            1 -> {
+                                DialogUtil.showGeneraCongrts(
+                                    requireContext(), { goToPreviewFragment() },
+                                    totalPoints = " مبروك لقد تم تعديل المعاينة بنجاح ولقد تم اضافة نقاط للفني برصيد ${response.data.totalPoints}"
+                                )
+                            }
+                            else -> {
+                                showSnackbar(response.data?.message)
+                            }
+                        }
+                    }
+                    is Resource.Error -> {
+                        DialogUtil.dismissDialog()
+                    }
+                    is Resource.Loading -> {
+                        DialogUtil.showDialog(requireContext())
+                    }
+                }
+
+            })
+
+    }
+
+    private fun goToPreviewFragment() {
+        findNavController().navigate(R.id.action_editGrnt4Fragment_to_edit_button_navigation)
+    }
+
+    private fun bodyEditGrnt(): BodyEditGrnt {
+        return BodyEditGrnt(
+            bodyEditGrnt?.grntID,
+            bodyEditGrnt?.techID,
+            bodyEditGrnt?.distributorID,
+            bodyEditGrnt?.consumerName,
+            bodyEditGrnt?.consumerPhone,
+            bodyEditGrnt?.consumerAddress,
+            fillGrntItems(),
+            bodyEditGrnt?.grntItemSerials,
+            bodyEditGrnt?.bookNo,
+            bodyEditGrnt?.grntType,
+            bodyEditGrnt?.grntCobonSerial,
+            bodyEditGrnt?.grntItemsType,
+            bodyEditGrnt?.grntMerchant,
+            binding.giftTextInput.editText?.text.toString(),
+            latLng?.latitude,
+            latLng?.longitude
+        )
+    }
 }

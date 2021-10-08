@@ -26,6 +26,7 @@ object Constant {
     const val CHECK_SERIAL = BASE_ROUTS + "ValidateSerial"
     const val GRNT_ITEMS = BASE_ROUTS + "GetGrntItemList"
     const val ADD_GRNT = BASE_ROUTS + "AddGrnt"
+    const val EDIT_GRNT = BASE_ROUTS + "EditGrnt"
     const val GET_GRNT = BASE_ROUTS + "GetGrntSimpleList"
 
     //endregion

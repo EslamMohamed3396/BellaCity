@@ -59,10 +59,15 @@ class EditGrnt3Fragment : BaseFragment<FragmentEditGrnt3Binding>() {
         }
         binding.toolbar.backBtn.setOnClickListener {
             findNavController().navigateUp()
-            Timber.d("$selectedSerialList")
+
         }
         binding.imTakePhoto.setOnClickListener {
             pickImage()
+        }
+
+        binding.nextBtn.setOnClickListener {
+            Timber.d("$selectedSerialList")
+            goToEditGrant4()
         }
 
     }

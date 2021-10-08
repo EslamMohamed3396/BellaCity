@@ -8,11 +8,11 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class GrntItem(
     @SerializedName("ItemID")
-    val itemID: Int?,
+    var itemID: Int?,
     @SerializedName("ItemName")
     val itemName: String?,
     @SerializedName("ItemQuantity")
-    val itemQuantity: Int?,
+    var itemQuantity: Int?,
     @SerializedName("ItemTotalPoints")
     val itemTotalPoints: Int?
 ) : Parcelable

@@ -1,6 +1,5 @@
 package com.bellacity.data.model.base.grntItems
 
-
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize

@@ -13,6 +13,7 @@ import com.bellacity.data.model.cobon.response.ResponseCobon
 import com.bellacity.data.model.detailsGrnt.request.BodyPreviousPreview
 import com.bellacity.data.model.detailsGrnt.response.ResponseGrntDetails
 import com.bellacity.data.model.distributor.response.ResponseDistributor
+import com.bellacity.data.model.editGrnt.request.BodyEditGrnt
 import com.bellacity.data.model.items.response.ResponseItems
 import com.bellacity.data.model.login.request.BodyLogin
 import com.bellacity.data.model.login.response.ResponseLogin
@@ -70,6 +71,9 @@ interface ApiService {
 
     @POST(Constant.ADD_GRNT)
     fun addGrnt(@Body bodyAddGrnt: BodyAddGrnt): Single<ResponseAddGrnt>
+
+    @POST(Constant.EDIT_GRNT)
+    fun editGrnt(@Body bodyEditGrnt: BodyEditGrnt): Single<ResponseAddGrnt>
 
     @POST(Constant.GET_GRNT)
     fun getGrnt(): Single<ResponsePreviewsGrnt>

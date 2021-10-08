@@ -115,5 +115,13 @@
         android:id="@+id/editGrnt4Fragment"
         android:name="com.bellacity.ui.fragment.editGrnt.EditGrnt4Fragment"
         android:label="fragment_edit_grnt4"
-        tools:layout="@layout/fragment_edit_grnt4" />
+        tools:layout="@layout/fragment_edit_grnt4">
+        <action
+            android:id="@+id/action_editGrnt4Fragment_to_edit_button_navigation"
+            app:destination="@id/edit_button_navigation"
+            app:enterAnim="@anim/anim_slide_in_left"
+            app:exitAnim="@anim/anim_slide_out_left"
+            app:popUpTo="@id/home_button_navigation"
+            app:popUpToInclusive="true" />
+    </fragment>
 </navigation>
