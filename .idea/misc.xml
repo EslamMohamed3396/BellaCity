@@ -3,12 +3,14 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Eslam/Documents/GitHub/BellaCity/app/src/main/res/drawable/bottom_nav_icon_color_selector.xml" value="0.16018518518518518" />
         <entry key="..\:/Users/Eslam/Documents/GitHub/BellaCity/app/src/main/res/drawable/congrts.xml" value="0.17407407407407408" />
         <entry key="..\:/Users/Eslam/Documents/GitHub/BellaCity/app/src/main/res/drawable/ic_baseline_arrow_back_24.xml" value="0.17962962962962964" />
+        <entry key="..\:/Users/Eslam/Documents/GitHub/BellaCity/app/src/main/res/drawable/ic_baseline_exit_to_app_24.xml" value="0.16018518518518518" />
         <entry key="..\:/Users/Eslam/Documents/GitHub/BellaCity/app/src/main/res/drawable/minues.xml" value="0.1787037037037037" />
         <entry key="..\:/Users/Eslam/Documents/GitHub/BellaCity/app/src/main/res/drawable/plus.xml" value="0.1787037037037037" />
         <entry key="..\:/Users/Eslam/Documents/GitHub/BellaCity/app/src/main/res/drawable/somthing_wrong.xml" value="0.19444444444444445" />
-        <entry key="..\:/Users/Eslam/Documents/GitHub/BellaCity/app/src/main/res/layout/activity_main.xml" value="0.2" />
+        <entry key="..\:/Users/Eslam/Documents/GitHub/BellaCity/app/src/main/res/layout/activity_main.xml" value="0.33" />
         <entry key="..\:/Users/Eslam/Documents/GitHub/BellaCity/app/src/main/res/layout/congrts_dialog.xml" value="0.22" />
         <entry key="..\:/Users/Eslam/Documents/GitHub/BellaCity/app/src/main/res/layout/dialog_loading.xml" value="0.19166666666666668" />
         <entry key="..\:/Users/Eslam/Documents/GitHub/BellaCity/app/src/main/res/layout/fragment_add_grnt1.xml" value="0.18" />
@@ -31,9 +33,10 @@
         <entry key="..\:/Users/Eslam/Documents/GitHub/BellaCity/app/src/main/res/layout/item_preview_list.xml" value="0.22" />
         <entry key="..\:/Users/Eslam/Documents/GitHub/BellaCity/app/src/main/res/layout/item_selected_cobon_before.xml" value="0.15185185185185185" />
         <entry key="..\:/Users/Eslam/Documents/GitHub/BellaCity/app/src/main/res/layout/item_tech_list.xml" value="0.25" />
-        <entry key="..\:/Users/Eslam/Documents/GitHub/BellaCity/app/src/main/res/layout/something_wrong.xml" value="0.25" />
+        <entry key="..\:/Users/Eslam/Documents/GitHub/BellaCity/app/src/main/res/layout/logout_dialog.xml" value="0.2" />
+        <entry key="..\:/Users/Eslam/Documents/GitHub/BellaCity/app/src/main/res/layout/something_wrong.xml" value="0.22" />
         <entry key="..\:/Users/Eslam/Documents/GitHub/BellaCity/app/src/main/res/layout/toolbar_custom.xml" value="0.22" />
-        <entry key="..\:/Users/Eslam/Documents/GitHub/BellaCity/app/src/main/res/menu/bottom_navigation_menu.xml" value="0.19166666666666668" />
+        <entry key="..\:/Users/Eslam/Documents/GitHub/BellaCity/app/src/main/res/menu/bottom_navigation_menu.xml" value="0.15" />
         <entry key="..\:/Users/Eslam/Documents/GitHub/BellaCity/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.16018518518518518" />
       </map>
     </option>

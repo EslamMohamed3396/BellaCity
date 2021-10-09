@@ -124,4 +124,16 @@
             app:popUpTo="@id/home_button_navigation"
             app:popUpToInclusive="true" />
     </fragment>
+    <dialog
+        android:id="@+id/exit_button_navigation"
+        android:name="com.bellacity.ui.fragment.logout.LogOutFragment"
+        android:label="LogOutFragment">
+        <action
+            android:id="@+id/action_exit_button_navigation_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:enterAnim="@anim/anim_slide_in_left"
+            app:exitAnim="@anim/anim_slide_out_left"
+            app:popUpTo="@id/home_button_navigation"
+            app:popUpToInclusive="true" />
+    </dialog>
 </navigation>

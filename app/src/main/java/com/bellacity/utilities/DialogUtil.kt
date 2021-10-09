@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.Window
 import com.bellacity.R
 import com.bellacity.databinding.CongrtsDialogBinding
+import com.bellacity.databinding.LogoutDialogBinding
 import com.bellacity.databinding.SomethingWrongBinding
 
 
@@ -36,13 +37,14 @@ object DialogUtil {
 
     fun showGeneralWithLogin(
         context: Context,
-        retryListener: () -> Unit,
-        view: SomethingWrongBinding = SomethingWrongBinding.inflate(
+        retryListener: () -> Unit
+    ) {
+        val view: SomethingWrongBinding = SomethingWrongBinding.inflate(
             LayoutInflater.from(context),
             null,
             false
         )
-    ): AlertDialog {
+
         val alertDialog = AlertDialog.Builder(context).apply {
             setView(view.root)
         }.create()
@@ -61,20 +63,19 @@ object DialogUtil {
 
             window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         }.show()
-        return alertDialog
-
     }
 
     fun showGeneraCongrts(
         context: Context,
         congrtsListener: () -> Unit,
-        view: CongrtsDialogBinding = CongrtsDialogBinding.inflate(
+
+        totalPoints: String
+    ) {
+        val view: CongrtsDialogBinding = CongrtsDialogBinding.inflate(
             LayoutInflater.from(context),
             null,
             false
-        ),
-        totalPoints: String
-    ): AlertDialog {
+        )
         val alertDialog = AlertDialog.Builder(context).apply {
             setView(view.root)
         }.create()
@@ -94,7 +95,36 @@ object DialogUtil {
 
             window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         }.show()
-        return alertDialog
+    }
 
+    fun showLogout(
+        context: Context,
+        logoutListener: () -> Unit
+    ) {
+        val view: LogoutDialogBinding = LogoutDialogBinding.inflate(
+            LayoutInflater.from(context),
+            null,
+            false
+        )
+        val alertDialog = AlertDialog.Builder(context).apply {
+            setView(view.root)
+        }.create()
+
+        alertDialog.apply {
+
+
+            setCancelable(false)
+
+            view.logoutBtn.setOnClickListener {
+                logoutListener.invoke()
+                dismiss()
+            }
+            view.cancelBtn.setOnClickListener {
+                dismiss()
+            }
+
+
+            window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        }.show()
     }
 }

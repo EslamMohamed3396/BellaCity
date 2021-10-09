@@ -80,7 +80,6 @@
                     android:layout_marginEnd="8dp"
                     android:hint="@string/date"
                     app:errorEnabled="false"
-
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_weight="0.02"
                     app:layout_constraintStart_toEndOf="@+id/name_text_input"
@@ -93,7 +92,7 @@
                         android:inputType="textPersonName"
                         android:textAlignment="center"
                         android:textColor="@color/black"
-                        app:changeDateFormat="@{grntData.grntDateTime}"
+                        app:changeDateFormatEdit="@{grntData.grntDateTime}"
                         tools:text="01-09-2021" />
 
                 </com.google.android.material.textfield.TextInputLayout>

@@ -4,10 +4,15 @@
         android:id="@+id/home_button_navigation"
         android:enabled="true"
         android:icon="@drawable/ic_baseline_home_24"
-        android:title="" />
+        android:title="اضافة معاينة" />
     <item
         android:id="@+id/edit_button_navigation"
         android:enabled="true"
         android:icon="@drawable/ic_baseline_edit_24"
-        android:title="" />
+        android:title="تعديل معاينة" />
+    <item
+        android:id="@+id/exit_button_navigation"
+        android:enabled="true"
+        android:icon="@drawable/ic_baseline_exit_to_app_24"
+        android:title="تسجيل خروج" />
 </menu>

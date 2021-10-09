@@ -67,6 +67,27 @@ fun changeDateFormat(textView: TextView, dateString: String?) {
 
 }
 
+
+@BindingAdapter("app:changeDateFormatEdit")
+fun changeDateFormatEdit(textView: TextView, dateString: String?) {
+    //2021-09-01 08:40:04
+    var result = ""
+    if (!dateString.isNullOrEmpty()) {
+        val formatterOld = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
+        val formatterNew = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+        var date: Date? = null
+        try {
+            date = formatterOld.parse(dateString)
+        } catch (e: ParseException) {
+            e.printStackTrace()
+        }
+        if (date != null) {
+            result = formatterNew.format(date)
+        }
+        textView.text = "$result"
+    }
+}
+
 @BindingAdapter("app:currentDate")
 fun currentDate(textView: TextView, dateString: Date?) {
     //2021-09-01 08:40:04

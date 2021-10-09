@@ -48,11 +48,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                     DialogUtil.dismissDialog()
                 }
                 is Resource.Error -> {
-                    when (response.code) {
-                        401 -> {
-                            refreshTokenViewModel()
-                        }
-                    }
+
+                    refreshTokenViewModel()
                 }
                 is Resource.Loading -> {
                     DialogUtil.showDialog(requireContext())
@@ -72,13 +69,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                             saveUserData(response.data)
                         }
                         else -> {
-                            DialogUtil.showGeneralWithLogin(requireContext(), { navigateToHome() })
+                            DialogUtil.showGeneralWithLogin(requireContext()) { navigateToHome() }
                         }
                     }
                 }
                 is Resource.Error -> {
                     DialogUtil.dismissDialog()
-                    DialogUtil.showGeneralWithLogin(requireContext(), { navigateToHome() })
+                    DialogUtil.showGeneralWithLogin(requireContext()) { navigateToHome() }
                 }
                 is Resource.Loading -> {
 

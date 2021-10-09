@@ -82,4 +82,27 @@
         <item name="colorOnPrimary">@color/gray</item>
     </style>
 
+
+    <style name="AppBottomSheetDialogTheme" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/BottomSheetModal</item>
+        <item name="android:statusBarColor">@color/black</item>
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:windowSoftInputMode">adjustResize</item>
+    </style>
+
+    <style name="BottomSheetModal" parent="Widget.Design.BottomSheet.Modal">
+        <item name="shapeAppearance">@style/BottomSheetShapeAppearance</item>
+        <item name="behavior_fitToContents">true</item>
+        <item name="behavior_skipCollapsed">true</item>
+        <!-- Effectively disable STATE_HALF_EXPANDED by having the tray have a minuscule height in this state -->
+    </style>
+
+    <style name="BottomSheetShapeAppearance" parent="ShapeAppearance.MaterialComponents.SmallComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeTopLeft">@dimen/radius_16</item>
+        <item name="cornerSizeTopRight">@dimen/radius_16</item>
+        <item name="colorSurface">@color/white</item>
+        <item name="android:backgroundTint">@color/white</item>
+        <item name="android:colorBackground">@color/white</item>
+    </style>
 </resources>
