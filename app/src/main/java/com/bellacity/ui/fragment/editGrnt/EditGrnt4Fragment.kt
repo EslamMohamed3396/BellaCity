@@ -530,8 +530,23 @@ class EditGrnt4Fragment : BaseFragment<FragmentEditGrnt4Binding>() {
             bodyEditGrnt?.grntItemsType,
             bodyEditGrnt?.grntMerchant,
             binding.giftTextInput.editText?.text.toString(),
-            latLng?.latitude,
-            latLng?.longitude
+            getLocation()?.latitude,
+            getLocation()?.longitude
         )
+    }
+
+    private fun getLocation(): LatLng? {
+
+        val location: LatLng? = if (binding.chLocation.isChecked) {
+            latLng
+        } else {
+            val latLng =
+                LatLng(
+                    grntDetails?.grntLat?.toDouble()!!,
+                    grntDetails?.grntLng?.toDouble()!!
+                )
+            latLng
+        }
+        return location
     }
 }
