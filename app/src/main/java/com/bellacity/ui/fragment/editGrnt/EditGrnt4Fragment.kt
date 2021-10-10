@@ -542,8 +542,8 @@ class EditGrnt4Fragment : BaseFragment<FragmentEditGrnt4Binding>() {
         } else {
             val latLng =
                 LatLng(
-                    grntDetails?.grntLat?.toDouble()!!,
-                    grntDetails?.grntLng?.toDouble()!!
+                    grntDetails?.grntLat?.toDouble() ?: 0.0,
+                    grntDetails?.grntLng?.toDouble() ?: 0.0
                 )
             latLng
         }
