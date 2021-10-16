@@ -202,9 +202,9 @@ class EditGrnt3Fragment : BaseFragment<FragmentEditGrnt3Binding>() {
                         DialogUtil.dismissDialog()
                         when (response.data?.status) {
                             1 -> {
-                                initCheckSerialViewModel(response.data.imageText!!)
                                 viewModel.textFromImage(bodySerialFromImage(image))
                                     .removeObservers(viewLifecycleOwner)
+                                initCheckSerialViewModel(response.data.imageText!!)
                             }
                             else -> {
                                 showSnackbar(response.data?.message)
@@ -234,13 +234,13 @@ class EditGrnt3Fragment : BaseFragment<FragmentEditGrnt3Binding>() {
                         DialogUtil.dismissDialog()
                         when (response.data?.status) {
                             1 -> {
-                                selectedSerialList.add(serial)
-                                serialValidList.add(serial)
+                                viewModel.checkSerial(bodyCheckSerial(serial))
+                                    .removeObservers(viewLifecycleOwner)
+                                selectedSerialList.add(serial.trim())
+                                serialValidList.add(serial.trim())
                                 validSerialAdapter.submitList(serialValidList)
                                 validSerialAdapter.notifyDataSetChanged()
                                 binding.serialTextInput.editText?.text?.clear()
-                                viewModel.checkSerial(bodyCheckSerial(serial))
-                                    .removeObservers(viewLifecycleOwner)
                             }
                             else -> {
                                 showSnackbar(response.data?.message)

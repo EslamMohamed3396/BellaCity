@@ -376,7 +376,7 @@ class AddGrnt2Fragment : BaseFragment<FragmentAddGrnt2Binding>() {
                         DialogUtil.dismissDialog()
                         when (response.data?.status) {
                             1 -> {
-                                chekedSerialList.add(serial)
+                                chekedSerialList.add(serial.trim())
                                 validSerialAdapter.submitList(chekedSerialList)
                                 validSerialAdapter.notifyDataSetChanged()
                                 binding.serialTextInput.editText?.text?.clear()
@@ -399,7 +399,7 @@ class AddGrnt2Fragment : BaseFragment<FragmentAddGrnt2Binding>() {
     }
 
     private fun bodyCheckSerial(serial: String): BodyCheckSerial {
-        return BodyCheckSerial(serial)
+        return BodyCheckSerial(serial.trim())
     }
 
     private fun pickImage() {

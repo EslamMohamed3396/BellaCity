@@ -28,6 +28,7 @@ object Constant {
     const val ADD_GRNT = BASE_ROUTS + "AddGrnt"
     const val EDIT_GRNT = BASE_ROUTS + "EditGrnt"
     const val GET_GRNT = BASE_ROUTS + "GetGrntSimpleList"
+    const val DELETE_GRNT = BASE_ROUTS + "DeleteGrnt"
 
     //endregion
 

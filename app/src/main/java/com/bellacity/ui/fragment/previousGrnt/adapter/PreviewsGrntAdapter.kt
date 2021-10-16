@@ -8,7 +8,10 @@ import com.bellacity.data.model.previewsGrnt.response.GrntSimple
 import com.bellacity.databinding.ItemPreviewListBinding
 import com.kadabradigital.ui.base.BaseViewHolder
 
-class PreviewsGrntAdapter(val actionSClickOnGrnt: (postion: Int, item: GrntSimple) -> Unit) :
+class PreviewsGrntAdapter(
+    val actionSClickOnGrnt: (postion: Int, item: GrntSimple) -> Unit,
+    val actionClickDeleteGrnt: (postion: Int, item: GrntSimple) -> Unit
+) :
     RecyclerView.Adapter<BaseViewHolder<*>>() {
     private val differ = AsyncListDiffer(this, PreviewsGrntDiffCallback())
 
@@ -41,6 +44,10 @@ class PreviewsGrntAdapter(val actionSClickOnGrnt: (postion: Int, item: GrntSimpl
 
             binding.root.setOnClickListener {
                 actionSClickOnGrnt(absoluteAdapterPosition, item)
+            }
+
+            binding.imDeleteGrnt.setOnClickListener {
+                actionClickDeleteGrnt(absoluteAdapterPosition, item)
             }
         }
     }

@@ -10,6 +10,8 @@ import com.bellacity.data.model.checkSerial.request.BodyCheckSerial
 import com.bellacity.data.model.checkSerial.response.ResponseCheckSerial
 import com.bellacity.data.model.cobon.request.BodyCobon
 import com.bellacity.data.model.cobon.response.ResponseCobon
+import com.bellacity.data.model.deleteGrnt.request.BodyDeleteGrnt
+import com.bellacity.data.model.deleteGrnt.response.ResponseDeleteGrnt
 import com.bellacity.data.model.detailsGrnt.request.BodyPreviousPreview
 import com.bellacity.data.model.detailsGrnt.response.ResponseGrntDetails
 import com.bellacity.data.model.distributor.response.ResponseDistributor
@@ -77,5 +79,8 @@ interface ApiService {
 
     @POST(Constant.GET_GRNT)
     fun getGrnt(): Single<ResponsePreviewsGrnt>
+
+    @POST(Constant.DELETE_GRNT)
+    fun deleteGrnt(@Body bodyDeleteGrnt: BodyDeleteGrnt): Single<ResponseDeleteGrnt>
 
 }

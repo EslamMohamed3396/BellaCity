@@ -10,6 +10,8 @@ import com.bellacity.data.model.checkSerial.request.BodyCheckSerial
 import com.bellacity.data.model.checkSerial.response.ResponseCheckSerial
 import com.bellacity.data.model.cobon.request.BodyCobon
 import com.bellacity.data.model.cobon.response.ResponseCobon
+import com.bellacity.data.model.deleteGrnt.request.BodyDeleteGrnt
+import com.bellacity.data.model.deleteGrnt.response.ResponseDeleteGrnt
 import com.bellacity.data.model.detailsGrnt.request.BodyPreviousPreview
 import com.bellacity.data.model.detailsGrnt.response.ResponseGrntDetails
 import com.bellacity.data.model.distributor.response.ResponseDistributor
@@ -184,6 +186,10 @@ object Client {
 
     fun getGrnt(): Single<ResponsePreviewsGrnt> {
         return apiService?.getGrnt()!!
+    }
+
+    fun deleteGrnt(bodyDeleteGrnt: BodyDeleteGrnt): Single<ResponseDeleteGrnt> {
+        return apiService?.deleteGrnt(bodyDeleteGrnt)!!
     }
 
 }

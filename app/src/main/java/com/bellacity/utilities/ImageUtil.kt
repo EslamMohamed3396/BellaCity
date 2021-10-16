@@ -10,7 +10,7 @@ object ImageUtil {
 
     fun encodeImage(bm: Bitmap?): String? {
         val byteArrayOutputStream = ByteArrayOutputStream()
-        bm?.compress(Bitmap.CompressFormat.JPEG, 0, byteArrayOutputStream)
+        bm?.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream)
         val byteArray: ByteArray = byteArrayOutputStream.toByteArray()
         return Base64.encodeToString(byteArray, Base64.DEFAULT)
     }

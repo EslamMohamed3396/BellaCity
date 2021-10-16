@@ -1,9 +1,12 @@
 package com.bellacity.ui.fragment.editGrnt
 
 import android.Manifest
+import android.app.ActivityManager
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
+import android.content.pm.ApplicationInfo
+import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationManager
@@ -40,6 +43,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.tasks.Task
 import timber.log.Timber
 
+
 class EditGrnt4Fragment : BaseFragment<FragmentEditGrnt4Binding>() {
     private var mFusedLocationClient: FusedLocationProviderClient? = null
     private var latLng: LatLng? = null
@@ -49,7 +53,6 @@ class EditGrnt4Fragment : BaseFragment<FragmentEditGrnt4Binding>() {
 
 
     private var itemsBefore = ArrayList<GrntItem>()
-    private var itemsBeforeHashSet = HashSet<GrntItem>()
 
 
     private var itemsHashSet = HashSet<GrntItems>()
@@ -117,7 +120,6 @@ class EditGrnt4Fragment : BaseFragment<FragmentEditGrnt4Binding>() {
                 } else {
                     initAlertDialogForGPS()
                 }
-
             }
             shouldShowRequestPermission() -> {
                 requestPermissionLocation()
@@ -236,7 +238,7 @@ class EditGrnt4Fragment : BaseFragment<FragmentEditGrnt4Binding>() {
     }
 
 
-    fun initAlertDialogForGPS() {
+    private fun initAlertDialogForGPS() {
         val alertDialog = AlertDialog.Builder(requireContext())
             .setTitle(requireContext().resources.getString(R.string.permission))
             .setMessage(requireContext().resources.getString(R.string.gps_required))
@@ -287,8 +289,12 @@ class EditGrnt4Fragment : BaseFragment<FragmentEditGrnt4Binding>() {
 
 
     private fun setCurrentLatLong(currentLatLong: Location) {
-        val currentLocation = LatLng(currentLatLong.latitude, currentLatLong.longitude)
-        latLng = currentLocation
+        if (!isMockLocationOn(currentLatLong)) {
+            val currentLocation = LatLng(currentLatLong.latitude, currentLatLong.longitude)
+            latLng = currentLocation
+        }
+
+
     }
 
 
@@ -549,4 +555,106 @@ class EditGrnt4Fragment : BaseFragment<FragmentEditGrnt4Binding>() {
         }
         return location
     }
+
+
+    //region detected mock location
+
+
+    private fun isMockLocationOn(location: Location): Boolean {
+        return location.isFromMockProvider
+    }
+
+    private fun getListOfFakeLocationApps(context: Context): List<String?> {
+        val runningApps = getRunningApps(context)
+        val fakeApps: MutableList<String?> = ArrayList()
+        for (app in runningApps) {
+            if (!isSystemPackage(context, app) && hasAppPermission(
+                    context,
+                    app,
+                    "android.permission.ACCESS_MOCK_LOCATION"
+                )
+            ) {
+                fakeApps.add(getApplicationName(context, app))
+            }
+        }
+        return fakeApps
+    }
+
+    private fun getRunningApps(context: Context): List<String> {
+        val activityManager = context.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
+        val runningApps: HashSet<String> = HashSet()
+        try {
+            val runAppsList = activityManager.runningAppProcesses
+            for (processInfo in runAppsList) {
+                runningApps.addAll(processInfo.pkgList)
+            }
+        } catch (ex: java.lang.Exception) {
+            ex.printStackTrace()
+        }
+        try {
+            //can throw securityException at api<18 (maybe need "android.permission.GET_TASKS")
+            val runningTasks = activityManager.getRunningTasks(1000)
+            for (taskInfo in runningTasks) {
+                runningApps.add(taskInfo.topActivity!!.packageName)
+            }
+        } catch (ex: java.lang.Exception) {
+            ex.printStackTrace()
+        }
+        try {
+            val runningServices = activityManager.getRunningServices(1000)
+            for (serviceInfo in runningServices) {
+                runningApps.add(serviceInfo.service.packageName)
+            }
+        } catch (ex: java.lang.Exception) {
+            ex.printStackTrace()
+        }
+        return ArrayList(runningApps)
+    }
+
+    private fun isSystemPackage(context: Context, app: String?): Boolean {
+        val packageManager = context.packageManager
+        try {
+            val pkgInfo = packageManager.getPackageInfo(app!!, 0)
+            return pkgInfo.applicationInfo.flags and ApplicationInfo.FLAG_SYSTEM != 0
+        } catch (e: PackageManager.NameNotFoundException) {
+            e.printStackTrace()
+        }
+        return false
+    }
+
+    private fun hasAppPermission(context: Context, app: String?, permission: String): Boolean {
+        val packageManager = context.packageManager
+        val packageInfo: PackageInfo
+        try {
+            packageInfo = packageManager.getPackageInfo(app!!, PackageManager.GET_PERMISSIONS)
+            if (packageInfo.requestedPermissions != null) {
+                for (requestedPermission in packageInfo.requestedPermissions) {
+                    if (requestedPermission == permission) {
+                        return true
+                    }
+                }
+            }
+        } catch (e: PackageManager.NameNotFoundException) {
+            e.printStackTrace()
+        }
+        return false
+    }
+
+    private fun getApplicationName(context: Context, packageName: String?): String? {
+        var appName = packageName
+        val packageManager = context.packageManager
+        try {
+            appName = packageManager.getApplicationLabel(
+                packageManager.getApplicationInfo(
+                    packageName!!,
+                    PackageManager.GET_META_DATA
+                )
+            ).toString()
+        } catch (e: PackageManager.NameNotFoundException) {
+            e.printStackTrace()
+        }
+        return appName
+    }
+
+    //endregion
 }
