@@ -5,7 +5,7 @@ object Constant {
 
 
     //region url and routs
-    const val URL = "http://173.212.218.180:22626"
+    const val URL = "http://bellabanha.com:801"
     const val AUTHORIZATION = "Authorization"
     const val BEARER = "Bearer "
 
