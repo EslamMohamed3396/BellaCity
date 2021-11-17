@@ -30,9 +30,14 @@ class AddGrnt1Fragment : BaseFragment<FragmentAddGrnt1Binding>() {
     override fun initClicks() {
 
         binding.nextBtn.setOnClickListener {
-            if (checkData()) {
-                goToAddGrant2()
+            if (techId != null && distributorId != null) {
+                if (checkData()) {
+                    goToAddGrant2()
+                }
+            } else {
+                showSnackbar("من فضلك اختر اعد اختيار اسم الفني او اسم الموزع")
             }
+
         }
 
         binding.toolbar.backBtn.setOnClickListener {

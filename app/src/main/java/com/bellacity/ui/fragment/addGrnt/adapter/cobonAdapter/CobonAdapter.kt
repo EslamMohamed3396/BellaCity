@@ -1,10 +1,10 @@
 package com.bellacity.ui.fragment.addGrnt.adapter.cobonAdapter
 
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.RecyclerView
+import com.bellacity.R
 import com.bellacity.data.model.cobon.response.Cobon
 import com.bellacity.databinding.ItemCobonListBinding
 import com.bellacity.ui.fragment.editGrnt.adapter.selectedCobonAdapter.SelectedCobonDiffCallback
@@ -40,10 +40,10 @@ class CobonAdapter(val actionSelectedCobon: (postion: Int, item: Cobon) -> Unit)
         override fun bind(item: Cobon) {
             binding.cobon = item
             binding.executePendingBindings()
-            binding.cardView.setCardBackgroundColor(if (item.isSelected) Color.RED else Color.WHITE)
+            binding.cardView.setBackgroundResource(if (item.isSelected) R.color.red else R.color.white)
             binding.cardView.setOnClickListener {
                 item.isSelected = !item.isSelected
-                binding.cardView.setCardBackgroundColor(if (item.isSelected) Color.RED else Color.WHITE)
+                binding.cardView.setBackgroundResource(if (item.isSelected) R.color.red else R.color.white)
                 actionSelectedCobon(absoluteAdapterPosition, item)
             }
         }

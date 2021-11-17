@@ -1,5 +1,6 @@
 package com.bellacity.ui.fragment.addGrnt
 
+import CobonSpinnerAdapter
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
@@ -22,7 +23,6 @@ import com.bellacity.data.model.productType.response.GrntItemsType
 import com.bellacity.data.model.serialFromImage.request.BodySerialFromImage
 import com.bellacity.databinding.FragmentAddGrnt2Binding
 import com.bellacity.ui.base.BaseFragment
-import com.bellacity.ui.fragment.addGrnt.adapter.cobonAdapter.CobonAdapter
 import com.bellacity.ui.fragment.addGrnt.adapter.vaildSerialAdapter.ValidSerialAdapter
 import com.bellacity.utilities.CheckValidData
 import com.bellacity.utilities.DialogUtil
@@ -44,7 +44,7 @@ class AddGrnt2Fragment : BaseFragment<FragmentAddGrnt2Binding>() {
     private var productTypeId: Int? = -1
     private var bodyAddGrnt: BodyAddGrnt? = null
     private val args: AddGrnt2FragmentArgs by navArgs()
-    private val cobonAdapter: CobonAdapter by lazy { CobonAdapter(::clickOnCobon) }
+
     private val validSerialAdapter: ValidSerialAdapter by lazy { ValidSerialAdapter(::deleteCheckedSerial) }
     private val chekedSerialList = ArrayList<String>()
 
@@ -138,15 +138,15 @@ class AddGrnt2Fragment : BaseFragment<FragmentAddGrnt2Binding>() {
 
 
     private fun emptyRecycler() {
-        cobonAdapter.submitList(null)
+        // cobonAdapter.submitList(null)
         selectedCobonsList.clear()
-        binding.rvCobon.visibility = View.GONE
+        binding.cobonInput.visibility = View.GONE
         binding.tvCobon.text = "*لا توجد كوبونات"
     }
 
     private fun visiableRecycler() {
-        cobonAdapter.submitList(cobonList)
-        binding.rvCobon.visibility = View.VISIBLE
+        // cobonAdapter.submitList(cobonList)
+        binding.cobonInput.visibility = View.VISIBLE
     }
 
     private fun initBookListViewModel(techId: Int) {
@@ -293,7 +293,7 @@ class AddGrnt2Fragment : BaseFragment<FragmentAddGrnt2Binding>() {
                         1 -> {
                             cobonList = response.data.cobonList
                             if (!response.data.cobonList.isNullOrEmpty()) {
-                                cobonAdapter.submitList(response.data.cobonList)
+                                fillSpinnerCobon(response.data.cobonList)
                                 binding.rvCobon.visibility = View.VISIBLE
                                 binding.tvCobon.text = getString(R.string.please_choose_cobon)
                             } else {
@@ -320,6 +320,18 @@ class AddGrnt2Fragment : BaseFragment<FragmentAddGrnt2Binding>() {
         return BodyCobon(activeType)
     }
 
+
+    private fun fillSpinnerCobon(item: List<Cobon>) {
+        val myAdapter = CobonSpinnerAdapter(
+            requireContext(),
+            0,
+            item,
+            ::clickOnCobon
+        )
+        binding.rvCobon.setAdapter(myAdapter)
+    }
+
+
     private fun clickOnCobon(postion: Int, item: Cobon) {
         Timber.d("$item")
         if (item.isSelected) {
@@ -331,7 +343,7 @@ class AddGrnt2Fragment : BaseFragment<FragmentAddGrnt2Binding>() {
 
 
     private fun bindData() {
-        binding.cobonAdapter = cobonAdapter
+        //  binding.cobonAdapter = cobonAdapter
         binding.validSerialAdapter = validSerialAdapter
     }
 

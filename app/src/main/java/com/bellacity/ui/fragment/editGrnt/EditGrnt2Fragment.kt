@@ -1,5 +1,6 @@
 package com.bellacity.ui.fragment.editGrnt
 
+import CobonSpinnerAdapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,7 +20,6 @@ import com.bellacity.data.model.productType.response.GrntItemsType
 import com.bellacity.databinding.FragmentEditGrnt2Binding
 import com.bellacity.ui.base.BaseFragment
 import com.bellacity.ui.fragment.addGrnt.AddGrntViewModel
-import com.bellacity.ui.fragment.addGrnt.adapter.cobonAdapter.CobonAdapter
 import com.bellacity.ui.fragment.editGrnt.adapter.selectedCobonAdapter.SelectedCobonAdapter
 import com.bellacity.utilities.DialogUtil
 import com.bellacity.utilities.Resource
@@ -33,8 +33,9 @@ class EditGrnt2Fragment : BaseFragment<FragmentEditGrnt2Binding>() {
     private var bodyEditGrnt: BodyEditGrnt? = null
     private var productTypeId: Int? = null
     private val viewModel: AddGrntViewModel by viewModels()
-    private var cobonList = ArrayList<Cobon>()
-    private val cobonAdapter: CobonAdapter by lazy { CobonAdapter(::clickOnCobon) }
+
+    // private var cobonList = ArrayList<Cobon>()
+    // private val cobonAdapter: CobonAdapter by lazy { CobonAdapter(::clickOnCobon) }
     private val selectedCobonBeforeAdapter:
             SelectedCobonAdapter by lazy { SelectedCobonAdapter(::clickOnDeleteCobon) }
     private var selectedCobonsList = ArrayList<Int>()
@@ -295,10 +296,10 @@ class EditGrnt2Fragment : BaseFragment<FragmentEditGrnt2Binding>() {
                     DialogUtil.dismissDialog()
                     when (response.data?.status) {
                         1 -> {
-                            cobonList = (response.data.cobonList as ArrayList<Cobon>?)!!
+                            // cobonList = (response.data.cobonList as ArrayList<Cobon>?)!!
 
                             if (!response.data.cobonList.isNullOrEmpty()) {
-                                cobonAdapter.submitList(response.data.cobonList)
+                                fillSpinnerCobon(response.data.cobonList)
                                 binding.rvCobon.visibility = View.VISIBLE
                                 binding.tvCobon.text = getString(R.string.please_choose_cobon)
                             } else {
@@ -335,10 +336,10 @@ class EditGrnt2Fragment : BaseFragment<FragmentEditGrnt2Binding>() {
     }
 
     private fun emptyRecycler() {
-        cobonAdapter.submitList(null)
+        // cobonAdapter.submitList(null)
         selectedCobonsList.clear()
         selectedCobonBeforeAdapter.submitList(null)
-        binding.rvCobon.visibility = View.GONE
+        binding.cobonInput.visibility = View.GONE
         binding.tvCobon.text = "*لا توجد كوبونات"
         binding.textView5.visibility = View.GONE
     }
@@ -347,8 +348,8 @@ class EditGrnt2Fragment : BaseFragment<FragmentEditGrnt2Binding>() {
         setSelectedCobon()
         bindSelectedCobonRecycler()
         binding.tvCobon.text = getString(R.string.cobons)
-        cobonAdapter.submitList(cobonList)
-        binding.rvCobon.visibility = View.VISIBLE
+        //  cobonAdapter.submitList(cobonList)
+        binding.cobonInput.visibility = View.VISIBLE
         binding.textView5.visibility = View.VISIBLE
 
     }
@@ -362,15 +363,15 @@ class EditGrnt2Fragment : BaseFragment<FragmentEditGrnt2Binding>() {
     }
 
 
-//    private fun getSerialSelectedCobon(): List<Int> {
-//        val serialCobon = ArrayList<Int>()
-//
-//        selectedCobonsList.forEach {
-//            serialCobon.add(it.coubonSerial!!)
-//        }
-//        return serialCobon
-//    }
-
+    private fun fillSpinnerCobon(item: List<Cobon>) {
+        val myAdapter = CobonSpinnerAdapter(
+            requireContext(),
+            0,
+            item,
+            ::clickOnCobon
+        )
+        binding.rvCobon.setAdapter(myAdapter)
+    }
 
     //endregion
 
@@ -400,7 +401,7 @@ class EditGrnt2Fragment : BaseFragment<FragmentEditGrnt2Binding>() {
 
     private fun bindData() {
         binding.grntData = grntDetails
-        binding.cobonAdapter = cobonAdapter
+        // binding.cobonAdapter = cobonAdapter
         binding.selectedCobonAdapter = selectedCobonBeforeAdapter
     }
 

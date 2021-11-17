@@ -124,18 +124,33 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_cobon"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/cobon_input"
+                style="@style/DropDownTextInputLayoutStyle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:orientation="vertical"
-                android:overScrollMode="never"
-                app:adapter="@{cobonAdapter}"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:errorEnabled="false"
+                app:hintEnabled="false"
                 app:layout_constraintEnd_toEndOf="@+id/active_type_input"
                 app:layout_constraintStart_toStartOf="@+id/active_type_input"
-                app:layout_constraintTop_toBottomOf="@+id/tv_cobon" />
+                app:layout_constraintTop_toBottomOf="@+id/tv_cobon">
+
+                <AutoCompleteTextView
+                    android:id="@+id/rv_cobon"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:clickable="true"
+                    android:drawableEnd="@drawable/ic_baseline_keyboard_arrow_down_24"
+
+                    android:focusable="true"
+                    android:focusableInTouchMode="false"
+                    android:hint="@string/cobons"
+
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_selected_cobon"
@@ -164,7 +179,7 @@
                 android:textColor="@color/red"
                 android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/rv_cobon" />
+                app:layout_constraintTop_toBottomOf="@+id/cobon_input" />
 
 
             <com.google.android.material.button.MaterialButton
