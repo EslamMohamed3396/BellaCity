@@ -1,6 +1,5 @@
 package com.bellacity.ui.fragment.editGrnt
 
-import CobonSpinnerAdapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,6 +19,7 @@ import com.bellacity.data.model.productType.response.GrntItemsType
 import com.bellacity.databinding.FragmentEditGrnt2Binding
 import com.bellacity.ui.base.BaseFragment
 import com.bellacity.ui.fragment.addGrnt.AddGrntViewModel
+import com.bellacity.ui.fragment.addGrnt.adapter.AutoCompleteCobonAdapter
 import com.bellacity.ui.fragment.editGrnt.adapter.selectedCobonAdapter.SelectedCobonAdapter
 import com.bellacity.utilities.DialogUtil
 import com.bellacity.utilities.Resource
@@ -299,7 +299,7 @@ class EditGrnt2Fragment : BaseFragment<FragmentEditGrnt2Binding>() {
                             // cobonList = (response.data.cobonList as ArrayList<Cobon>?)!!
 
                             if (!response.data.cobonList.isNullOrEmpty()) {
-                                fillSpinnerCobon(response.data.cobonList)
+                                fillCobonAutoCompelete(response.data.cobonList)
                                 binding.rvCobon.visibility = View.VISIBLE
                                 binding.tvCobon.text = getString(R.string.please_choose_cobon)
                             } else {
@@ -326,14 +326,6 @@ class EditGrnt2Fragment : BaseFragment<FragmentEditGrnt2Binding>() {
         return BodyCobon(activeType)
     }
 
-    private fun clickOnCobon(postion: Int, item: Cobon) {
-        Timber.d("$item")
-        if (item.isSelected) {
-            selectedCobonsList.add(item.coubonSerial!!)
-        } else {
-            selectedCobonsList.remove(item.coubonSerial!!)
-        }
-    }
 
     private fun emptyRecycler() {
         // cobonAdapter.submitList(null)
@@ -363,16 +355,29 @@ class EditGrnt2Fragment : BaseFragment<FragmentEditGrnt2Binding>() {
     }
 
 
-    private fun fillSpinnerCobon(item: List<Cobon>) {
-        val myAdapter = CobonSpinnerAdapter(
+    private fun fillCobonAutoCompelete(item: List<Cobon>) {
+
+        val adapter = AutoCompleteCobonAdapter(
             requireContext(),
-            0,
+            R.layout.item_tech_list,
             item,
             ::clickOnCobon
         )
-        binding.rvCobon.setAdapter(myAdapter)
+
+        binding.rvCobon.setAdapter(adapter)
+
     }
 
+
+    private fun clickOnCobon(item: Cobon) {
+        if (selectedCobonsList.isNotEmpty()) {
+            selectedCobonsList.remove(item.coubonSerial)
+        }
+        binding.cobonInput.editText?.setText(item.coubonSerial.toString())
+
+        selectedCobonsList.add(item.coubonSerial!!)
+
+    }
     //endregion
 
 

@@ -1,6 +1,5 @@
 package com.bellacity.ui.fragment.addGrnt
 
-import CobonSpinnerAdapter
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
@@ -10,7 +9,6 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import com.bellacity.R
 import com.bellacity.data.model.activeType.response.GrntTypes
 import com.bellacity.data.model.addGrnt.request.BodyAddGrnt
@@ -23,6 +21,7 @@ import com.bellacity.data.model.productType.response.GrntItemsType
 import com.bellacity.data.model.serialFromImage.request.BodySerialFromImage
 import com.bellacity.databinding.FragmentAddGrnt2Binding
 import com.bellacity.ui.base.BaseFragment
+import com.bellacity.ui.fragment.addGrnt.adapter.AutoCompleteCobonAdapter
 import com.bellacity.ui.fragment.addGrnt.adapter.vaildSerialAdapter.ValidSerialAdapter
 import com.bellacity.utilities.CheckValidData
 import com.bellacity.utilities.DialogUtil
@@ -43,7 +42,6 @@ class AddGrnt2Fragment : BaseFragment<FragmentAddGrnt2Binding>() {
     private var bookId: Int? = -1
     private var productTypeId: Int? = -1
     private var bodyAddGrnt: BodyAddGrnt? = null
-    private val args: AddGrnt2FragmentArgs by navArgs()
 
     private val validSerialAdapter: ValidSerialAdapter by lazy { ValidSerialAdapter(::deleteCheckedSerial) }
     private val chekedSerialList = ArrayList<String>()
@@ -173,6 +171,7 @@ class AddGrnt2Fragment : BaseFragment<FragmentAddGrnt2Binding>() {
         })
     }
 
+
     private fun fillSpinnerBookNumber(bookNumberList: List<BookNo>) {
         val bookNumber = ArrayList<Int>()
         bookNumberList.forEach {
@@ -185,7 +184,7 @@ class AddGrnt2Fragment : BaseFragment<FragmentAddGrnt2Binding>() {
                 bookNumber
             )
         binding.autoBookNumber.setAdapter(dataAdapter)
-        binding.autoBookNumber.setOnItemClickListener { parent, view, position, id ->
+        binding.autoBookNumber.setOnItemClickListener { _, _, position, _ ->
             bookId = bookNumberList[position].bookNo
         }
     }
@@ -230,7 +229,7 @@ class AddGrnt2Fragment : BaseFragment<FragmentAddGrnt2Binding>() {
                 productType
             )
         binding.autoProductType.setAdapter(dataAdapter)
-        binding.autoProductType.setOnItemClickListener { parent, view, position, id ->
+        binding.autoProductType.setOnItemClickListener { _, _, position, _ ->
             productTypeId = productTypeList[position].grntItemsTypeID
             initCobonListViewModel(productTypeId)
         }
@@ -272,7 +271,7 @@ class AddGrnt2Fragment : BaseFragment<FragmentAddGrnt2Binding>() {
                 activeType
             )
         binding.autoActiveType.setAdapter(dataAdapter)
-        binding.autoActiveType.setOnItemClickListener { parent, view, position, id ->
+        binding.autoActiveType.setOnItemClickListener { _, _, position, _ ->
             activeTypeId = activeTypeList[position].grntTypeID
 
             if (activeTypeId == 1) {
@@ -293,7 +292,7 @@ class AddGrnt2Fragment : BaseFragment<FragmentAddGrnt2Binding>() {
                         1 -> {
                             cobonList = response.data.cobonList
                             if (!response.data.cobonList.isNullOrEmpty()) {
-                                fillSpinnerCobon(response.data.cobonList)
+                                fillCobonAutoCompelete(response.data.cobonList)
                                 binding.rvCobon.visibility = View.VISIBLE
                                 binding.tvCobon.text = getString(R.string.please_choose_cobon)
                             } else {
@@ -321,24 +320,28 @@ class AddGrnt2Fragment : BaseFragment<FragmentAddGrnt2Binding>() {
     }
 
 
-    private fun fillSpinnerCobon(item: List<Cobon>) {
-        val myAdapter = CobonSpinnerAdapter(
+    private fun fillCobonAutoCompelete(item: List<Cobon>) {
+
+        val adapter = AutoCompleteCobonAdapter(
             requireContext(),
-            0,
+            R.layout.item_tech_list,
             item,
             ::clickOnCobon
         )
-        binding.rvCobon.setAdapter(myAdapter)
+
+        binding.rvCobon.setAdapter(adapter)
+
     }
 
 
-    private fun clickOnCobon(postion: Int, item: Cobon) {
-        Timber.d("$item")
-        if (item.isSelected) {
-            selectedCobonsList.add(item.coubonSerial!!)
-        } else {
+    private fun clickOnCobon(item: Cobon) {
+        if (selectedCobonsList.isNotEmpty()) {
             selectedCobonsList.remove(item.coubonSerial)
         }
+        binding.cobonInput.editText?.setText(item.coubonSerial.toString())
+
+        selectedCobonsList.add(item.coubonSerial!!)
+
     }
 
 

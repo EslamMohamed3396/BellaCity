@@ -124,9 +124,10 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
+
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/cobon_input"
-                style="@style/DropDownTextInputLayoutStyle"
+                style="@style/TextInputLayoutStyle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
@@ -136,18 +137,15 @@
                 app:layout_constraintStart_toStartOf="@+id/active_type_input"
                 app:layout_constraintTop_toBottomOf="@+id/tv_cobon">
 
+
                 <AutoCompleteTextView
                     android:id="@+id/rv_cobon"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
-                    android:clickable="true"
-                    android:drawableEnd="@drawable/ic_baseline_keyboard_arrow_down_24"
-
-                    android:focusable="true"
-                    android:focusableInTouchMode="false"
+                    android:completionThreshold="1"
                     android:hint="@string/cobons"
+                    android:padding="8dp" />
 
-                    />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -204,7 +202,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
-                android:text="@string/cobons"
+                android:text="@string/please_choose_cobon"
                 android:textColor="@color/red"
                 android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="parent"
