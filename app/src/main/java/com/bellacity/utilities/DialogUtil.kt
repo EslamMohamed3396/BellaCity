@@ -7,9 +7,11 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.view.LayoutInflater
 import android.view.Window
+import androidx.recyclerview.widget.RecyclerView
 import com.bellacity.R
 import com.bellacity.databinding.CongrtsDialogBinding
 import com.bellacity.databinding.LogoutDialogBinding
+import com.bellacity.databinding.RecyclerSearchDialogBinding
 import com.bellacity.databinding.SomethingWrongBinding
 
 
@@ -82,7 +84,6 @@ object DialogUtil {
 
         alertDialog.apply {
 
-
             setCancelable(false)
 
             view.title.text = totalPoints
@@ -95,6 +96,39 @@ object DialogUtil {
 
             window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         }.show()
+    }
+
+    var alertDialog: AlertDialog? = null
+    fun <T : RecyclerView.ViewHolder?> showRecycler(
+        context: Context,
+        adabter: RecyclerView.Adapter<T>
+    ) {
+        val view: RecyclerSearchDialogBinding = RecyclerSearchDialogBinding.inflate(
+            LayoutInflater.from(context),
+            null,
+            false
+        )
+        if (alertDialog != null && alertDialog?.isShowing == true) {
+            alertDialog?.dismiss()
+        }
+        alertDialog = AlertDialog.Builder(context).apply {
+            setView(view.root)
+        }.create()
+
+
+        alertDialog?.apply {
+            view.rvAdapter.adapter = adabter
+            setCancelable(false)
+            view.imClose.setOnClickListener {
+                dismiss()
+            }
+        }?.show()
+    }
+
+    fun dismissRecyclerDialog() {
+        if (alertDialog != null && alertDialog?.isShowing == true) {
+            alertDialog?.dismiss()
+        }
     }
 
     fun showLogout(

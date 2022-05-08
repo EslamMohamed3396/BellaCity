@@ -11,6 +11,7 @@ import com.bellacity.R
 import com.bellacity.data.model.activeType.response.GrntTypes
 import com.bellacity.data.model.bookNumber.request.BodyBookNumber
 import com.bellacity.data.model.bookNumber.response.BookNo
+import com.bellacity.data.model.checkCobonLlimit.request.BodyCheckLimitCobon
 import com.bellacity.data.model.cobon.request.BodyCobon
 import com.bellacity.data.model.cobon.response.Cobon
 import com.bellacity.data.model.detailsGrnt.response.Grnt
@@ -64,7 +65,7 @@ class EditGrnt2Fragment : BaseFragment<FragmentEditGrnt2Binding>() {
     }
 
     override fun onCreateInit() {
-        hideNavBtn()
+        hideMainNavBtn()
     }
 
 
@@ -377,7 +378,46 @@ class EditGrnt2Fragment : BaseFragment<FragmentEditGrnt2Binding>() {
 
         selectedCobonsList.add(item.coubonSerial!!)
 
+        initCheckLimitCobonViewModel()
     }
+
+    //region check Limit cobon
+
+    private fun initCheckLimitCobonViewModel() {
+        viewModel.checkLimitCobon(bodyCheckLimitCobon())
+            .observe(viewLifecycleOwner, { response ->
+                when (response) {
+                    is Resource.Success -> {
+                        DialogUtil.dismissDialog()
+                        when (response.data?.status) {
+                            1 -> {
+                                showSnackbar("هذه الكوبون صالح للاستخدام")
+                            }
+                            else -> {
+                                if (selectedCobonsList.isNotEmpty()) {
+                                    selectedCobonsList.clear()
+                                    binding.cobonInput.editText?.text?.clear()
+                                }
+                                showSnackbar(response.data?.message)
+                            }
+                        }
+                    }
+                    is Resource.Error -> {
+                        DialogUtil.dismissDialog()
+                    }
+                    is Resource.Loading -> {
+                        DialogUtil.showDialog(requireContext())
+                    }
+                }
+            })
+    }
+
+    private fun bodyCheckLimitCobon(): BodyCheckLimitCobon {
+        return BodyCheckLimitCobon(selectedCobonsList, productTypeId)
+    }
+
+    //endregion
+
     //endregion
 
 

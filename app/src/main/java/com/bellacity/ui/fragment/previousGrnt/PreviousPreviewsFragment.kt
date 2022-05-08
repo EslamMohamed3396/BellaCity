@@ -40,7 +40,7 @@ class PreviousPreviewsFragment : BaseFragment<FragmentPreviousPreviewsBinding>()
 
     override fun onCreateInit() {
         bindData()
-        showNavBtn()
+        showMainNavBtn()
     }
 
 

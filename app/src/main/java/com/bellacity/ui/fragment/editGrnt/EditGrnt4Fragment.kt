@@ -321,7 +321,7 @@ class EditGrnt4Fragment : BaseFragment<FragmentEditGrnt4Binding>() {
     }
 
     override fun onCreateInit() {
-        hideNavBtn()
+        hideMainNavBtn()
         initFusedLocation()
         checkPermissionLocation()
     }

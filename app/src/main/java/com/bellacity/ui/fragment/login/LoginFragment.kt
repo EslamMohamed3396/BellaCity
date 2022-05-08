@@ -35,7 +35,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
     }
 
     override fun onCreateInit() {
-        hideNavBtn()
+        hideMainNavBtn()
 
         textValidation()
 
@@ -64,13 +64,13 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
     //region init view model
 
     private fun initViewModelLogin() {
-        viewModel.login(bodyLogin()).observe(viewLifecycleOwner, { response ->
+        viewModel.login(bodyLogin()).observe(viewLifecycleOwner) { response ->
             when (response) {
                 is Resource.Success -> {
                     DialogUtil.dismissDialog()
                     when (response.data?.status) {
                         1 -> {
-                            saveUserData(response.data!!)
+                            saveUserData(response.data)
                             navigateToHome()
                         }
                         else -> {
@@ -85,7 +85,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
                     DialogUtil.showDialog(requireContext())
                 }
             }
-        })
+        }
     }
 
 
@@ -101,7 +101,9 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
     //region navigate and save
 
     private fun navigateToHome() {
-        findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
+        if (findNavController().currentDestination?.id == R.id.loginFragment) {
+            findNavController().navigate(R.id.action_loginFragment_to_chooseTypeFragment)
+        }
     }
 
     private fun saveUserData(responseLogin: ResponseLogin) {
@@ -112,7 +114,9 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
             responseLogin.superName,
             responseLogin.superID2,
             responseLogin.superName2,
-            responseLogin.token
+            responseLogin.token,
+            responseLogin.userType,
+            responseLogin.userAccessPermissionList
         )
         PreferencesUtils(requireContext()).getInstance()
             ?.putUserData(Constant.USER_DATA_KEY, userData)

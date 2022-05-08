@@ -5,17 +5,27 @@ import com.bellacity.data.model.addGrnt.request.BodyAddGrnt
 import com.bellacity.data.model.addGrnt.response.ResponseAddGrnt
 import com.bellacity.data.model.bookNumber.request.BodyBookNumber
 import com.bellacity.data.model.bookNumber.response.ResponseBookNumber
+import com.bellacity.data.model.checkCobonLlimit.request.BodyCheckLimitCobon
+import com.bellacity.data.model.checkCobonLlimit.response.ResponseCheckLimitCobon
 import com.bellacity.data.model.checkLogin.response.ResonseCheckLogin
 import com.bellacity.data.model.checkSerial.request.BodyCheckSerial
 import com.bellacity.data.model.checkSerial.response.ResponseCheckSerial
+import com.bellacity.data.model.clientList.request.BodyClientList
+import com.bellacity.data.model.clientList.response.ResponseClientList
 import com.bellacity.data.model.cobon.request.BodyCobon
 import com.bellacity.data.model.cobon.response.ResponseCobon
 import com.bellacity.data.model.deleteGrnt.request.BodyDeleteGrnt
 import com.bellacity.data.model.deleteGrnt.response.ResponseDeleteGrnt
+import com.bellacity.data.model.deliveryAgentList.request.BodyDeliveryAgentList
+import com.bellacity.data.model.deliveryAgentList.response.ResponseDeliveryAgentList
 import com.bellacity.data.model.detailsGrnt.request.BodyPreviousPreview
 import com.bellacity.data.model.detailsGrnt.response.ResponseGrntDetails
 import com.bellacity.data.model.distributor.response.ResponseDistributor
+import com.bellacity.data.model.driverList.request.BodyDriverList
+import com.bellacity.data.model.driverList.response.ResponseDriverList
 import com.bellacity.data.model.editGrnt.request.BodyEditGrnt
+import com.bellacity.data.model.extraOptions.request.BodyExtraOptions
+import com.bellacity.data.model.extraOptions.response.ResponseExtraOptions
 import com.bellacity.data.model.items.response.ResponseItems
 import com.bellacity.data.model.login.request.BodyLogin
 import com.bellacity.data.model.login.response.ResponseLogin
@@ -24,6 +34,10 @@ import com.bellacity.data.model.productType.response.ResponseProductType
 import com.bellacity.data.model.refreshToken.response.BodyRefreshToken
 import com.bellacity.data.model.serialFromImage.request.BodySerialFromImage
 import com.bellacity.data.model.serialFromImage.response.ResponseSerialFromImage
+import com.bellacity.data.model.storageList.request.BodyStoarageList
+import com.bellacity.data.model.storageList.response.ResponseStorageList
+import com.bellacity.data.model.supplementItems.request.BodySupplementItems
+import com.bellacity.data.model.supplementItems.response.ResponseSupplementItems
 import com.bellacity.data.model.tech.response.ResponseTech
 import com.bellacity.utilities.Constant
 import io.reactivex.Single
@@ -82,5 +96,26 @@ interface ApiService {
 
     @POST(Constant.DELETE_GRNT)
     fun deleteGrnt(@Body bodyDeleteGrnt: BodyDeleteGrnt): Single<ResponseDeleteGrnt>
+
+    @POST(Constant.CHECK_COBON_LIMIT)
+    fun checkLimitCobon(@Body bodyCheckLimitCobon: BodyCheckLimitCobon): Single<ResponseCheckLimitCobon>
+
+    @POST(Constant.SUPPLEMENT_ITEMS)
+    fun searchSupplementItems(@Body bodySupplementItems: BodySupplementItems): Single<ResponseSupplementItems>
+
+    @POST(Constant.GET_CLIENT_LIST)
+    fun clientList(@Body bodyClientList: BodyClientList): Single<ResponseClientList>
+
+    @POST(Constant.GET_DELIVERY_AGENT_LIST)
+    fun deliveryAgentList(@Body bodyDeliveryAgentList: BodyDeliveryAgentList): Single<ResponseDeliveryAgentList>
+
+    @POST(Constant.GET_DRIVER_LIST)
+    fun driverAgentList(@Body bodyDriverList: BodyDriverList): Single<ResponseDriverList>
+
+    @POST(Constant.GET_STORAGE_LIST)
+    fun storageList(@Body bodyStorageList: BodyStoarageList): Single<ResponseStorageList>
+
+    @POST(Constant.GET_EXTRA_OPTIONS)
+    fun extraOptionList(@Body bodyExtraOptions: BodyExtraOptions): Single<ResponseExtraOptions>
 
 }

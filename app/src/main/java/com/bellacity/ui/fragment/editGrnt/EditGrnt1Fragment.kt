@@ -50,7 +50,7 @@ class EditGrnt1Fragment : BaseFragment<FragmentEditGrnt1Binding>() {
 
     override fun onCreateInit() {
         textValidation()
-        hideNavBtn()
+        hideMainNavBtn()
     }
 
     private fun checkData(): Boolean {

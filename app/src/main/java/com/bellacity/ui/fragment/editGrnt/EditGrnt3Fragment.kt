@@ -78,7 +78,7 @@ class EditGrnt3Fragment : BaseFragment<FragmentEditGrnt3Binding>() {
 
     override fun onCreateInit() {
         visableCheckSerialButton()
-        hideNavBtn()
+        hideMainNavBtn()
 
     }
 

@@ -60,7 +60,7 @@ class AddGrnt1Fragment : BaseFragment<FragmentAddGrnt1Binding>() {
     override fun onCreateInit() {
         bindData()
         textValidation()
-        hideNavBtn()
+        hideMainNavBtn()
     }
 
 

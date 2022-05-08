@@ -23,6 +23,10 @@ data class ResponseLogin(
     val superID2: Int?,
     @SerializedName("SuperName2")
     val superName2: String?,
+    @SerializedName("UserType")
+    val userType: Int?,
     @SerializedName("Token")
-    val token: String?
+    val token: String?,
+    @SerializedName("UserAccessPermissionList")
+    val userAccessPermissionList: List<UserAccessPermissionList>?,
 ) : Parcelable

@@ -14,6 +14,7 @@ import com.bellacity.data.model.activeType.response.GrntTypes
 import com.bellacity.data.model.addGrnt.request.BodyAddGrnt
 import com.bellacity.data.model.bookNumber.request.BodyBookNumber
 import com.bellacity.data.model.bookNumber.response.BookNo
+import com.bellacity.data.model.checkCobonLlimit.request.BodyCheckLimitCobon
 import com.bellacity.data.model.checkSerial.request.BodyCheckSerial
 import com.bellacity.data.model.cobon.request.BodyCobon
 import com.bellacity.data.model.cobon.response.Cobon
@@ -131,7 +132,7 @@ class AddGrnt2Fragment : BaseFragment<FragmentAddGrnt2Binding>() {
         getGrntSharedViewModel()
         bindData()
         visableCheckSerialButton()
-        hideNavBtn()
+        hideMainNavBtn()
     }
 
 
@@ -342,7 +343,46 @@ class AddGrnt2Fragment : BaseFragment<FragmentAddGrnt2Binding>() {
 
         selectedCobonsList.add(item.coubonSerial!!)
 
+        initCheckLimitCobonViewModel()
+
     }
+
+    //region check Limit cobon
+
+    private fun initCheckLimitCobonViewModel() {
+        viewModel.checkLimitCobon(bodyCheckLimitCobon())
+            .observe(viewLifecycleOwner, { response ->
+                when (response) {
+                    is Resource.Success -> {
+                        DialogUtil.dismissDialog()
+                        when (response.data?.status) {
+                            1 -> {
+                                showSnackbar("هذه الكوبون صالح للاستخدام")
+                            }
+                            else -> {
+                                if (selectedCobonsList.isNotEmpty()) {
+                                    selectedCobonsList.clear()
+                                    binding.cobonInput.editText?.text?.clear()
+                                }
+                                showSnackbar(response.data?.message)
+                            }
+                        }
+                    }
+                    is Resource.Error -> {
+                        DialogUtil.dismissDialog()
+                    }
+                    is Resource.Loading -> {
+                        DialogUtil.showDialog(requireContext())
+                    }
+                }
+            })
+    }
+
+    private fun bodyCheckLimitCobon(): BodyCheckLimitCobon {
+        return BodyCheckLimitCobon(selectedCobonsList, productTypeId)
+    }
+
+    //endregion
 
 
     private fun bindData() {

@@ -344,7 +344,7 @@ class AddGrnt3Fragment : BaseFragment<FragmentAddGrnt3Binding>() {
 
     override fun onCreateInit() {
         bindData()
-        hideNavBtn()
+        hideMainNavBtn()
         initFusedLocation()
         checkPermissionLocation()
 

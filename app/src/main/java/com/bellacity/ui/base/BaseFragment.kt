@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import com.bellacity.R
 import com.bellacity.ui.activity.mainActivity.MainActivity
 import com.bellacity.ui.fragment.SharedViewModel
 import com.google.android.material.snackbar.Snackbar
@@ -32,7 +33,6 @@ abstract class BaseFragment<VDB : ViewDataBinding> : Fragment() {
         initViewModel()
         initClicks()
         onCreateInit()
-
     }
 
     protected abstract fun initClicks()
@@ -47,17 +47,48 @@ abstract class BaseFragment<VDB : ViewDataBinding> : Fragment() {
         snackBar.show()
     }
 
-    protected fun showNavBtn() {
+    protected fun showMainNavBtn() {
+        (activity as MainActivity).binding.bottomNavigation.menu.clear()
+
+        // if ((activity as MainActivity).binding.bottomNavigation.menu.findItem(R.id.home_button_navigation)== null) {
+        (activity as MainActivity).binding.bottomNavigation.inflateMenu(R.menu.bottom_navigation_menu)
+        //  }
         (activity as MainActivity).binding.bottomNavigation.visibility = View.VISIBLE
     }
 
-    protected fun hideNavBtn() {
+    protected fun hideMainNavBtn() {
+//        if ((activity as MainActivity).binding.bottomNavigation.menu.findItem(R.id.home_button_navigation)!=null
+//            && (activity as MainActivity).binding.bottomNavigation.menu.findItem(R.id.home_button_navigation).isVisible
+//        ) {
+        (activity as MainActivity).binding.bottomNavigation.menu.clear()
+        // }
+
         (activity as MainActivity).binding.bottomNavigation.visibility = View.GONE
     }
 
 
-    override fun onPause() {
-        super.onPause()
+    protected fun showInvoiceNavBtn() {
+        (activity as MainActivity).binding.bottomNavigation.menu.clear()
+
+        //   if ((activity as MainActivity).binding.bottomNavigation.menu.findItem(R.id.home_invoice_navigation) == null) {
+        (activity as MainActivity).binding.bottomNavigation.inflateMenu(R.menu.bottom_navigation_menu_invoice)
+        // }
+        (activity as MainActivity).binding.bottomNavigation.visibility = View.VISIBLE
+    }
+
+    protected fun hideInvoiceNavBtn() {
+
+//        if ((activity as MainActivity).binding.bottomNavigation.menu.findItem(R.id.home_invoice_navigation) != null
+//            && (activity as MainActivity).binding.bottomNavigation.menu.findItem(R.id.home_invoice_navigation).isVisible
+//        ) {
+        (activity as MainActivity).binding.bottomNavigation.menu.clear()
+        // }
+        (activity as MainActivity).binding.bottomNavigation.visibility = View.GONE
+    }
+
+
+    override fun onDestroyView() {
+        super.onDestroyView()
         binding.unbind()
     }
 }

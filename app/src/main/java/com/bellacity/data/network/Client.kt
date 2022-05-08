@@ -5,17 +5,27 @@ import com.bellacity.data.model.addGrnt.request.BodyAddGrnt
 import com.bellacity.data.model.addGrnt.response.ResponseAddGrnt
 import com.bellacity.data.model.bookNumber.request.BodyBookNumber
 import com.bellacity.data.model.bookNumber.response.ResponseBookNumber
+import com.bellacity.data.model.checkCobonLlimit.request.BodyCheckLimitCobon
+import com.bellacity.data.model.checkCobonLlimit.response.ResponseCheckLimitCobon
 import com.bellacity.data.model.checkLogin.response.ResonseCheckLogin
 import com.bellacity.data.model.checkSerial.request.BodyCheckSerial
 import com.bellacity.data.model.checkSerial.response.ResponseCheckSerial
+import com.bellacity.data.model.clientList.request.BodyClientList
+import com.bellacity.data.model.clientList.response.ResponseClientList
 import com.bellacity.data.model.cobon.request.BodyCobon
 import com.bellacity.data.model.cobon.response.ResponseCobon
 import com.bellacity.data.model.deleteGrnt.request.BodyDeleteGrnt
 import com.bellacity.data.model.deleteGrnt.response.ResponseDeleteGrnt
+import com.bellacity.data.model.deliveryAgentList.request.BodyDeliveryAgentList
+import com.bellacity.data.model.deliveryAgentList.response.ResponseDeliveryAgentList
 import com.bellacity.data.model.detailsGrnt.request.BodyPreviousPreview
 import com.bellacity.data.model.detailsGrnt.response.ResponseGrntDetails
 import com.bellacity.data.model.distributor.response.ResponseDistributor
+import com.bellacity.data.model.driverList.request.BodyDriverList
+import com.bellacity.data.model.driverList.response.ResponseDriverList
 import com.bellacity.data.model.editGrnt.request.BodyEditGrnt
+import com.bellacity.data.model.extraOptions.request.BodyExtraOptions
+import com.bellacity.data.model.extraOptions.response.ResponseExtraOptions
 import com.bellacity.data.model.items.response.ResponseItems
 import com.bellacity.data.model.login.request.BodyLogin
 import com.bellacity.data.model.login.response.ResponseLogin
@@ -24,11 +34,13 @@ import com.bellacity.data.model.productType.response.ResponseProductType
 import com.bellacity.data.model.refreshToken.response.BodyRefreshToken
 import com.bellacity.data.model.serialFromImage.request.BodySerialFromImage
 import com.bellacity.data.model.serialFromImage.response.ResponseSerialFromImage
+import com.bellacity.data.model.storageList.request.BodyStoarageList
+import com.bellacity.data.model.storageList.response.ResponseStorageList
+import com.bellacity.data.model.supplementItems.request.BodySupplementItems
+import com.bellacity.data.model.supplementItems.response.ResponseSupplementItems
 import com.bellacity.data.model.tech.response.ResponseTech
-import com.bellacity.utilities.App
 import com.bellacity.utilities.Constant
 import com.bellacity.utilities.ErrorHandling
-import com.bellacity.utilities.PreferencesUtils
 import io.reactivex.Single
 import io.reactivex.SingleObserver
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -68,9 +80,11 @@ object Client {
                     val request: Request = original.newBuilder()
                         .header(
                             Constant.AUTHORIZATION,
-                            Constant.BEARER + PreferencesUtils(App.getContext()).getUserData(
-                                Constant.USER_DATA_KEY
-                            )?.token
+                            Constant.BEARER +
+                                    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIzYTQ0YTVmZC00OTYwLTRkMjEtYWI5Mi1mNTVjYmNkYTdiNDMiLCJ2YWxpZCI6IjEiLCJ1c2VyaWQiOiIyNzAwMDA5IiwidXNlcm5hbWUiOiLYp9it2YXYryDYudmE2Yog2YHZiNiy2YoiLCJ1c2VyYWNjZXNzIjoiJiYmJiYmJiYmXyYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYoXysmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiUrJiYmXyYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmXyYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiIsInN1cGVyaWQiOiIwIiwic3VwZXJuYW1lIjoiIiwic3VwZXJpZDIiOiIwIiwic3VwZXJuYW1lMiI6IiIsInVzZXJkaXZpc2lvbiI6ItmF2LTYsdmBINmF2KjZiti52KfYqiIsImV4cCI6MTY1MTk5NjE4MywiaXNzIjoiaHR0cDovL215c2l0ZS5jb20iLCJhdWQiOiJodHRwOi8vbXlzaXRlLmNvbSJ9.ZkqHgm-XlX-kd2hoOOFkWWEiDOObrHtyYOeXo632NvE"
+//                                    PreferencesUtils(App.getContext()).getUserData(
+//                                Constant.USER_DATA_KEY
+                            //                    )?.token
                         )
                         .build()
                     chain.proceed(request)
@@ -190,6 +204,34 @@ object Client {
 
     fun deleteGrnt(bodyDeleteGrnt: BodyDeleteGrnt): Single<ResponseDeleteGrnt> {
         return apiService?.deleteGrnt(bodyDeleteGrnt)!!
+    }
+
+    fun checkLimitCobon(bodyCheckLimitCobon: BodyCheckLimitCobon): Single<ResponseCheckLimitCobon> {
+        return apiService?.checkLimitCobon(bodyCheckLimitCobon)!!
+    }
+
+    fun searchSupplementItems(bodySupplementItems: BodySupplementItems): Single<ResponseSupplementItems> {
+        return apiService?.searchSupplementItems(bodySupplementItems)!!
+    }
+
+    fun clientList(bodyClientList: BodyClientList): Single<ResponseClientList> {
+        return apiService?.clientList(bodyClientList)!!
+    }
+
+    fun deliveryAgentList(bodyDeliveryAgentList: BodyDeliveryAgentList): Single<ResponseDeliveryAgentList> {
+        return apiService?.deliveryAgentList(bodyDeliveryAgentList)!!
+    }
+
+    fun driverAgentList(bodyDriverList: BodyDriverList): Single<ResponseDriverList> {
+        return apiService?.driverAgentList(bodyDriverList)!!
+    }
+
+    fun storageList(bodyStorageList: BodyStoarageList): Single<ResponseStorageList> {
+        return apiService?.storageList(bodyStorageList)!!
+    }
+
+    fun extraOptionList(bodyExtraOptions: BodyExtraOptions): Single<ResponseExtraOptions> {
+        return apiService?.extraOptionList(bodyExtraOptions)!!
     }
 
 }

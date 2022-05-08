@@ -11,6 +11,5 @@ data class GrntItems(
     val itemID: Int?,
     @SerializedName("ItemName")
     val itemName: String?,
-
     var itemQuantity: Int?
 ) : Parcelable

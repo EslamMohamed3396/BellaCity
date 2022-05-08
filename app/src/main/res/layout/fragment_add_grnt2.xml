@@ -78,7 +78,6 @@
                 app:layout_constraintTop_toTopOf="@+id/book_number_input">
 
                 <AutoCompleteTextView
-
                     android:id="@+id/auto_product_type"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"

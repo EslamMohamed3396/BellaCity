@@ -7,6 +7,8 @@ import com.bellacity.data.model.addGrnt.request.BodyAddGrnt
 import com.bellacity.data.model.addGrnt.response.ResponseAddGrnt
 import com.bellacity.data.model.bookNumber.request.BodyBookNumber
 import com.bellacity.data.model.bookNumber.response.ResponseBookNumber
+import com.bellacity.data.model.checkCobonLlimit.request.BodyCheckLimitCobon
+import com.bellacity.data.model.checkCobonLlimit.response.ResponseCheckLimitCobon
 import com.bellacity.data.model.checkSerial.request.BodyCheckSerial
 import com.bellacity.data.model.checkSerial.response.ResponseCheckSerial
 import com.bellacity.data.model.cobon.request.BodyCobon
@@ -103,6 +105,16 @@ class AddGrntViewModel : BaseViewModel() {
     fun addGrnt(bodyAddGrnt: BodyAddGrnt): LiveData<Resource<ResponseAddGrnt>> {
         return callApi(
             Client.getInstance()?.addGrnt(bodyAddGrnt)!!, _addGrntMutableLiveData
+        )
+    }
+
+    var _checkLimitCobonMutableLiveData =
+        MutableLiveData<Resource<ResponseCheckLimitCobon>>()
+
+    fun checkLimitCobon(bodyCheckLimitCobon: BodyCheckLimitCobon): LiveData<Resource<ResponseCheckLimitCobon>> {
+        return callApi(
+            Client.getInstance()?.checkLimitCobon(bodyCheckLimitCobon)!!,
+            _checkLimitCobonMutableLiveData
         )
     }
 

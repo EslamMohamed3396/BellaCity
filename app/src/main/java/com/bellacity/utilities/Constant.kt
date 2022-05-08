@@ -5,7 +5,8 @@ object Constant {
 
 
     //region url and routs
-    const val URL = "http://bellabanha.com:801"
+    // const val URL = "http://bellabanha.com:801"
+    const val URL = "http://173.212.218.180:22626"
     const val AUTHORIZATION = "Authorization"
     const val BEARER = "Bearer "
 
@@ -29,13 +30,20 @@ object Constant {
     const val EDIT_GRNT = BASE_ROUTS + "EditGrnt"
     const val GET_GRNT = BASE_ROUTS + "GetGrntSimpleList"
     const val DELETE_GRNT = BASE_ROUTS + "DeleteGrnt"
+    const val CHECK_COBON_LIMIT = BASE_ROUTS + "CheckCoubonLimit"
+    const val SUPPLEMENT_ITEMS = BASE_ROUTS + "GetItemsList"
+    const val GET_CLIENT_LIST = BASE_ROUTS + "GetClientList"
+    const val GET_DELIVERY_AGENT_LIST = BASE_ROUTS + "GetDeliveryAgentsList"
+    const val GET_DRIVER_LIST = BASE_ROUTS + "GetDriversList"
+    const val GET_STORAGE_LIST = BASE_ROUTS + "GetItemsStorageList"
+    const val GET_EXTRA_OPTIONS = BASE_ROUTS + "GetExtraOptions"
 
     //endregion
 
 
     //shared Preference
     const val PRIVATE_MODE = 0
-    const val sharedPrefFile = "bella city"
+    const val sharedPrefFile = "bella_city"
 
     //shared Preference Key
 
@@ -44,5 +52,29 @@ object Constant {
 
     //region error
     const val ERROR_DIALOG_REQUEST = 9004
+
+
+    //CHOOSE TYPE
+    //5, مبيعات البولي
+    // 55, مبيعات قطعية
+    //57, مبيعات الصرف الأبيض
+    //89, مبيعات الرمادي
+    // 81, مبيعات المشروعات صرف
+    //84, مبيعات قطعية مشروعات
+    //78, مبيعات المشروعات بولي
+    //92, مبيعات المشروعات رمادي
+    //34, تفعيل المعاينات
+    const val MABE3AT_MASHRO3AT_BOLY = 78
+    const val MABE3AT_MASHRO3AT_SARF = 81
+    const val MABE3AT_MASHRO3AT_RAMADY = 92
+    const val MABE3AT_MASHRO3AT_KATA3Y = 84
+
+    const val MABE3AT_TOGARY_BOLY = 5
+    const val MABE3AT_TOGARY_SARF = 57
+    const val MABE3AT_TOGARY_RAMADY = 89
+    const val MABE3AT_TOGARY_KATA3Y = 55
+
+    const val MO3AYNAT = 34
+
 
 }

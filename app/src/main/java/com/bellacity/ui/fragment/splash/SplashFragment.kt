@@ -12,7 +12,6 @@ import com.bellacity.databinding.FragmentSplashBinding
 import com.bellacity.ui.base.BaseFragment
 import com.bellacity.utilities.Constant
 import com.bellacity.utilities.PreferencesUtils
-import timber.log.Timber
 
 class SplashFragment : BaseFragment<FragmentSplashBinding>() {
 
@@ -36,7 +35,7 @@ class SplashFragment : BaseFragment<FragmentSplashBinding>() {
 
     override fun onCreateInit() {
         checkLogin()
-        hideNavBtn()
+        hideMainNavBtn()
     }
 
 
@@ -69,7 +68,6 @@ class SplashFragment : BaseFragment<FragmentSplashBinding>() {
         super.onDestroyView()
         mAnimationLogo?.cancel()
         handler?.removeCallbacks(runnable!!)
-        Timber.d("onDestroyView")
     }
 
 }

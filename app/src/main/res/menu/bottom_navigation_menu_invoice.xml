@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/home_invoice_navigation"
+        android:enabled="true"
+        android:icon="@drawable/ic_baseline_home_24"
+        android:title="اضافة فاتورة" />
+    <item
+        android:id="@+id/edit_invoice_navigation"
+        android:enabled="true"
+        android:icon="@drawable/ic_baseline_edit_24"
+        android:title="تعديل فاتورة" />
+    <item
+        android:id="@+id/exit_button_navigation"
+        android:enabled="true"
+        android:icon="@drawable/ic_baseline_exit_to_app_24"
+        android:title="تسجيل خروج" />
+</menu>

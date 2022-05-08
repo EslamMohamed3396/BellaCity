@@ -73,13 +73,12 @@ class PreferencesUtils(val context: Context?) {
     }
 
     fun getUserData(key: String): UserData? {
-        val gson = Gson()
         val json = sharedPreferences.getString(key, null) ?: return null
 
         val type = object : TypeToken<UserData>() {
         }.type
 
-        return gson.fromJson(json, type)
+        return Gson().fromJson(json, type)
     }
 
     fun clear() {
