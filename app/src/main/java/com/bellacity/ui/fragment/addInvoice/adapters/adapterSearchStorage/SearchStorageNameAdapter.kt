@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bellacity.data.model.storageList.response.Storage
 import com.bellacity.databinding.ItemSearchAgentNameBinding
 import com.kadabradigital.ui.base.BaseViewHolder
+import timber.log.Timber
 
 class SearchStorageNameAdapter(
     val actionClick: (postion: Int, item: Storage) -> Unit,
@@ -38,6 +39,8 @@ class SearchStorageNameAdapter(
     inner class SearchStorageViewHolder(val binding: ItemSearchAgentNameBinding) :
         BaseViewHolder<Storage>(binding) {
         override fun bind(item: Storage) {
+            Timber.d("${item.storageName}")
+
             binding.textView.text = " اسم المخزن : ${item.storageName}"
             binding.executePendingBindings()
 

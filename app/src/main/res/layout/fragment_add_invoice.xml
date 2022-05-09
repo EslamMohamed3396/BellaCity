@@ -215,7 +215,7 @@
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/extra_options_text_input"
-                    style="@style/TextInputLayoutStyle"
+                    style="@style/DropDownTextInputLayoutStyle"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
@@ -230,6 +230,11 @@
                         android:id="@+id/auto_extra_options_name"
                         android:layout_width="match_parent"
                         android:layout_height="60dp"
+                        android:clickable="true"
+                        android:drawableEnd="@drawable/ic_baseline_keyboard_arrow_down_24"
+                        android:focusable="true"
+                        android:focusableInTouchMode="false"
+                        android:inputType="none"
                         android:padding="8dp" />
 
                 </com.google.android.material.textfield.TextInputLayout>

@@ -39,7 +39,7 @@ class SupplementItemsAdapter(
         BaseViewHolder<Item>(binding) {
         override fun bind(item: Item) {
             binding.textView.text = "اسم القطعة : ${item.itemName}"
-            binding.textView2.text = "الكود : ${item.itemName}"
+            binding.textView2.text = "الكود : ${item.itemID}"
             binding.executePendingBindings()
 
             binding.root.setOnClickListener {

@@ -18,5 +18,7 @@ data class Item(
     @SerializedName("ItemUnit")
     val itemUnit: String?,
     @SerializedName("ItemSellPrice")
-    val itemSellPrice: Double?
+    val itemSellPrice: Double?,
+    var itemQuantity: Int?
+
 ) : Parcelable

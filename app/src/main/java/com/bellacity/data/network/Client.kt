@@ -39,8 +39,10 @@ import com.bellacity.data.model.storageList.response.ResponseStorageList
 import com.bellacity.data.model.supplementItems.request.BodySupplementItems
 import com.bellacity.data.model.supplementItems.response.ResponseSupplementItems
 import com.bellacity.data.model.tech.response.ResponseTech
+import com.bellacity.utilities.App
 import com.bellacity.utilities.Constant
 import com.bellacity.utilities.ErrorHandling
+import com.bellacity.utilities.PreferencesUtils
 import io.reactivex.Single
 import io.reactivex.SingleObserver
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -81,10 +83,9 @@ object Client {
                         .header(
                             Constant.AUTHORIZATION,
                             Constant.BEARER +
-                                    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIzYTQ0YTVmZC00OTYwLTRkMjEtYWI5Mi1mNTVjYmNkYTdiNDMiLCJ2YWxpZCI6IjEiLCJ1c2VyaWQiOiIyNzAwMDA5IiwidXNlcm5hbWUiOiLYp9it2YXYryDYudmE2Yog2YHZiNiy2YoiLCJ1c2VyYWNjZXNzIjoiJiYmJiYmJiYmXyYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYoXysmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiUrJiYmXyYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmXyYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiIsInN1cGVyaWQiOiIwIiwic3VwZXJuYW1lIjoiIiwic3VwZXJpZDIiOiIwIiwic3VwZXJuYW1lMiI6IiIsInVzZXJkaXZpc2lvbiI6ItmF2LTYsdmBINmF2KjZiti52KfYqiIsImV4cCI6MTY1MTk5NjE4MywiaXNzIjoiaHR0cDovL215c2l0ZS5jb20iLCJhdWQiOiJodHRwOi8vbXlzaXRlLmNvbSJ9.ZkqHgm-XlX-kd2hoOOFkWWEiDOObrHtyYOeXo632NvE"
-//                                    PreferencesUtils(App.getContext()).getUserData(
-//                                Constant.USER_DATA_KEY
-                            //                    )?.token
+                                    PreferencesUtils(App.getContext()).getUserData(
+                                        Constant.USER_DATA_KEY
+                                    )?.token
                         )
                         .build()
                     chain.proceed(request)

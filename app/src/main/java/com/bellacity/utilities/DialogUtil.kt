@@ -13,6 +13,7 @@ import com.bellacity.databinding.CongrtsDialogBinding
 import com.bellacity.databinding.LogoutDialogBinding
 import com.bellacity.databinding.RecyclerSearchDialogBinding
 import com.bellacity.databinding.SomethingWrongBinding
+import timber.log.Timber
 
 
 object DialogUtil {
@@ -115,6 +116,7 @@ object DialogUtil {
             setView(view.root)
         }.create()
 
+        Timber.d("${adabter.itemCount}}")
 
         alertDialog?.apply {
             view.rvAdapter.adapter = adabter

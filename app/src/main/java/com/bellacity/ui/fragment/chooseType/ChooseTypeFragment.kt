@@ -33,7 +33,7 @@ class ChooseTypeFragment : BaseFragment<FragmentChooseTypeBinding>() {
     }
 
     override fun initViewModel() {
-        // checkLoginViewModel()
+         checkLoginViewModel()
     }
 
     override fun onCreateInit() {

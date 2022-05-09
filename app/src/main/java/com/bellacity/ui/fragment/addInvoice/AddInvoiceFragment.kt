@@ -75,7 +75,11 @@ class AddInvoiceFragment : BaseFragment<FragmentAddInvoiceBinding>() {
         }
         binding.nextBtn.setOnClickListener {
             if (checkData()) {
-
+                val action =
+                    AddInvoiceFragmentDirections.actionAddInvoiceFragmentToAddInvoiceFragment2(
+                        bodyAddInvoice()
+                    )
+                findNavController().navigate(action)
             } else {
                 showSnackbar("من فضلك ادخل جميع البيانات")
             }
@@ -182,7 +186,6 @@ class AddInvoiceFragment : BaseFragment<FragmentAddInvoiceBinding>() {
                 }
             }
         }.debounce(2, TimeUnit.SECONDS)
-            .distinctUntilChanged()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe { s: String? ->
@@ -246,7 +249,6 @@ class AddInvoiceFragment : BaseFragment<FragmentAddInvoiceBinding>() {
                 }
             }
         }.debounce(2, TimeUnit.SECONDS)
-            .distinctUntilChanged()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe { s: String? ->
@@ -312,7 +314,6 @@ class AddInvoiceFragment : BaseFragment<FragmentAddInvoiceBinding>() {
                 }
             }
         }.debounce(2, TimeUnit.SECONDS)
-            .distinctUntilChanged()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe { s: String? ->
@@ -323,7 +324,7 @@ class AddInvoiceFragment : BaseFragment<FragmentAddInvoiceBinding>() {
     }
 
     private fun initSearchStorageNameViewModel(item: String) {
-        adapterSearchDriver.submitList(null)
+        adapterSearchStorage.submitList(null)
         viewModel.storageList(bodyStorageList(item))
             .observe(viewLifecycleOwner) { response ->
                 when (response) {
@@ -331,9 +332,9 @@ class AddInvoiceFragment : BaseFragment<FragmentAddInvoiceBinding>() {
                         DialogUtil.dismissDialog()
                         when (response.data?.status) {
                             1 -> {
-                                adapterSearchStorage.submitList(response.data.storageList)
-                                DialogUtil.showRecycler(requireContext(), adapterSearchDriver)
 
+                                adapterSearchStorage.submitList(response.data.storageList)
+                                DialogUtil.showRecycler(requireContext(), adapterSearchStorage)
                             }
                             else -> {
                                 showSnackbar(response.data?.message)
@@ -401,7 +402,6 @@ class AddInvoiceFragment : BaseFragment<FragmentAddInvoiceBinding>() {
     private fun fillSpinnerExtraOption(extraOptionsList: List<ExtraOption>?) {
         if (extraOptionsList?.isNotEmpty() == true) {
             binding.extraOptionsTextInput.editText?.hint = extraOptionsList.first().displayName
-
             val extraOptions = ArrayList<String>()
             extraOptionsList.first().options?.forEach {
                 extraOptions.add(it.value!!)
@@ -455,8 +455,8 @@ class AddInvoiceFragment : BaseFragment<FragmentAddInvoiceBinding>() {
                 && stockID != 0
                 && driverID != 0
                 && deliveryAgentID != 0
-                && paymentTypeID != null
-                && cashAccountID != null
+                && (paymentTypeID != null
+                || cashAccountID != null)
                 && binding.notesTextInput.editText?.text.toString().isNotEmpty()
     }
 
