@@ -33,7 +33,7 @@ class ChooseTypeFragment : BaseFragment<FragmentChooseTypeBinding>() {
     }
 
     override fun initViewModel() {
-         checkLoginViewModel()
+        checkLoginViewModel()
     }
 
     override fun onCreateInit() {
@@ -47,9 +47,8 @@ class ChooseTypeFragment : BaseFragment<FragmentChooseTypeBinding>() {
                 findNavController().navigate(R.id.action_chooseTypeFragment_to_home_button_navigation)
             }
             else -> {
-                val action =
-                    ChooseTypeFragmentDirections.actionChooseTypeFragmentToHomeSalesFragment(item.screenAccessID!!)
-                findNavController().navigate(action)
+                Constant.SCREEN_ID = item.screenAccessID!!
+                findNavController().navigate(R.id.action_chooseTypeFragment_to_homeSalesFragment)
             }
         }
     }

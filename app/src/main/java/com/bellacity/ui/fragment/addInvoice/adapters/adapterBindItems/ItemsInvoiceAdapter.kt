@@ -42,6 +42,8 @@ class ItemsInvoiceAdapter(
         override fun bind(item: Item) {
 
             binding.items = item
+            binding.tvUnit.text = "الوحدة : ${item.itemUnit}"
+            binding.tvPrice.text = "السعر : ${item.itemSellPrice}"
             binding.executePendingBindings()
 
             binding.tvPlus.setOnClickListener {

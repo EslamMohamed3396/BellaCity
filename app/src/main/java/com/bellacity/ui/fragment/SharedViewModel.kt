@@ -36,4 +36,5 @@ class SharedViewModel : ViewModel() {
         _serialGrntId.value = serialGrntId
     }
 
+
 }

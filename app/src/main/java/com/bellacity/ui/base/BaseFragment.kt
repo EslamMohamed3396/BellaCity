@@ -49,40 +49,22 @@ abstract class BaseFragment<VDB : ViewDataBinding> : Fragment() {
 
     protected fun showMainNavBtn() {
         (activity as MainActivity).binding.bottomNavigation.menu.clear()
-
-        // if ((activity as MainActivity).binding.bottomNavigation.menu.findItem(R.id.home_button_navigation)== null) {
         (activity as MainActivity).binding.bottomNavigation.inflateMenu(R.menu.bottom_navigation_menu)
-        //  }
         (activity as MainActivity).binding.bottomNavigation.visibility = View.VISIBLE
     }
 
     protected fun hideMainNavBtn() {
-//        if ((activity as MainActivity).binding.bottomNavigation.menu.findItem(R.id.home_button_navigation)!=null
-//            && (activity as MainActivity).binding.bottomNavigation.menu.findItem(R.id.home_button_navigation).isVisible
-//        ) {
-        (activity as MainActivity).binding.bottomNavigation.menu.clear()
-        // }
-
         (activity as MainActivity).binding.bottomNavigation.visibility = View.GONE
     }
 
 
     protected fun showInvoiceNavBtn() {
         (activity as MainActivity).binding.bottomNavigation.menu.clear()
-
-        //   if ((activity as MainActivity).binding.bottomNavigation.menu.findItem(R.id.home_invoice_navigation) == null) {
         (activity as MainActivity).binding.bottomNavigation.inflateMenu(R.menu.bottom_navigation_menu_invoice)
-        // }
         (activity as MainActivity).binding.bottomNavigation.visibility = View.VISIBLE
     }
 
     protected fun hideInvoiceNavBtn() {
-
-//        if ((activity as MainActivity).binding.bottomNavigation.menu.findItem(R.id.home_invoice_navigation) != null
-//            && (activity as MainActivity).binding.bottomNavigation.menu.findItem(R.id.home_invoice_navigation).isVisible
-//        ) {
-        (activity as MainActivity).binding.bottomNavigation.menu.clear()
-        // }
         (activity as MainActivity).binding.bottomNavigation.visibility = View.GONE
     }
 

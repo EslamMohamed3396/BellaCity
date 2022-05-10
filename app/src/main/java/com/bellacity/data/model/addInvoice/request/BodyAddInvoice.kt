@@ -24,7 +24,7 @@ data class BodyAddInvoice(
     @SerializedName("InvoiceNote")
     val invoiceNote: String?,
     @SerializedName("OldPrices")
-    val oldPrices: Double?,
+    val oldPrices: Boolean?,
     @SerializedName("CashAccountID")
     val cashAccountID: Int?,
     @SerializedName("InvoiceItems")

@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/addInvoiceFragment">
+    app:startDestination="@id/splashFragment">
 
     <fragment
         android:id="@+id/loginFragment"
@@ -194,5 +194,30 @@
         <argument
             android:name="body_add_invoice"
             app:argType="com.bellacity.data.model.addInvoice.request.BodyAddInvoice" />
+        <action
+            android:id="@+id/action_addInvoiceFragment2_to_chooseTypeFragment"
+            app:destination="@id/chooseTypeFragment"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/addInvoiceFragment2"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/edit_invoice_navigation"
+        android:name="com.bellacity.ui.fragment.invoices.InvoicesFragment"
+        android:label="InvoicesFragment">
+        <argument
+            android:name="screen_id"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_edit_invoice_navigation_to_editInvoiceFragment"
+            app:destination="@id/editInvoiceFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/editInvoiceFragment"
+        android:name="com.bellacity.ui.fragment.editInvoice.EditInvoiceFragment"
+        android:label="EditInvoiceFragment">
+        <argument
+            android:name="invoice_id"
+            app:argType="integer" />
     </fragment>
 </navigation>

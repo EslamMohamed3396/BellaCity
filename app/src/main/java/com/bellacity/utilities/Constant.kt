@@ -37,6 +37,10 @@ object Constant {
     const val GET_DRIVER_LIST = BASE_ROUTS + "GetDriversList"
     const val GET_STORAGE_LIST = BASE_ROUTS + "GetItemsStorageList"
     const val GET_EXTRA_OPTIONS = BASE_ROUTS + "GetExtraOptions"
+    const val CALCULATE_DISCOUNT = BASE_ROUTS + "CalculateInvoiceAmount"
+    const val ADD_INVOICE = BASE_ROUTS + "AddInvoice"
+    const val GET_INVOICES_LIST = BASE_ROUTS + "GetSimpleInvoiceList"
+    const val GET_INVOICES_DETAILS = BASE_ROUTS + "GetInvoice"
 
     //endregion
 
@@ -76,5 +80,9 @@ object Constant {
 
     const val MO3AYNAT = 34
 
+
+    //screen Id
+
+    var SCREEN_ID = 0
 
 }

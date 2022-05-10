@@ -3,8 +3,12 @@ package com.bellacity.data.network
 import com.bellacity.data.model.activeType.response.ResponseActiveType
 import com.bellacity.data.model.addGrnt.request.BodyAddGrnt
 import com.bellacity.data.model.addGrnt.response.ResponseAddGrnt
+import com.bellacity.data.model.addInvoice.request.BodyAddInvoice
+import com.bellacity.data.model.addInvoice.response.ResponseAddInvoice
 import com.bellacity.data.model.bookNumber.request.BodyBookNumber
 import com.bellacity.data.model.bookNumber.response.ResponseBookNumber
+import com.bellacity.data.model.calculateDiscount.request.BodyCalculateDiscount
+import com.bellacity.data.model.calculateDiscount.response.ResponseCalculateDiscount
 import com.bellacity.data.model.checkCobonLlimit.request.BodyCheckLimitCobon
 import com.bellacity.data.model.checkCobonLlimit.response.ResponseCheckLimitCobon
 import com.bellacity.data.model.checkLogin.response.ResonseCheckLogin
@@ -26,6 +30,10 @@ import com.bellacity.data.model.driverList.response.ResponseDriverList
 import com.bellacity.data.model.editGrnt.request.BodyEditGrnt
 import com.bellacity.data.model.extraOptions.request.BodyExtraOptions
 import com.bellacity.data.model.extraOptions.response.ResponseExtraOptions
+import com.bellacity.data.model.invoiceDetails.request.BodyInvoieDetails
+import com.bellacity.data.model.invoiceDetails.response.ResponsInvoiceDetails
+import com.bellacity.data.model.invoices.request.BodyInvoices
+import com.bellacity.data.model.invoices.response.ResponseInvoices
 import com.bellacity.data.model.items.response.ResponseItems
 import com.bellacity.data.model.login.request.BodyLogin
 import com.bellacity.data.model.login.response.ResponseLogin
@@ -233,6 +241,22 @@ object Client {
 
     fun extraOptionList(bodyExtraOptions: BodyExtraOptions): Single<ResponseExtraOptions> {
         return apiService?.extraOptionList(bodyExtraOptions)!!
+    }
+
+    fun calculateDiscount(bodyCalculateDiscount: BodyCalculateDiscount): Single<ResponseCalculateDiscount> {
+        return apiService?.calculateDiscount(bodyCalculateDiscount)!!
+    }
+
+    fun addInvoice(bodyAddInvoice: BodyAddInvoice): Single<ResponseAddInvoice> {
+        return apiService?.addInvoice(bodyAddInvoice)!!
+    }
+
+    fun getInvoices(bodyInvoices: BodyInvoices): Single<ResponseInvoices> {
+        return apiService?.getInvoices(bodyInvoices)!!
+    }
+
+    fun getInvoiceDetails(bodyInvoiceDetails: BodyInvoieDetails): Single<ResponsInvoiceDetails> {
+        return apiService?.getInvoiceDetails(bodyInvoiceDetails)!!
     }
 
 }

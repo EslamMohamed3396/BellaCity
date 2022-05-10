@@ -82,7 +82,9 @@ object DialogUtil {
         val alertDialog = AlertDialog.Builder(context).apply {
             setView(view.root)
         }.create()
-
+        if (alertDialog != null && alertDialog.isShowing) {
+            alertDialog.dismiss()
+        }
         alertDialog.apply {
 
             setCancelable(false)

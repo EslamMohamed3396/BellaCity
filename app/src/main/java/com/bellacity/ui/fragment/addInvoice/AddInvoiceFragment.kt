@@ -25,6 +25,7 @@ import com.bellacity.ui.fragment.addInvoice.adapters.adapterDelvieryAgent.Delive
 import com.bellacity.ui.fragment.addInvoice.adapters.adapterSearchAgentName.SearchAgentAdapter
 import com.bellacity.ui.fragment.addInvoice.adapters.adapterSearchDriver.SearchDriverNameAdapter
 import com.bellacity.ui.fragment.addInvoice.adapters.adapterSearchStorage.SearchStorageNameAdapter
+import com.bellacity.utilities.Constant
 import com.bellacity.utilities.DialogUtil
 import com.bellacity.utilities.Resource
 import io.reactivex.Observable
@@ -396,7 +397,7 @@ class AddInvoiceFragment : BaseFragment<FragmentAddInvoiceBinding>() {
     }
 
     private fun bodyExtraOptionsList(): BodyExtraOptions {
-        return BodyExtraOptions(viewAccessID = 55)
+        return BodyExtraOptions(Constant.SCREEN_ID)
     }
 
     private fun fillSpinnerExtraOption(extraOptionsList: List<ExtraOption>?) {
