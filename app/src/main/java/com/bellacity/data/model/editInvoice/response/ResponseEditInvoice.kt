@@ -1,4 +1,4 @@
-package com.bellacity.data.model.addInvoice.response
+package com.bellacity.data.model.editInvoice.response
 
 
 import android.os.Parcelable
@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class ResponseAddInvoice(
+data class ResponseEditInvoice(
     @SerializedName("Status")
     val status: Int?,
     @SerializedName("Message")
