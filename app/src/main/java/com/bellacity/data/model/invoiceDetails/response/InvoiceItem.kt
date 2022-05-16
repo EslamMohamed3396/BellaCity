@@ -16,9 +16,14 @@ data class InvoiceItem(
     @SerializedName("ItemUnitName")
     val itemUnitName: String?,
     @SerializedName("ItemQuantity")
-    val itemQuantity: Double?,
+    var itemQuantity: Double?,
     @SerializedName("ItemPrice")
     val itemPrice: Double?,
     @SerializedName("TotalPrice")
     val totalPrice: Double?
-) : Parcelable
+
+) : Parcelable {
+    override fun hashCode(): Int {
+        return super.hashCode()
+    }
+}

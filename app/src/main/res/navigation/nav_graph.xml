@@ -219,5 +219,25 @@
         <argument
             android:name="invoice_id"
             app:argType="integer" />
+        <action
+            android:id="@+id/action_editInvoiceFragment_to_editInvoiceFragment2"
+            app:destination="@id/editInvoiceFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/editInvoiceFragment2"
+        android:name="com.bellacity.ui.fragment.editInvoice.EditInvoiceFragment2"
+        android:label="EditInvoiceFragment2">
+        <argument
+            android:name="body_edit_invoice_args"
+            app:argType="com.bellacity.data.model.editInvoice.request.BodyEditInvoice" />
+        <argument
+            android:name="invoice_details"
+            app:argType="com.bellacity.data.model.invoiceDetails.response.Invoice" />
+        <action
+            android:id="@+id/action_editInvoiceFragment2_to_chooseTypeFragment"
+            app:destination="@id/chooseTypeFragment"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/editInvoiceFragment2"
+            app:popUpToInclusive="true" />
     </fragment>
 </navigation>

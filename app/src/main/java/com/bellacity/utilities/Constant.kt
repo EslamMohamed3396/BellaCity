@@ -39,6 +39,7 @@ object Constant {
     const val GET_EXTRA_OPTIONS = BASE_ROUTS + "GetExtraOptions"
     const val CALCULATE_DISCOUNT = BASE_ROUTS + "CalculateInvoiceAmount"
     const val ADD_INVOICE = BASE_ROUTS + "AddInvoice"
+    const val EDIT_INVOICE = BASE_ROUTS + "EditInvoice"
     const val GET_INVOICES_LIST = BASE_ROUTS + "GetSimpleInvoiceList"
     const val GET_INVOICES_DETAILS = BASE_ROUTS + "GetInvoice"
 

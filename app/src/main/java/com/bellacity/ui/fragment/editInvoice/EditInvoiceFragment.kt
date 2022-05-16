@@ -8,12 +8,14 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bellacity.R
+import com.bellacity.data.model.addInvoice.request.InvoiceItem
 import com.bellacity.data.model.clientList.request.BodyClientList
 import com.bellacity.data.model.clientList.response.Distributor
 import com.bellacity.data.model.deliveryAgentList.request.BodyDeliveryAgentList
 import com.bellacity.data.model.deliveryAgentList.response.DeliveryAgent
 import com.bellacity.data.model.driverList.request.BodyDriverList
 import com.bellacity.data.model.driverList.response.Driver
+import com.bellacity.data.model.editInvoice.request.BodyEditInvoice
 import com.bellacity.data.model.extraOptions.request.BodyExtraOptions
 import com.bellacity.data.model.extraOptions.response.ExtraOption
 import com.bellacity.data.model.invoiceDetails.request.BodyInvoieDetails
@@ -71,6 +73,14 @@ class EditInvoiceFragment : BaseFragment<FragmentEditInvoiceBinding>() {
 
     private var paymentTypeID: Int? = null
     private var cashAccountID: Int? = null
+
+    private var viewAccessID: Int? = 0
+
+    private var invoiceItems: ArrayList<InvoiceItem>? = null
+
+    private var invoice: Invoice? = null
+
+
     override fun getViewBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
@@ -79,6 +89,19 @@ class EditInvoiceFragment : BaseFragment<FragmentEditInvoiceBinding>() {
     override fun initClicks() {
         binding.toolbar.backBtn.setOnClickListener {
             findNavController().navigateUp()
+        }
+
+        binding.nextBtn.setOnClickListener {
+            if (checkData()) {
+                val action =
+                    EditInvoiceFragmentDirections.actionEditInvoiceFragmentToEditInvoiceFragment2(
+                        bodyEditInvoice(),
+                        invoice!!
+                    )
+                findNavController().navigate(action)
+            } else {
+                showSnackbar("من فضلك ادخل جميع البيانات")
+            }
         }
     }
 
@@ -129,6 +152,7 @@ class EditInvoiceFragment : BaseFragment<FragmentEditInvoiceBinding>() {
     }
 
     private fun bindData(invoice: Invoice) {
+        this.invoice = invoice
         binding.agentNameTextInput.editText?.setText(invoice.distributorName)
         binding.agentAddressTextInput.editText?.setText(invoice.distributorName)
         binding.dateTextInput.editText?.setText(invoice.invoiceAddDate)
@@ -147,7 +171,13 @@ class EditInvoiceFragment : BaseFragment<FragmentEditInvoiceBinding>() {
 
         driverID = invoice.driverID
 
+        viewAccessID = invoice.invoiceTypeID
         deliveryAgentID = invoice.deliveryAgentID
+
+
+        invoice.invoiceItems?.forEach {
+            invoiceItems?.add(InvoiceItem(it.itemID, it.itemQuantity?.toInt()))
+        }
 
         paymentTypeID = invoice.paymentTypeID
         cashAccountID = invoice.cashAccountID
@@ -164,7 +194,6 @@ class EditInvoiceFragment : BaseFragment<FragmentEditInvoiceBinding>() {
 
     }
     //endregion
-
 
     //region search agent name
     private fun searchAgentName() {
@@ -465,7 +494,6 @@ class EditInvoiceFragment : BaseFragment<FragmentEditInvoiceBinding>() {
 
     private fun fillSpinnerExtraOption(extraOptionsList: List<ExtraOption>?) {
         if (extraOptionsList?.isNotEmpty() == true) {
-            binding.extraOptionsTextInput.editText?.hint = extraOptionsList.first().displayName
             val extraOptions = ArrayList<String>()
             extraOptionsList.first().options?.forEach {
                 extraOptions.add(it.value!!)
@@ -483,11 +511,9 @@ class EditInvoiceFragment : BaseFragment<FragmentEditInvoiceBinding>() {
                 when (extraOptionsList.first().displayName) {
                     "CashAccountID" -> {
                         cashAccountID = extraOptionsList.first().options?.get(position)?.iD
-                        paymentTypeID = null
                     }
                     else -> {
                         paymentTypeID = extraOptionsList.first().options?.get(position)?.iD
-                        cashAccountID = null
                     }
 
                 }
@@ -496,6 +522,35 @@ class EditInvoiceFragment : BaseFragment<FragmentEditInvoiceBinding>() {
 
     }
     //endregion
+
+
+    private fun checkData(): Boolean {
+        return distributorID != 0
+                && salesAgentID != 0
+                && stockID != 0
+                && driverID != 0
+                && deliveryAgentID != 0
+                && (paymentTypeID != null
+                || cashAccountID != null)
+                && binding.notesTextInput.editText?.text.toString().isNotEmpty()
+    }
+
+    private fun bodyEditInvoice(): BodyEditInvoice {
+        return BodyEditInvoice(
+            distributorID,
+            salesAgentID,
+            viewAccessID,
+            args.invoiceId,
+            stockID,
+            driverID,
+            deliveryAgentID,
+            paymentTypeID,
+            binding.notesTextInput.editText?.text.toString(),
+            null,
+            cashAccountID,
+            invoiceItems
+        )
+    }
 
 
 }

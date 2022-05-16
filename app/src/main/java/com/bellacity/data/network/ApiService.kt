@@ -28,6 +28,7 @@ import com.bellacity.data.model.distributor.response.ResponseDistributor
 import com.bellacity.data.model.driverList.request.BodyDriverList
 import com.bellacity.data.model.driverList.response.ResponseDriverList
 import com.bellacity.data.model.editGrnt.request.BodyEditGrnt
+import com.bellacity.data.model.editInvoice.request.BodyEditInvoice
 import com.bellacity.data.model.extraOptions.request.BodyExtraOptions
 import com.bellacity.data.model.extraOptions.response.ResponseExtraOptions
 import com.bellacity.data.model.invoiceDetails.request.BodyInvoieDetails
@@ -133,6 +134,10 @@ interface ApiService {
 
     @POST(Constant.ADD_INVOICE)
     fun addInvoice(@Body bodyAddInvoice: BodyAddInvoice): Single<ResponseAddInvoice>
+
+
+    @POST(Constant.EDIT_INVOICE)
+    fun editInvoice(@Body bodyEditInvoice: BodyEditInvoice): Single<ResponseAddInvoice>
 
 
     @POST(Constant.GET_INVOICES_LIST)

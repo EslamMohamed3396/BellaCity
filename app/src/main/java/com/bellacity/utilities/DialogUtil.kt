@@ -6,6 +6,7 @@ import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.view.LayoutInflater
+import android.view.View
 import android.view.Window
 import androidx.recyclerview.widget.RecyclerView
 import com.bellacity.R
@@ -13,7 +14,6 @@ import com.bellacity.databinding.CongrtsDialogBinding
 import com.bellacity.databinding.LogoutDialogBinding
 import com.bellacity.databinding.RecyclerSearchDialogBinding
 import com.bellacity.databinding.SomethingWrongBinding
-import timber.log.Timber
 
 
 object DialogUtil {
@@ -118,10 +118,14 @@ object DialogUtil {
             setView(view.root)
         }.create()
 
-        Timber.d("${adabter.itemCount}}")
+
 
         alertDialog?.apply {
-            view.rvAdapter.adapter = adabter
+            if (adabter.itemCount > 0) {
+                view.rvAdapter.adapter = adabter
+            } else {
+                view.tvEmpty.visibility = View.VISIBLE
+            }
             setCancelable(false)
             view.imClose.setOnClickListener {
                 dismiss()

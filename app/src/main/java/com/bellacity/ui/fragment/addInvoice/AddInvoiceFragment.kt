@@ -333,7 +333,6 @@ class AddInvoiceFragment : BaseFragment<FragmentAddInvoiceBinding>() {
                         DialogUtil.dismissDialog()
                         when (response.data?.status) {
                             1 -> {
-
                                 adapterSearchStorage.submitList(response.data.storageList)
                                 DialogUtil.showRecycler(requireContext(), adapterSearchStorage)
                             }
@@ -354,7 +353,7 @@ class AddInvoiceFragment : BaseFragment<FragmentAddInvoiceBinding>() {
     }
 
     private fun bodyStorageList(name: String): BodyStoarageList {
-        return BodyStoarageList(viewAccessID = 55, storageName = name)
+        return BodyStoarageList(viewAccessID = Constant.SCREEN_ID, storageName = name)
     }
 
 

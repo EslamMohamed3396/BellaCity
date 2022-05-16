@@ -12,6 +12,7 @@ import com.bellacity.data.model.deliveryAgentList.request.BodyDeliveryAgentList
 import com.bellacity.data.model.deliveryAgentList.response.ResponseDeliveryAgentList
 import com.bellacity.data.model.driverList.request.BodyDriverList
 import com.bellacity.data.model.driverList.response.ResponseDriverList
+import com.bellacity.data.model.editInvoice.request.BodyEditInvoice
 import com.bellacity.data.model.extraOptions.request.BodyExtraOptions
 import com.bellacity.data.model.extraOptions.response.ResponseExtraOptions
 import com.bellacity.data.model.invoiceDetails.request.BodyInvoieDetails
@@ -115,6 +116,17 @@ class InvoiceViewModel : BaseViewModel() {
         return callApi(
             Client.getInstance()?.getInvoiceDetails(bodyInvoiceDetails)!!,
             invoiceDetailsMutableLiveData
+        )
+    }
+
+
+    private var editInvoiceMutableLiveData =
+        MutableLiveData<Resource<ResponseAddInvoice>>()
+
+    fun editInvoice(bodyEditInvoice: BodyEditInvoice): LiveData<Resource<ResponseAddInvoice>> {
+        return callApi(
+            Client.getInstance()?.editInvoice(bodyEditInvoice)!!,
+            editInvoiceMutableLiveData
         )
     }
 

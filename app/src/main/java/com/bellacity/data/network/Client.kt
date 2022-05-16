@@ -28,6 +28,7 @@ import com.bellacity.data.model.distributor.response.ResponseDistributor
 import com.bellacity.data.model.driverList.request.BodyDriverList
 import com.bellacity.data.model.driverList.response.ResponseDriverList
 import com.bellacity.data.model.editGrnt.request.BodyEditGrnt
+import com.bellacity.data.model.editInvoice.request.BodyEditInvoice
 import com.bellacity.data.model.extraOptions.request.BodyExtraOptions
 import com.bellacity.data.model.extraOptions.response.ResponseExtraOptions
 import com.bellacity.data.model.invoiceDetails.request.BodyInvoieDetails
@@ -249,6 +250,10 @@ object Client {
 
     fun addInvoice(bodyAddInvoice: BodyAddInvoice): Single<ResponseAddInvoice> {
         return apiService?.addInvoice(bodyAddInvoice)!!
+    }
+
+    fun editInvoice(bodyEditInvoice: BodyEditInvoice): Single<ResponseAddInvoice> {
+        return apiService?.editInvoice(bodyEditInvoice)!!
     }
 
     fun getInvoices(bodyInvoices: BodyInvoices): Single<ResponseInvoices> {

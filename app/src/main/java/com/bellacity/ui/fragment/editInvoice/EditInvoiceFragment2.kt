@@ -1,4 +1,4 @@
-package com.bellacity.ui.fragment.addInvoice
+package com.bellacity.ui.fragment.editInvoice
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -7,15 +7,17 @@ import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.ConcatAdapter
 import com.bellacity.R
-import com.bellacity.data.model.addInvoice.request.BodyAddInvoice
-import com.bellacity.data.model.addInvoice.request.InvoiceItem
 import com.bellacity.data.model.calculateDiscount.request.BodyCalculateDiscount
+import com.bellacity.data.model.editInvoice.request.BodyEditInvoice
+import com.bellacity.data.model.invoiceDetails.response.InvoiceItem
 import com.bellacity.data.model.supplementItems.request.BodySupplementItems
 import com.bellacity.data.model.supplementItems.response.Item
-import com.bellacity.databinding.FragmentAddInvoice2Binding
+import com.bellacity.databinding.FragmentEditInvoice2Binding
 import com.bellacity.ui.base.BaseFragment
-import com.bellacity.ui.fragment.addInvoice.adapters.adapterBindItems.ItemsInvoiceAdapter
+import com.bellacity.ui.fragment.addInvoice.InvoiceViewModel
+import com.bellacity.ui.fragment.editInvoice.adapter.ItemsInvoiceDetailsAdapter
 import com.bellacity.ui.fragment.supplementItems.SupplementItemsViewModel
 import com.bellacity.ui.fragment.supplementItems.adapter.SupplementItemsAdapter
 import com.bellacity.utilities.Constant
@@ -28,39 +30,49 @@ import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 
-class AddInvoiceFragment2 : BaseFragment<FragmentAddInvoice2Binding>() {
+class EditInvoiceFragment2 : BaseFragment<FragmentEditInvoice2Binding>() {
+
     private val viewModel: SupplementItemsViewModel by viewModels()
     private val invoiceViewModel: InvoiceViewModel by viewModels()
     private val adapter: SupplementItemsAdapter by lazy { SupplementItemsAdapter(::onClickSupplementItems) }
 
-    private val args by navArgs<AddInvoiceFragment2Args>()
-    private val itemHashSet = mutableSetOf<Item>()
-    private val itemsInvoiceAdapter: ItemsInvoiceAdapter by lazy {
-        ItemsInvoiceAdapter(
+
+    private var isOldPrice = false
+    private var isProject = false
+
+
+    private val itemsInvoiceDetailsAdapter: ItemsInvoiceDetailsAdapter by lazy {
+        ItemsInvoiceDetailsAdapter(
             ::plusQuantity,
             ::minuesQuantity
         )
     }
 
-    private var isOldPrice = false
-    private var isProject = false
+    private val args by navArgs<EditInvoiceFragment2Args>()
+    private val itemHashSet =
+        mutableSetOf<InvoiceItem>()
 
     override fun getViewBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
-    ) = FragmentAddInvoice2Binding.inflate(inflater, container, false)
+    ) = FragmentEditInvoice2Binding.inflate(inflater, container, false)
 
     override fun initClicks() {
-        binding.nextBtn.setOnClickListener {
-            if (itemHashSet.isNotEmpty()) {
-                initAddInvoiceViewModel()
-            } else {
-                showSnackbar("من فضلك اختر الأصناف ")
-            }
-
+        binding.toolbar.backBtn.setOnClickListener {
+            findNavController().navigateUp()
         }
         binding.materialCheckBox.setOnCheckedChangeListener { buttonView, isChecked ->
             isOldPrice = isChecked
+        }
+        binding.nextBtn.setOnClickListener {
+            Timber.d("${fillInvoicItems()}")
+        }
+        binding.nextBtn.setOnClickListener {
+            if (itemHashSet.isNotEmpty()) {
+                initEditInvoiceViewModel()
+            } else {
+                showSnackbar("من فضلك اختر الأصناف ")
+            }
         }
         binding.calculateBtn.setOnClickListener {
             if (itemHashSet.isNotEmpty()) {
@@ -72,20 +84,17 @@ class AddInvoiceFragment2 : BaseFragment<FragmentAddInvoice2Binding>() {
     }
 
     override fun initViewModel() {
-        searchSupplement()
+
     }
 
     override fun onCreateInit() {
+        bindData()
+        searchSupplement()
         checkIsProject()
-        bindAdapter()
-    }
-
-    private fun bindAdapter() {
-        binding.recyclerView5.adapter = itemsInvoiceAdapter
     }
 
     private fun checkIsProject() {
-        isProject = when (args.bodyAddInvoice.invoiceTypeID) {
+        isProject = when (args.bodyEditInvoiceArgs.viewAccessID) {
             Constant.MABE3AT_MASHRO3AT_BOLY,
             Constant.MABE3AT_MASHRO3AT_SARF,
             Constant.MABE3AT_MASHRO3AT_RAMADY,
@@ -97,6 +106,51 @@ class AddInvoiceFragment2 : BaseFragment<FragmentAddInvoice2Binding>() {
             }
         }
     }
+
+    private fun bindData() {
+        val concatADapter = ConcatAdapter(itemsInvoiceDetailsAdapter)
+        binding.recyclerView5.adapter = concatADapter
+        itemHashSet.addAll(args.invoiceDetails.invoiceItems!!)
+        itemsInvoiceDetailsAdapter.submitList(args.invoiceDetails.invoiceItems)
+
+        binding.tvCalcDiscount.text =
+            "اجمالي الفاتورة : ${args.invoiceDetails.totalAmountBeforeDiscount}  , " +
+                    "الخصم % : ${args.invoiceDetails.discountPercentage} " +
+                    "\n" +
+                    "قيمة الخصم : ${args.invoiceDetails.discountValue}  , " +
+                    "السعر بعد الخصم : ${args.invoiceDetails.totalAmountAfterDiscount}"
+
+
+        binding.tvAddedBy.text = "تم الاضافة بواسطة : ${args.invoiceDetails.invoiceAddedByUserName}"
+
+    }
+
+    private fun plusQuantity(postion: Int, item: InvoiceItem, quantity: TextView) {
+        val newQuantity = item.itemQuantity?.toInt()?.inc()
+        quantity.text = "$newQuantity"
+        itemHashSet.toList()[postion].itemQuantity = newQuantity?.toDouble()
+        Timber.d("${itemHashSet}")
+
+        itemsInvoiceDetailsAdapter.notifyDataSetChanged()
+    }
+
+    private fun minuesQuantity(postion: Int, item: InvoiceItem, quantity: TextView) {
+        val newQuantity = item.itemQuantity?.dec()
+        if (newQuantity == 0.0) {
+            itemHashSet.remove(item)
+            itemsInvoiceDetailsAdapter.submitList(itemHashSet.distinctBy {
+                it.itemID
+            })
+        } else {
+            quantity.text = "${newQuantity}"
+            itemHashSet.toList()[postion].itemQuantity = newQuantity
+        }
+
+
+        itemsInvoiceDetailsAdapter.notifyDataSetChanged()
+
+    }
+
 
     //region search item name
     private fun searchSupplement() {
@@ -127,7 +181,6 @@ class AddInvoiceFragment2 : BaseFragment<FragmentAddInvoice2Binding>() {
                             1 -> {
                                 adapter.submitList(response.data.itemList)
                                 DialogUtil.showRecycler(requireContext(), adapter)
-
                             }
                             else -> {
                                 showSnackbar(response.data?.message)
@@ -147,7 +200,7 @@ class AddInvoiceFragment2 : BaseFragment<FragmentAddInvoice2Binding>() {
 
     private fun bodySupplementItems(item: String): BodySupplementItems {
         return BodySupplementItems(
-            args.bodyAddInvoice.stockID,
+            args.bodyEditInvoiceArgs.stockID,
             item,
             isProject = isProject,
             isForGrnt = false
@@ -155,10 +208,18 @@ class AddInvoiceFragment2 : BaseFragment<FragmentAddInvoice2Binding>() {
     }
 
     private fun onClickSupplementItems(postion: Int, item: Item) {
-        item.itemQuantity = 1
-        itemHashSet.add(item)
-        Timber.d("${itemHashSet}")
-        itemsInvoiceAdapter.submitList(itemHashSet.distinctBy {
+        itemHashSet.add(
+            InvoiceItem(
+                itemsInvoiceDetailsAdapter.itemCount + 1,
+                item.itemID,
+                item.itemName,
+                item.itemUnit,
+                1.toDouble(),
+                item.itemSellPrice,
+                item.itemSellPrice
+            )
+        )
+        itemsInvoiceDetailsAdapter.submitList(itemHashSet.distinctBy {
             it.itemID
         })
         showSnackbar("تم اضافة القطعة")
@@ -169,38 +230,18 @@ class AddInvoiceFragment2 : BaseFragment<FragmentAddInvoice2Binding>() {
 
     //endregion
 
+    private fun fillInvoicItems(): List<com.bellacity.data.model.addInvoice.request.InvoiceItem> {
+        val itemsList = ArrayList<com.bellacity.data.model.addInvoice.request.InvoiceItem>()
 
-    private fun plusQuantity(postion: Int, item: Item, quantity: TextView) {
-        val newQuantity = item.itemQuantity?.inc()
-        Timber.d("" + newQuantity)
-        quantity.text = "${newQuantity}"
-        itemHashSet.toList()[postion].itemQuantity = newQuantity
-        itemsInvoiceAdapter.notifyDataSetChanged()
-    }
-
-    private fun minuesQuantity(postion: Int, item: Item, quantity: TextView) {
-        val newQuantity = item.itemQuantity?.dec()
-        Timber.d("" + newQuantity)
-        if (newQuantity == 0) {
-            itemHashSet.remove(item)
-            itemsInvoiceAdapter.submitList(itemHashSet.distinctBy {
-                it.itemID
-            })
-        } else {
-            quantity.text = "${newQuantity}"
-            itemHashSet.toList()[postion].itemQuantity = newQuantity
-        }
-        itemsInvoiceAdapter.notifyDataSetChanged()
-
-    }
-
-
-    private fun fillInvoicItems(): List<InvoiceItem> {
-        val itemsList = ArrayList<InvoiceItem>()
         itemHashSet.distinctBy {
             it.itemID
         }.forEach {
-            itemsList.add(InvoiceItem(it.itemID, it.itemQuantity))
+            itemsList.add(
+                com.bellacity.data.model.addInvoice.request.InvoiceItem(
+                    it.itemID,
+                    it.itemQuantity?.toInt()
+                )
+            )
         }
         return itemsList
     }
@@ -238,25 +279,22 @@ class AddInvoiceFragment2 : BaseFragment<FragmentAddInvoice2Binding>() {
 
     private fun bodyCalcDiscount(): BodyCalculateDiscount {
         return BodyCalculateDiscount(
-            args.bodyAddInvoice.invoiceTypeID,
+            args.bodyEditInvoiceArgs.viewAccessID,
             isOldPrice,
             fillInvoicItems()
         )
     }
 
 
-    private fun initAddInvoiceViewModel() {
-        invoiceViewModel.addInvoice(bodyAddInvoice())
+    private fun initEditInvoiceViewModel() {
+        invoiceViewModel.editInvoice(bodyEditInvoice())
             .observe(viewLifecycleOwner) { response ->
                 when (response) {
                     is Resource.Success -> {
                         DialogUtil.dismissDialog()
                         when (response.data?.status) {
                             1 -> {
-                                DialogUtil.showGeneraCongrts(
-                                    requireContext(), { goToChooseFragment() },
-                                    totalPoints = " تم اضافة الفاتورة بنجاح ورقم الفاتورة هو :  ${response.data.invoiceID}"
-                                )
+                                goToChooseFragment()
                             }
                             else -> {
                                 showSnackbar(response.data?.message)
@@ -274,26 +312,26 @@ class AddInvoiceFragment2 : BaseFragment<FragmentAddInvoice2Binding>() {
 
     }
 
-
-    private fun bodyAddInvoice(): BodyAddInvoice {
-        return BodyAddInvoice(
-            args.bodyAddInvoice.distributorID,
-            args.bodyAddInvoice.salesAgentID,
-            args.bodyAddInvoice.invoiceTypeID,
-            args.bodyAddInvoice.stockID,
-            args.bodyAddInvoice.driverID,
-            args.bodyAddInvoice.deliveryAgentID,
-            args.bodyAddInvoice.paymentTypeID,
-            args.bodyAddInvoice.invoiceNote,
+    private fun bodyEditInvoice(): BodyEditInvoice {
+        return BodyEditInvoice(
+            args.bodyEditInvoiceArgs.distributorID,
+            args.bodyEditInvoiceArgs.salesAgentID,
+            args.bodyEditInvoiceArgs.viewAccessID,
+            args.bodyEditInvoiceArgs.invoiceID,
+            args.bodyEditInvoiceArgs.stockID,
+            args.bodyEditInvoiceArgs.driverID,
+            args.bodyEditInvoiceArgs.deliveryAgentID,
+            args.bodyEditInvoiceArgs.paymentTypeID,
+            args.bodyEditInvoiceArgs.invoiceNote,
             isOldPrice,
-            args.bodyAddInvoice.cashAccountID,
+            args.bodyEditInvoiceArgs.cashAccountID,
             fillInvoicItems()
         )
     }
 
     private fun goToChooseFragment() {
-        if (findNavController().currentDestination?.id == R.id.addInvoiceFragment2) {
-            findNavController().navigate(R.id.action_addInvoiceFragment2_to_chooseTypeFragment)
+        if (findNavController().currentDestination?.id == R.id.editInvoiceFragment2) {
+            findNavController().navigate(R.id.action_editInvoiceFragment2_to_chooseTypeFragment)
 
         }
     }
