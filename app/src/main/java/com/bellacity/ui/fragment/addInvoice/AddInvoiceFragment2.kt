@@ -69,6 +69,9 @@ class AddInvoiceFragment2 : BaseFragment<FragmentAddInvoice2Binding>() {
                 showSnackbar("من فضلك اختر الأصناف ")
             }
         }
+        binding.toolbar.backBtn.setOnClickListener {
+            findNavController().navigateUp()
+        }
     }
 
     override fun initViewModel() {

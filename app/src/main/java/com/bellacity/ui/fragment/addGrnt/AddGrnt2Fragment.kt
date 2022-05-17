@@ -46,7 +46,7 @@ class AddGrnt2Fragment : BaseFragment<FragmentAddGrnt2Binding>() {
 
     private val validSerialAdapter: ValidSerialAdapter by lazy { ValidSerialAdapter(::deleteCheckedSerial) }
     private val chekedSerialList = ArrayList<String>()
-
+    private var isFirstTime = false
     override fun getViewBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
@@ -92,14 +92,22 @@ class AddGrnt2Fragment : BaseFragment<FragmentAddGrnt2Binding>() {
     private fun getGrntSharedViewModel() {
         sharedViewModel.addGrnt.observe(viewLifecycleOwner, { response ->
             bodyAddGrnt = response
-            initBookListViewModel(bodyAddGrnt?.techID!!)
+            if (!isFirstTime) {
+                initBookListViewModel(bodyAddGrnt?.techID!!)
+            }
         })
 
     }
 
     private fun goToAddGrant2() {
         sharedViewModel.saveAddGrnt(bodyAddGrnt())
-        findNavController().navigate(R.id.action_addGrnt2Fragment_to_addGrnt3Fragment)
+        if (activeTypeId == 1) {
+            findNavController().navigate(R.id.action_addGrnt2Fragment_to_addGrntMarmaFragment)
+
+        } else {
+            findNavController().navigate(R.id.action_addGrnt2Fragment_to_addGrnt3Fragment)
+
+        }
     }
 
 
@@ -126,10 +134,11 @@ class AddGrnt2Fragment : BaseFragment<FragmentAddGrnt2Binding>() {
     override fun initViewModel() {
         initProductTypeListViewModel()
         initActiveTypeListViewModel()
+        getGrntSharedViewModel()
+
     }
 
     override fun onCreateInit() {
-        getGrntSharedViewModel()
         bindData()
         visableCheckSerialButton()
         hideMainNavBtn()
@@ -156,6 +165,7 @@ class AddGrnt2Fragment : BaseFragment<FragmentAddGrnt2Binding>() {
                     when (response.data?.status) {
                         1 -> {
                             fillSpinnerBookNumber(response.data.bookNoList!!)
+                            isFirstTime = true
                         }
                         else -> {
                             showSnackbar(response.data?.message)

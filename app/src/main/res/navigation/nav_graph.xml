@@ -77,6 +77,9 @@
         <action
             android:id="@+id/action_addGrnt2Fragment_to_addGrnt3Fragment"
             app:destination="@id/addGrnt3Fragment" />
+        <action
+            android:id="@+id/action_addGrnt2Fragment_to_addGrntMarmaFragment"
+            app:destination="@id/addGrntMarmaFragment" />
     </fragment>
     <fragment
         android:id="@+id/addGrnt3Fragment"
@@ -238,6 +241,16 @@
             app:destination="@id/chooseTypeFragment"
             app:launchSingleTop="true"
             app:popUpTo="@id/editInvoiceFragment2"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/addGrntMarmaFragment"
+        android:name="com.bellacity.ui.fragment.addGrnt.AddGrntMarmaFragment"
+        android:label="AddGrntMarmaFragment">
+        <action
+            android:id="@+id/action_addGrntMarmaFragment_to_edit_button_navigation"
+            app:destination="@id/edit_button_navigation"
+            app:popUpTo="@id/home_button_navigation"
             app:popUpToInclusive="true" />
     </fragment>
 </navigation>
