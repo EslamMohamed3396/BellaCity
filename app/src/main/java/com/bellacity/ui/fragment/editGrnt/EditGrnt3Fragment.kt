@@ -92,6 +92,7 @@ class EditGrnt3Fragment : BaseFragment<FragmentEditGrnt3Binding>() {
             bodyEditGrnt?.consumerPhone,
             bodyEditGrnt?.consumerAddress,
             null,
+            null,
             selectedSerialList,
             bodyEditGrnt?.bookNo,
             bodyEditGrnt?.grntType,
@@ -108,7 +109,12 @@ class EditGrnt3Fragment : BaseFragment<FragmentEditGrnt3Binding>() {
     private fun goToEditGrant4() {
         sharedViewModel.saveEditGrnt(bodyEditGrnt())
         sharedViewModel.saveGrntDetails(grntDetails!!)
-        findNavController().navigate(R.id.action_editGrnt3Fragment_to_editGrnt4Fragment)
+        if (bodyEditGrnt().grntType == 1) {
+            findNavController().navigate(R.id.action_editGrnt3Fragment_to_editGrntMarmaFragment)
+        } else {
+            findNavController().navigate(R.id.action_editGrnt3Fragment_to_editGrnt4Fragment)
+
+        }
     }
 
     private fun bindData() {

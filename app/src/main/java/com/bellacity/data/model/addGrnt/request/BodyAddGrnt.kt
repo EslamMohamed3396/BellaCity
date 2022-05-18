@@ -20,6 +20,8 @@ data class BodyAddGrnt(
     val consumerAddress: String?,
     @SerializedName("GrntItems")
     val grntItems: List<GrntItem>?,
+    @SerializedName("BulkItems")
+    val bulkItems: List<BulkItems>?,
     @SerializedName("GrntItemSerials")
     val grntItemSerials: List<String>?,
     @SerializedName("BookNo")

@@ -2,6 +2,7 @@ package com.bellacity.data.model.editGrnt.request
 
 
 import android.os.Parcelable
+import com.bellacity.data.model.addGrnt.request.BulkItems
 import com.bellacity.data.model.base.grntItems.GrntItem
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
@@ -22,6 +23,8 @@ data class BodyEditGrnt(
     val consumerAddress: String?,
     @SerializedName("GrntItems")
     val grntItems: List<GrntItem>?,
+    @SerializedName("BulkItems")
+    val bulkItems: List<BulkItems>?,
     @SerializedName("GrntItemSerials")
     val grntItemSerials: List<String>?,
     @SerializedName("BookNo")

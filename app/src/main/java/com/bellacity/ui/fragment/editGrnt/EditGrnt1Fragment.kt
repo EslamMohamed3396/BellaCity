@@ -100,6 +100,7 @@ class EditGrnt1Fragment : BaseFragment<FragmentEditGrnt1Binding>() {
             binding.consumerPhoneTextInput.editText?.text.toString(),
             binding.consumerAddressTextInput.editText?.text.toString(),
             null,
+            null,
             grntDetails.grntPartSerials,
             grntDetails.grntBookNumber?.toInt(),
             grntDetails.grntTypeID,

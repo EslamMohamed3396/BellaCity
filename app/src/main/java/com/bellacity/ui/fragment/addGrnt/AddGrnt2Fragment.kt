@@ -90,12 +90,14 @@ class AddGrnt2Fragment : BaseFragment<FragmentAddGrnt2Binding>() {
     }
 
     private fun getGrntSharedViewModel() {
-        sharedViewModel.addGrnt.observe(viewLifecycleOwner, { response ->
+        sharedViewModel.addGrnt.observe(viewLifecycleOwner) { response ->
             bodyAddGrnt = response
-            if (!isFirstTime) {
-                initBookListViewModel(bodyAddGrnt?.techID!!)
-            }
-        })
+            initBookListViewModel(bodyAddGrnt?.techID!!)
+
+            sharedViewModel.addGrnt.removeObservers(viewLifecycleOwner)
+//            if (!isFirstTime) {
+//            }
+        }
 
     }
 
@@ -118,6 +120,7 @@ class AddGrnt2Fragment : BaseFragment<FragmentAddGrnt2Binding>() {
             bodyAddGrnt?.consumerName,
             bodyAddGrnt?.consumerPhone,
             bodyAddGrnt?.consumerAddress,
+            null,
             null,
             chekedSerialList,
             bookId,

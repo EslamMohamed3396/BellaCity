@@ -529,6 +529,7 @@ class EditGrnt4Fragment : BaseFragment<FragmentEditGrnt4Binding>() {
             bodyEditGrnt?.consumerPhone,
             bodyEditGrnt?.consumerAddress,
             fillGrntItems(),
+            ArrayList(),
             bodyEditGrnt?.grntItemSerials,
             bodyEditGrnt?.bookNo,
             bodyEditGrnt?.grntType,

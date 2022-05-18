@@ -203,6 +203,7 @@ class AddGrnt1Fragment : BaseFragment<FragmentAddGrnt1Binding>() {
             null,
             null,
             null,
+            null,
             binding.merchantTextInput.editText?.text.toString(),
             null,
             null,

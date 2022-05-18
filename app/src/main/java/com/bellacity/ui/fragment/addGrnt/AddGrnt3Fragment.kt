@@ -22,6 +22,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.bellacity.R
 import com.bellacity.data.model.addGrnt.request.BodyAddGrnt
+import com.bellacity.data.model.addGrnt.request.BulkItems
 import com.bellacity.data.model.base.grntItems.GrntItem
 import com.bellacity.data.model.items.response.GrntItems
 import com.bellacity.databinding.FragmentAddGrnt3Binding
@@ -53,7 +54,6 @@ class AddGrnt3Fragment : BaseFragment<FragmentAddGrnt3Binding>() {
             ::minuesQuantity
         )
     }
-
 
 
     val requestPermissionLocation =
@@ -113,9 +113,6 @@ class AddGrnt3Fragment : BaseFragment<FragmentAddGrnt3Binding>() {
         }
 
     }
-
-
-
 
 
     private fun checkSelfPermission(): Boolean {
@@ -459,6 +456,7 @@ class AddGrnt3Fragment : BaseFragment<FragmentAddGrnt3Binding>() {
             bodyAddGrnt?.consumerPhone,
             bodyAddGrnt?.consumerAddress,
             fillGrntItems(),
+            ArrayList<BulkItems>(),
             bodyAddGrnt?.grntItemSerials,
             bodyAddGrnt?.bookNo,
             bodyAddGrnt?.grntType,

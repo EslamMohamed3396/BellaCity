@@ -22,6 +22,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.bellacity.R
 import com.bellacity.data.model.addGrnt.request.BodyAddGrnt
+import com.bellacity.data.model.addGrnt.request.BulkItems
 import com.bellacity.data.model.base.grntItems.GrntItem
 import com.bellacity.data.model.supplementItems.request.BodySupplementItems
 import com.bellacity.data.model.supplementItems.response.Item
@@ -425,12 +426,12 @@ class AddGrntMarmaFragment : BaseFragment<FragmentAddGrntMarmaBinding>() {
     }
 
 
-    private fun fillGrntItems(): ArrayList<GrntItem> {
-        val itemsList = ArrayList<GrntItem>()
+    private fun fillGrntItems(): ArrayList<BulkItems> {
+        val itemsList = ArrayList<BulkItems>()
         itemHashSet.distinctBy {
             it.itemID
         }.forEach {
-            val grntItem = GrntItem(it.itemID, it.itemQuantity)
+            val grntItem = BulkItems(it.itemID, it.itemQuantity)
             itemsList.add(grntItem)
         }
         return itemsList
@@ -472,6 +473,7 @@ class AddGrntMarmaFragment : BaseFragment<FragmentAddGrntMarmaBinding>() {
             bodyAddGrnt?.consumerName,
             bodyAddGrnt?.consumerPhone,
             bodyAddGrnt?.consumerAddress,
+            ArrayList<GrntItem>(),
             fillGrntItems(),
             bodyAddGrnt?.grntItemSerials,
             bodyAddGrnt?.bookNo,
@@ -495,7 +497,7 @@ class AddGrntMarmaFragment : BaseFragment<FragmentAddGrntMarmaBinding>() {
     }
 
     private fun goToPreviewFragment() {
-        findNavController().navigate(R.id.action_addGrnt3Fragment_to_edit_button_navigation)
+        findNavController().navigate(R.id.action_addGrntMarmaFragment_to_edit_button_navigation)
     }
 
 }

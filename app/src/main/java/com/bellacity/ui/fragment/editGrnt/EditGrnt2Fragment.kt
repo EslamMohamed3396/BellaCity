@@ -70,12 +70,12 @@ class EditGrnt2Fragment : BaseFragment<FragmentEditGrnt2Binding>() {
 
 
     private fun getGrntSharedViewModel() {
-        sharedViewModel.editGrnt.observe(viewLifecycleOwner, { response ->
+        sharedViewModel.editGrnt.observe(viewLifecycleOwner) { response ->
             bodyEditGrnt = response
             initBookListViewModel(bodyEditGrnt?.techID!!)
             sharedViewModel.editGrnt.removeObservers(viewLifecycleOwner)
-        })
-        sharedViewModel.grntDetails.observe(viewLifecycleOwner, { response ->
+        }
+        sharedViewModel.grntDetails.observe(viewLifecycleOwner) { response ->
             grntDetails = response
             bindData()
             setSelectedCobon()
@@ -85,7 +85,7 @@ class EditGrnt2Fragment : BaseFragment<FragmentEditGrnt2Binding>() {
             sharedViewModel.grntDetails.removeObservers(viewLifecycleOwner)
 
             //bindSelectedCobon()
-        })
+        }
 
 
     }
@@ -99,6 +99,7 @@ class EditGrnt2Fragment : BaseFragment<FragmentEditGrnt2Binding>() {
             bodyEditGrnt?.consumerName,
             bodyEditGrnt?.consumerPhone,
             bodyEditGrnt?.consumerAddress,
+            null,
             null,
             grntDetails?.grntPartSerials,
             bookId,

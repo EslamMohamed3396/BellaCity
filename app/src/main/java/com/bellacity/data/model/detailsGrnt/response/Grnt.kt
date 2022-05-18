@@ -56,6 +56,8 @@ data class Grnt(
     val grntPartSerials: List<String>?,
     @SerializedName("GrntItems")
     val grntItems: List<GrntItem>?,
+    @SerializedName("BulkItems")
+    val bulkItems: List<BulkItems>?,
     @SerializedName("GrntLat")
     val grntLat: String?,
     @SerializedName("GrntLng")

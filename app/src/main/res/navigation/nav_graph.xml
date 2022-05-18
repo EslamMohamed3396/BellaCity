@@ -120,6 +120,9 @@
             app:destination="@id/editGrnt4Fragment"
             app:enterAnim="@anim/anim_slide_in_left"
             app:exitAnim="@anim/anim_slide_out_left" />
+        <action
+            android:id="@+id/action_editGrnt3Fragment_to_editGrntMarmaFragment"
+            app:destination="@id/editGrntMarmaFragment" />
     </fragment>
     <fragment
         android:id="@+id/editGrnt4Fragment"
@@ -249,6 +252,17 @@
         android:label="AddGrntMarmaFragment">
         <action
             android:id="@+id/action_addGrntMarmaFragment_to_edit_button_navigation"
+            app:destination="@id/edit_button_navigation"
+            app:popUpTo="@id/home_button_navigation"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/editGrntMarmaFragment"
+        android:name="com.bellacity.ui.fragment.editGrnt.EditGrntMarmaFragment"
+        android:label="fragment_edit_grnt_marma"
+        tools:layout="@layout/fragment_edit_grnt_marma" >
+        <action
+            android:id="@+id/action_editGrntMarmaFragment_to_edit_button_navigation"
             app:destination="@id/edit_button_navigation"
             app:popUpTo="@id/home_button_navigation"
             app:popUpToInclusive="true" />
